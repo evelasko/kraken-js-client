@@ -27,10 +27,8 @@
     "object-assign": "2.0.0",
     "request": "2.74.0",
     "request-promise": "^4.2.1",
-
     "@types/node": "^8.0.0",
     "tslib": "^1.6.0"
-
   },
   "description": "The Kraken Exchange API for Node.js",
   "devDependencies": {
