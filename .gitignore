@@ -46,3 +46,9 @@ crashlytics-build.properties
 fabric.properties
 *.iml
 node_modules
+
+# Generated stuff
+.code
+dist
+lib
+es
