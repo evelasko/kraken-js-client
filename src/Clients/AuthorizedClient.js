@@ -9,12 +9,14 @@ const MessageSignature = new MS();
 
 class AuthorizedClient {
 
-    constructor({apiKey, apiSecret, opts}) {
+    constructor({apiKey, apiSecret, otp, retryCount}) {
         this.apiKey = apiKey;
+        this.otp = otp;
+
         MessageSignature.setSecret(apiSecret);
 
-        if (opts && opts.retryCount) {
-            this.retryCount = opts.retryCount;
+        if (retryCount) {
+            this.retryCount = retryCount;
         }
     }
 
@@ -54,7 +56,12 @@ class AuthorizedClient {
 
         const nonce = this.getNonce();
 
-        let data = Object.assign(message, {nonce: nonce});
+        let authData = {
+            nonce: nonce,
+            otp: this.otp
+        };
+
+        let data = Object.assign(message, authData);
 
         const _messageSignature = MessageSignature.getSignature(path, data, nonce);
         const url = KRAKEN_API_ENDPOINT_URL + path;
@@ -81,13 +88,19 @@ class AuthorizedClient {
             request(options)
                 .then((response) => {
 
-                    let body = response.body;
+                    let body;
+
+                    try {
+                        body = JSON.parse(response.body);
+                    } catch (e) {
+                        throw new Error('Cannot parse data response.');
+                    }
 
                     if (body.error && body.error.length > 0) {
                         return reject(body, response);
                     }
 
-                    resolve(body, response);
+                    resolve(body.result, response);
                 })
                 .catch(e => reject(e))
         });

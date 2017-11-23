@@ -24,8 +24,8 @@ class Trades extends AuthChecker {
         return this._TradesHistory.get(opts);
     }
 
-    getBalance(opts) {
-        return this._TradeBalance.get(opts);
+    getBalance(opts, raw) {
+        return this._TradeBalance.get(opts, raw);
     }
 
     getVolume(opts) {

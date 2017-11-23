@@ -1,19 +1,28 @@
 # kraken-exchange-api
-[![Build Status](https://travis-ci.org/lucklo/kraken-exchange-api.svg?branch=master)](https://travis-ci.org/lucklo/kraken-exchange-api)
+[![Build Status](https://travis-ci.org/flipio/kraken-exchange-api.svg?branch=master)](https://travis-ci.org/flipioo/kraken-exchange-api)
+
 # Quick Start
 
 ## Status
-This project is still in very early development and some major functionality is probably missing.
-All documented endpoints and objects should be usable though.
 
-If you like to contribute feel free to contact author of this repo or push `Pull Request` with changes.
+**This is a fork of [Kraken node api by lucklo](https://github.com/lucklo/kraken-exchange-api)**
+
+Why i forked ?
+Because it was missing hole private section and i found this as the best kraken js client to start from.
+
+My goals:
+- Convert it to typescript for smoother development
+- Make it usable in all nodejs versions and browsers.
+- Implement retry system since kraken is unstabble atm
+- Create typeings for easier use  
+
 
 
 ## Installation
 Please install this package using `npm`
 kraken-exchange-node-api
 ```bash
-npm install kraken-exchange-node-api
+npm install kraken-node-client
 ```
 
 ## Requirements

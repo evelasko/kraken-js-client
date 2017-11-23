@@ -1,4 +1,4 @@
-const DEFAULT_RETRY_COUNT = 3;
+const DEFAULT_RETRY_COUNT = 0;
 const MODULE_NAME = '[Retry:Module]';
 
 class Retry {

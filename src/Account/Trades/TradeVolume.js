@@ -8,13 +8,10 @@ class TradeVolume {
 
     constructor(opts, client) {
 
-        if (opts && !client) {
-            new AuthChecker(opts);
-        }
-
         if (client instanceof AuthenticatedClient) {
             this.client = client;
         } else {
+            new AuthChecker(opts);
             this.client = new AuthenticatedClient(opts);
         }
 
