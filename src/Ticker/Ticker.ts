@@ -1,11 +1,13 @@
-const forEach = require('lodash.foreach');
-const PublicClient = require('../Clients/PublicClient');
-const endpointPath = require('../Clients/KrakenEndpoints').Ticker;
-const TickerInfo = require('./TickerInfo');
+import {forEach} from 'lodash.foreach';
+import {PublicClient} from '../Clients/PublicClient';
+import {KrakenEndoints} from '../Clients/KrakenEndpoints';
+import {TickerInfo} from './TickerInfo';
+
+const endpointPath = KrakenEndoints.Ticker;
 
 function createTickerCollection(rawResponse) {
 
-    let collection = [];
+    let collection: Array<TickerInfo> = [];
 
     forEach(rawResponse, (rawTickerData, tickerPair) => {
         collection.push(new TickerInfo(rawTickerData, tickerPair))
@@ -14,14 +16,16 @@ function createTickerCollection(rawResponse) {
     return collection;
 }
 
-class Ticker {
+export class Ticker {
+
+    protected client: PublicClient;
 
     constructor() {
         this.client = new PublicClient();
     }
 
     getPairsTickers(assetPairs, callback) {
-        let message = {};
+        let message: any = {};
 
         if (assetPairs !== null) {
             if (!(assetPairs instanceof Array) || assetPairs.length === 0) {
@@ -67,4 +71,3 @@ class Ticker {
 
 }
 
-module.exports = Ticker;

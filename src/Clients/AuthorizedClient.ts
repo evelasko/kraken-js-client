@@ -1,13 +1,19 @@
-const KRAKEN_API_ENDPOINT_URL = require('../Config').KRAKEN_API_ENDPOINT;
-const request = require('request-promise');
-const qs = require('querystring');
+import * as request from 'request-promise'
+import * as qs from 'querystring';
 
-const Retry = require('../Common/Retry');
+import {Config} from '../Config';
+import {Retry} from '../Common/Retry';
+import {MessageSignature as MS} from './MessageSignature'
 
-const MS = require('./MessageSignature');
+const KRAKEN_API_ENDPOINT_URL = Config.KRAKEN_API_ENDPOINT;
 const MessageSignature = new MS();
 
-class AuthorizedClient {
+export class AuthorizedClient {
+
+    private apiKey: string;
+    private otp: string;
+
+    private retryCount: number;
 
     constructor({apiKey, apiSecret, otp, retryCount}) {
         this.apiKey = apiKey;
@@ -66,7 +72,7 @@ class AuthorizedClient {
         const _messageSignature = MessageSignature.getSignature(path, data, nonce);
         const url = KRAKEN_API_ENDPOINT_URL + path;
 
-        const options = {
+        const options: any = {
             headers: {
                 'User-Agent': 'Kraken Javascript API Client',
                 'API-Key': this.apiKey,
@@ -97,10 +103,10 @@ class AuthorizedClient {
                     }
 
                     if (body.error && body.error.length > 0) {
-                        return reject(body, response);
+                        return reject(body.error);
                     }
 
-                    resolve(body.result, response);
+                    return resolve(body.result);
                 })
                 .catch(e => reject(e))
         });
@@ -108,8 +114,8 @@ class AuthorizedClient {
     }
 
     getNonce() {
-        return new Date() * 1000;
+        let time = new Date() as any;
+        return time * 1000;
     }
-}
 
-module.exports = AuthorizedClient;
+}

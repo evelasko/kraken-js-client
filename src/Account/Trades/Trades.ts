@@ -1,16 +1,21 @@
-const AuthenticatedClient = require('../../Clients/AuthorizedClient');
-const AuthChecker = require('../../Common/AuthChecker');
+import {AuthorizedClient} from '../../Clients/AuthorizedClient';
+import {AuthChecker} from '../../Common/AuthChecker';
 
-const TradesHistory = require('./TradesHistory');
-const TradeBalance = require('./TradeBalance');
-const TradeVolume = require('./TradeVolume');
+import {TradesHistory} from './TradesHistory';
+import {TradeBalance} from './TradeBalance';
+import {TradeVolume} from './TradeVolume';
 
-class Trades extends AuthChecker {
+export class Trades extends AuthChecker {
+    protected client: AuthorizedClient;
+
+    _TradesHistory: TradesHistory;
+    _TradeBalance: TradeBalance;
+    _TradeVolume: TradeVolume;
 
     constructor(opts) {
         super(opts);
 
-        this.client = new AuthenticatedClient(opts);
+        this.client = new AuthorizedClient(opts);
 
         /**
          * Mount apis
@@ -33,5 +38,3 @@ class Trades extends AuthChecker {
     }
 
 }
-
-module.exports = Trades;

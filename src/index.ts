@@ -1,30 +1,31 @@
-const PublicClient = require('./Clients/PublicClient');
-const AuthorizedClient = require('./Clients/AuthorizedClient');
+import {PublicClient} from './Clients/PublicClient'
+import {AuthorizedClient} from './Clients/AuthorizedClient';
 
 // Assets
-const Assets = require('./Assets/Assets');
-const AssetPairs = require('./Assets/AssetPairs');
+import {Assets} from './Assets/Assets';
+import {AssetPairs} from './Assets/AssetPairs';
 
 // Orders
-const OrderSides = require('./Order/OrderSides');
-const OrderTypes = require('./Order/OrderTypes');
-const OrderFlags = require('./Order/OrderFlags');
+import {OrderSides} from './Order/OrderSides';
+import {OrderTypes} from './Order/OrderTypes';
+import {OrderFlags} from './Order/OrderFlags';
 
-const Time = require('./Time');
-const Ticker = require('./Ticker/Ticker');
-const TickerParts = require('./Ticker/TickerParts');
+import {Time} from './Time';
+import {Ticker} from './Ticker/Ticker';
+import {TickerParts} from './Ticker/TickerParts';
 
-const OHLC = require('./OHLC/OHLC');
+import {OHLC} from './OHLC/OHLC';
 
-const Balance = require('./Account/Balance');
-const Trades = require('./Account/Trades/Trades');
+import {Balance} from './Account/Balance';
+import {Trades} from './Account/Trades/Trades';
 
-const Account = {
-    Balance,
-    Trades
+const AccountApis = {
+    Balance: Balance,
+    Trades: Trades
 };
 
-module.exports = {
+export const Kraken = {
+    Account: AccountApis,
     PublicClient,
     AuthorizedClient,
     Time,
@@ -36,5 +37,4 @@ module.exports = {
     Ticker,
     TickerParts,
     OHLC,
-    Account
 };

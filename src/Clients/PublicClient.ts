@@ -1,9 +1,11 @@
 const KRAKEN_API_ENDPOINT_URL = require('../Config').KRAKEN_API_ENDPOINT;
 const request = require('request-promise');
 
-class PublicClient {
+export class PublicClient {
 
-    get(path, message) {
+    constructor() {}
+
+    get(path, message?) {
         return this.request('get', path, message);
     }
 
@@ -28,4 +30,3 @@ class PublicClient {
     }
 }
 
-module.exports = PublicClient;

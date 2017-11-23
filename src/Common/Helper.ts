@@ -1,6 +1,6 @@
-const Config = require('../Config');
+import {Config} from '../Config';
 
-class Helper {
+export class Helper {
 
     static getApiPath(path) {
 
@@ -36,5 +36,3 @@ class Helper {
     }
 
 }
-
-module.exports = Helper;

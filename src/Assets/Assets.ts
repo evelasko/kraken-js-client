@@ -1,17 +1,22 @@
-const endpointPath = require('../Clients/KrakenEndpoints').Assets;
-const PublicClient = require('../Clients/PublicClient');
-const Helper = require('../Common/Helper');
 
-class Assets {
+import {PublicClient} from '../Clients/PublicClient';
+import {KrakenEndoints} from '../Clients/KrakenEndpoints';
+import {Helper} from '../Common/Helper';
+
+const endpointPath = KrakenEndoints.Assets;
+
+export class Assets {
+    protected client: PublicClient;
 
     constructor() {
         this.client = new PublicClient();
     }
 
     getAssets(assets, callback) {
-        let message = {};
+        let message: any = {};
 
         Helper.validateAssets(assets);
+
         message.asset = assets.join(',');
 
         return new Promise((resolve, reject) => {
@@ -41,5 +46,3 @@ class Assets {
         return this.getAssets([asset], callback);
     }
 }
-
-module.exports = Assets;

@@ -1,13 +1,17 @@
-const endpointPath = require('../Clients/KrakenEndpoints').OHLC
-const PublicClient = require('../Clients/PublicClient')
+import {KrakenEndoints} from '../Clients/KrakenEndpoints';
+import {PublicClient} from '../Clients/PublicClient'
 
-class OHLC {
+const endpointPath = KrakenEndoints.OHLC;
+
+export class OHLC {
+
+    protected client: PublicClient = new PublicClient();
+
     constructor() {
-        this.client = new PublicClient()
     }
 
     getAssets(assets, callback) {
-        let message = {}
+        let message: any = {};
 
         if (assets !== null) {
             if (!(assets instanceof Array) || assets.length === 0) {
@@ -18,13 +22,14 @@ class OHLC {
                 if (typeof asset !== 'string' || !asset) {
                     throw new Error('Kraken:Assets: every `asset` in array need to be a non-empty string')
                 }
-            })
+            });
 
             message.asset = assets.join(',')
         }
 
         return new Promise((resolve, reject) => {
-            const request = this.client.get(endpointPath, message)
+            const request = this.client.get(endpointPath, message);
+
             request
                 .then((response) => {
                     if (response.statusCode !== 200) {
@@ -53,5 +58,3 @@ class OHLC {
         return this.getAssets([asset], callback)
     }
 }
-
-module.exports = OHLC

@@ -1,18 +1,20 @@
-const AuthenticatedClient = require('../Clients/AuthorizedClient');
-const Endpoints = require('../Clients/KrakenEndpoints');
-const AuthChecker = require('../Common/AuthChecker');
+import {AuthorizedClient} from '../Clients/AuthorizedClient';
+import {KrakenEndoints} from '../Clients/KrakenEndpoints';
+import {AuthChecker} from '../Common/AuthChecker';
 
-class Balance extends AuthChecker {
+export class Balance extends AuthChecker {
+
+    protected client: AuthorizedClient;
 
     constructor(opts) {
         super(opts);
-        this.client = new AuthenticatedClient(opts);
+        this.client = new AuthorizedClient(opts);
     }
 
     get() {
         return new Promise((resolve, reject) => {
 
-            this.client.post(Endpoints.Balance, {})
+            this.client.post(KrakenEndoints.Balance, {})
                 .then(resolve)
                 .catch(reject);
 
@@ -20,5 +22,3 @@ class Balance extends AuthChecker {
     }
 
 }
-
-module.exports = Balance;

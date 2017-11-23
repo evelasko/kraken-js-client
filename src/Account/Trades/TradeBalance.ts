@@ -1,11 +1,24 @@
-const AuthChecker = require('../../Common/AuthChecker');
-const Endpoints = require('../../Clients/KrakenEndpoints');
-const AuthenticatedClient = require('../../Clients/AuthorizedClient');
+import {AuthChecker} from '../../Common/AuthChecker';
+import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
+import {AuthorizedClient} from '../../Clients/AuthorizedClient';
 
+interface IBalance {
+    eb: string,
+    tb: string,
+    m: string,
+    n: string,
+    c: string,
+    v: string,
+    e: string,
+    mf: string,
+    ml: string
+}
 
 class BalanceInfo {
 
-    constructor(balance) {
+    _balance: IBalance;
+
+    constructor(balance: IBalance) {
         this._balance = balance;
     }
 
@@ -51,15 +64,17 @@ class BalanceInfo {
 
 }
 
-class TradeBalance {
+export class TradeBalance {
+
+    protected client: AuthorizedClient;
 
     constructor(opts, client) {
 
-        if (client instanceof AuthenticatedClient) {
+        if (client instanceof AuthorizedClient) {
             this.client = client;
         } else {
             new AuthChecker(opts);
-            this.client = new AuthenticatedClient(opts);
+            this.client = new AuthorizedClient(opts);
         }
 
     }
@@ -67,8 +82,8 @@ class TradeBalance {
     get(opts, raw) {
         return new Promise((resolve, reject) => {
 
-            this.client.post(Endpoints.TradeBalance, opts)
-                .then((d) => {
+            this.client.post(KrakenEndoints.TradeBalance, opts)
+                .then((d: IBalance) => {
                     resolve(raw ? d : new BalanceInfo(d));
                 })
                 .catch(reject);
@@ -76,5 +91,3 @@ class TradeBalance {
         });
     }
 }
-
-module.exports = TradeBalance;

@@ -1,5 +1,5 @@
 
-class KrakenPayload {
+export class KrakenPayload {
 
     constructor(payload) {
 
@@ -16,5 +16,3 @@ class KrakenPayload {
     }
 
 }
-
-module.exports = KrakenPayload;

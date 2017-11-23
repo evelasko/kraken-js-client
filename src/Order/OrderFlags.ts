@@ -3,40 +3,40 @@
  *
  * @type {string}
  */
-const VolumeInQuoteCurrency = 'viqc'
+const VolumeInQuoteCurrency = 'viqc';
 
 /**
  * Prefer fee in base currency
  *
  * @type {string}
  */
-const PreferFeeInBaseCurrency = 'fcib'
+const PreferFeeInBaseCurrency = 'fcib';
 
 /**
  * Prefer fee in quote currency
  *
  * @type {string}
  */
-const PreferFeeInQuoteCurrency = 'fciq'
+const PreferFeeInQuoteCurrency = 'fciq';
 
 /**
  * No market price protection
  *
  * @type {string}
  */
-const NoMarketPriceProtection = 'nompp'
+const NoMarketPriceProtection = 'nompp';
 
 /**
  * Post only order (available when OrderType = limit)
  *
  * @type {string}
  */
-const PostOnlyOrder = 'post'
+const PostOnlyOrder = 'post';
 
-module.exports = {
+export const OrderFlags = {
     VolumeInQuoteCurrency,
     PreferFeeInBaseCurrency,
     PreferFeeInQuoteCurrency,
     NoMarketPriceProtection,
     PostOnlyOrder
-}
+};

@@ -1,6 +1,6 @@
-const [Time, Open, High, Low, Close, VolumeWeightedAveragePrice, Volume, Count] = [0, 1, 3, 4, 5, 6, 7]
+const [Time, Open, High, Low, Close, VolumeWeightedAveragePrice, Volume, Count] = [0, 1, 2, 3, 4, 5, 6, 7];
 
-module.exports = {
+export const OHLCParts = {
     Time,
     Open,
     High,
@@ -9,4 +9,4 @@ module.exports = {
     VolumeWeightedAveragePrice,
     Volume,
     Count
-}
+};

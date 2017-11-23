@@ -1,13 +1,18 @@
-const endpointPath = require('../Clients/KrakenEndpoints').AssetPairs;
-const PublicClient = require('../Clients/PublicClient');
+import { PublicClient } from '../Clients/PublicClient';
+import { KrakenEndoints } from '../Clients/KrakenEndpoints';
 
-class AssetPairs {
+const endpointPath = KrakenEndoints.AssetPairs;
+
+export class AssetPairs {
+
+    protected client: PublicClient;
+
     constructor() {
         this.client = new PublicClient()
     }
 
     getAssetPairs(assetPairs, callback) {
-        let message = {}
+        let message:any = {};
 
         if (assetPairs !== null) {
             if (!(assetPairs instanceof Array) || assetPairs.length === 0) {
@@ -53,5 +58,3 @@ class AssetPairs {
         return this.getAssetPairs([assetPair], callback)
     }
 }
-
-module.exports = AssetPairs

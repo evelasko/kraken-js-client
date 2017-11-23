@@ -2,7 +2,10 @@ const get = require('lodash.get');
 const includes = require('lodash.includes');
 const TickerParts = require('./TickerParts');
 
-class TickerInfo {
+export class TickerInfo {
+
+    rawTickerInfo: any;
+    tickerPair: string;
 
     constructor(rawTickerInfo, tickerPair) {
         this.rawTickerInfo = rawTickerInfo;
@@ -28,7 +31,7 @@ class TickerInfo {
     }
 
     getParts(parts) {
-        let partsData = [];
+        let partsData: Array<any> = [];
         if (!parts || !Array.isArray(parts)) {
             throw new Error('`parts` argument need to be an non-empty array');
         }
@@ -38,7 +41,7 @@ class TickerInfo {
                 throw new Error('Value `' + part + '` is not supported by TickerInfo');
             }
 
-            const partValue = get(this.rawTickerInfo, part);
+            const partValue: any = get(this.rawTickerInfo, part);
             partsData.push(partValue);
         });
 
@@ -51,4 +54,3 @@ class TickerInfo {
 
 }
 
-module.exports = TickerInfo;

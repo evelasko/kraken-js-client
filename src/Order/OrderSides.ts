@@ -3,16 +3,16 @@
  *
  * @type {string}
  */
-const Buy = 'buy'
+const Buy = 'buy';
 
 /**
  * Sell Side Order
  *
  * @type {string}
  */
-const Sell = 'sell'
+const Sell = 'sell';
 
-module.exports = {
+export const OrderSides = {
     Buy,
     Sell
-}
+};

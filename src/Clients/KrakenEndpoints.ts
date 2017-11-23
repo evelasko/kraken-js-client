@@ -28,7 +28,8 @@ const TradeVolume = '/0/private/TradeVolume';
 const AddOrder = '/0/private/AddOrder';
 const CancelOrder = '/0/private/CancelOrder';
 
-module.exports = {
+
+export const KrakenEndoints = {
     Time,
     Assets,
     AssetPairs,

@@ -7,7 +7,7 @@ const AuthKeyConfig = {
 
 const OptsFormat = '{apiKey: string, apiSecret: string, otp?: string} // otp is required only if u gave 2FA enabled';
 
-class AuthChecker {
+export class AuthChecker {
 
     constructor(opts) {
 
@@ -40,4 +40,3 @@ class AuthChecker {
 
 }
 
-module.exports = AuthChecker;

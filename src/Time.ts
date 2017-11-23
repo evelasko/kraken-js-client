@@ -1,21 +1,27 @@
-const PublicClient = require('./Clients/PublicClient')
-const endpointPath = require('./Clients/KrakenEndpoints').Time
+import  {PublicClient} from './Clients/PublicClient'
+import  {KrakenEndoints} from './Clients/KrakenEndpoints';
 
-class Time {
+const endpointPath = KrakenEndoints.Time;
+
+export class Time {
+    protected client: PublicClient;
+
     constructor() {
         this.client = new PublicClient()
     }
 
-    getTime(callback) {
+    getTime(callback?) {
         return new Promise((resolve, reject) => {
-            const request = this.client.get(endpointPath)
+            const request = this.client.get(endpointPath);
 
             request
                 .then((response) => {
-                    if (response.statusCode !== 200) {
-                        return reject(response)
+
+                if (response.statusCode !== 200) {
+                        return reject(response);
                     }
-                    resolve(response.body.result)
+
+                    resolve(response.body.result);
                 })
         }).then((response) => {
             if (typeof callback === 'function') {
@@ -26,27 +32,27 @@ class Time {
         })
     }
 
-    getUnixTime(callback) {
+    getUnixTime(callback?) {
         return this.getTime()
             .then((response) => {
-                const unixTime = response['unixtime']
+                const unixTime = response['unixtime'];
                 if (typeof callback === 'function') {
-                    callback(unixTime)
+                    callback(unixTime);
                 }
                 return unixTime
             })
     }
 
-    getTimeInRfc1123(callback) {
+    getTimeInRfc1123(callback?) {
         return this.getTime()
             .then((response) => {
-                const unixTime = response['rfc1123']
+                const unixTime = response['rfc1123'];
+
                 if (typeof callback === 'function') {
-                    callback(unixTime)
+                    callback(unixTime);
                 }
-                return unixTime
+
+                return unixTime;
             })
     }
 }
-
-module.exports = Time

@@ -3,28 +3,28 @@
  *
  * @type {string}
  */
-const Market = 'market'
+const Market = 'market';
 
 /**
  * Limit
  *
  * @type {string}
  */
-const Limit = 'limit'
+const Limit = 'limit';
 
 /**
  * price = stop loss price
  *
  * @type {string}
  */
-const StopLoss = 'stop-loss'
+const StopLoss = 'stop-loss';
 
 /**
  * price = take profit price
  *
  * @type {string}
  */
-const TakeProfit = 'take-profit'
+const TakeProfit = 'take-profit';
 
 /**
  * price = stop loss price,
@@ -32,7 +32,7 @@ const TakeProfit = 'take-profit'
  *
  * @type {string}
  */
-const StopLossProfit = 'stop-loss-profit'
+const StopLossProfit = 'stop-loss-profit';
 
 /**
  * price = stop loss price,
@@ -40,7 +40,7 @@ const StopLossProfit = 'stop-loss-profit'
  *
  * @type {string}
  */
-const StopLossProfitLimit = 'stop-loss-profit-limit'
+const StopLossProfitLimit = 'stop-loss-profit-limit';
 
 /**
  * price = stop loss trigger price,
@@ -48,7 +48,7 @@ const StopLossProfitLimit = 'stop-loss-profit-limit'
  *
  * @type {string}
  */
-const StopLossLimit = 'stop-loss-limit'
+const StopLossLimit = 'stop-loss-limit';
 
 /**
  * price = take profit trigger price,
@@ -56,14 +56,14 @@ const StopLossLimit = 'stop-loss-limit'
  *
  * @type {string}
  */
-const TakeProfitLimit = 'take-profit-limit'
+const TakeProfitLimit = 'take-profit-limit';
 
 /**
  * price = trailing stop offset
  *
  * @type {string}
  */
-const TrailingStop = 'trailing-stop'
+const TrailingStop = 'trailing-stop';
 
 /**
  * price = trailing stop offset,
@@ -71,7 +71,7 @@ const TrailingStop = 'trailing-stop'
  *
  * @type {string}
  */
-const TrailingStopLimit = 'trailing-stop-limit'
+const TrailingStopLimit = 'trailing-stop-limit';
 
 /**
  * price = stop loss price,
@@ -79,16 +79,16 @@ const TrailingStopLimit = 'trailing-stop-limit'
  *
  * @type {string}
  */
-const StopLossAndLimit = 'stop-loss-and-limit'
+const StopLossAndLimit = 'stop-loss-and-limit';
 
 /**
  * Settle Position
  *
  * @type {string}
  */
-const SettlePosition = 'settle-position'
+const SettlePosition = 'settle-position';
 
-module.exports = {
+export const OrderTypes = {
     Market,
     Limit,
     StopLoss,

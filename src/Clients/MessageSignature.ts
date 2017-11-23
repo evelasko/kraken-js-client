@@ -1,14 +1,18 @@
-const crypto = require('crypto');
-const queryString = require('querystring');
+import * as crypto from 'crypto';
+import * as queryString from'querystring';
 
-class MessageSignature {
+export class MessageSignature {
+
+    private secret: Buffer;
 
     constructor() {}
 
     setSecret(secret) {
+
         if (!secret || typeof secret !== 'string') {
             throw new Error('Secret needs to be a non-empty string');
         }
+
         this.secret = new Buffer(secret, 'base64');
     }
 
@@ -19,13 +23,12 @@ class MessageSignature {
         }
 
         const message = queryString.stringify(request);
-        let hash = new crypto.createHash('sha256');
-        let hmac = new crypto.createHmac('sha512', this.secret);
+        let hash = crypto.createHash('sha256');
+        let hmac = crypto.createHmac('sha512', this.secret);
         const hashDigest = hash.update(nonce + message).digest('binary');
         const hmacDigest = hmac.update(path + hashDigest, 'binary').digest('base64');
 
         return hmacDigest;
     }
-}
 
-module.exports = MessageSignature;
+}

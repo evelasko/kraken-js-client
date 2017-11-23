@@ -1,7 +1,14 @@
 const DEFAULT_RETRY_COUNT = 0;
 const MODULE_NAME = '[Retry:Module]';
 
-class Retry {
+export class Retry {
+
+    resource: Function;
+    _resolveFn: Function;
+    _rejectFn: Function;
+
+    _retryCount: number;
+    _attemptsCount: number = 0;
 
     /**
      * Resource passed must be bound to a ctx of execution or pass in ctx ( class instance ) unfortunately
@@ -21,7 +28,6 @@ class Retry {
         }
 
         this._retryCount = DEFAULT_RETRY_COUNT;
-        this._attemptsCount = 0;
 
     }
 
@@ -62,4 +68,3 @@ class Retry {
 
 }
 
-module.exports = Retry;
