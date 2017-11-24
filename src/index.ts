@@ -20,9 +20,12 @@ import {OHLC} from './OHLC/OHLC';
 import {Balance} from './Account/Balance';
 import {Trades} from './Account/Trades/Trades';
 
+import {Orders} from './Account/Orders/Orders';
+
 const Account = {
     Balance,
-    Trades
+    Trades,
+    Orders
 };
 
 export const Kraken = {
