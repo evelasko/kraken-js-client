@@ -1,3 +1,4 @@
+// Clients
 import {PublicClient} from './Clients/PublicClient'
 import {AuthorizedClient} from './Clients/AuthorizedClient';
 
@@ -19,13 +20,13 @@ import {OHLC} from './OHLC/OHLC';
 import {Balance} from './Account/Balance';
 import {Trades} from './Account/Trades/Trades';
 
-const AccountApis = {
-    Balance: Balance,
-    Trades: Trades
+const Account = {
+    Balance,
+    Trades
 };
 
 export const Kraken = {
-    Account: AccountApis,
+    Account,
     PublicClient,
     AuthorizedClient,
     Time,

@@ -24,9 +24,15 @@ export class MessageSignature {
 
         const message = queryString.stringify(request);
         let hash = crypto.createHash('sha256');
-        let hmac = crypto.createHmac('sha512', this.secret);
-        const hashDigest = hash.update(nonce + message).digest('binary');
-        const hmacDigest = hmac.update(path + hashDigest, 'binary').digest('base64');
+
+        /**
+         * Had to do this "hack" since ts lint was going crazy
+         * @type {any}
+         */
+        let hmac = crypto.createHmac('sha512', this.secret) as any;
+        const hashDigest = hash.update(nonce + message) as any;
+        const nHashDigest = hashDigest.digest('binary');
+        const hmacDigest = hmac.update(path + nHashDigest, 'binary').digest('base64');
 
         return hmacDigest;
     }

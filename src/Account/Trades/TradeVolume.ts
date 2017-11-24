@@ -26,10 +26,10 @@ export class TradeVolume {
      * @param opts
      * @returns {Promise}
      */
-    get(opts) {
+    get(opts: {pair: any}) {
 
         if (opts && opts.pair && Array.isArray(opts.pair)) {
-            let assetPairs = opts.pair;
+            let assetPairs: Array<string> = opts.pair;
 
             assetPairs.forEach((assetPair) => {
                 if (typeof assetPair !== 'string' || !assetPair) {
