@@ -12,7 +12,7 @@ export class Assets {
         this.client = new PublicClient();
     }
 
-    getAssets(assets, callback) {
+    getAssets(assets: Array<string>, callback?) {
         let message: any = {};
 
         Helper.validateAssets(assets);
@@ -38,7 +38,7 @@ export class Assets {
     }
 
     getAllAssets(callback) {
-        return this.getAssets(null, callback);
+        return this.getAssets([], callback);
     }
 
     getSingleAsset(asset, callback) {

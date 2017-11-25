@@ -21,12 +21,16 @@ import {Balance} from './Account/Balance';
 import {Trades} from './Account/Trades/Trades';
 
 import {Orders} from './Account/Orders/Orders';
+import {OpenPositions} from './Account/OpenPositions';
+
 
 const Account = {
     Balance,
     Trades,
-    Orders
+    Orders,
+    OpenPositions
 };
+
 
 export const Kraken = {
     Account,
