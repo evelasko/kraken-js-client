@@ -2,7 +2,7 @@ import {AuthorizedClient} from '../Clients/AuthorizedClient';
 import {KrakenEndoints} from '../Clients/KrakenEndpoints';
 import {AuthChecker} from '../Common/AuthChecker';
 
-interface IOpenPositions {
+export interface IOpenPositions {
     txid: string;
     docalcs?: boolean;
 }

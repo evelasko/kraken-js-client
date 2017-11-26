@@ -6,7 +6,7 @@ import {TradeBalance} from './TradeBalance';
 import {TradeVolume} from './TradeVolume';
 import {QueryTrades, IQueryTrades} from './QueryTrades';
 
-interface ITradeOpts {
+export interface ITradeOpts {
     joinOrders: boolean;
 }
 

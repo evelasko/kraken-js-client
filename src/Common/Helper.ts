@@ -1,8 +1,9 @@
+import {map} from 'lodash';
 import {Config} from '../Config';
 
 export class Helper {
 
-    static getApiPath(path) {
+    static getApiPath(path): string {
 
         if (typeof path === 'string' && path.charAt(0) !== '/') {
             path = '/' + path;
@@ -29,16 +30,16 @@ export class Helper {
 
     }
 
-    static validateAsset(asset) {
+    static validateAsset(asset): void {
         if (typeof asset !== 'string' || !asset) {
             throw new Error('Kraken:Assets: `asset` variable need to be a non-empty string')
         }
     }
 
-    static parseKrakenErrors(err: Array<string>) {
+    static parseKrakenErrors(err: Array<string>): string | boolean {
 
         if (!Array.isArray(err)) {
-            console.warn('err passed is not instace of Array');
+            console.warn('err passed is not instance of Array');
             return false;
         }
 
@@ -52,15 +53,28 @@ export class Helper {
             .filter((e) => e.startsWith('W'))
             .map((e) => e.substr(1));
 
-        if (errors.length > 0 ) {
+        if (errors.length > 0) {
             msg = msg + '[Errors] ' + err.join('; ') + ';';
         }
 
-        if (warnings.length > 0 ) {
+        if (warnings.length > 0) {
             msg = msg + '[Warnings] ' + err.join('; ') + ';';
         }
 
         return msg;
+    }
+
+    static chunkArray(array: Array<any>, chunkSize): Array<Array<any>> {
+
+        chunkSize = chunkSize || 20;
+
+        let result: Array<any> = map(array, function (item, index) {
+            return index % chunkSize === 0 ? array.slice(index, index + chunkSize) : null;
+        }).filter(function (item) {
+            return item;
+        });
+
+        return result;
     }
 
 }

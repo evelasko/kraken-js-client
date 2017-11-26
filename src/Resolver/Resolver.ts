@@ -1,9 +1,10 @@
-import {forEach, map} from 'lodash';
+import {extend, forEach, map} from 'lodash';
 import {Trades} from '../Account/Trades';
 import {AuthChecker} from '../Common/AuthChecker';
 import {Orders} from '../Account/Orders/Orders';
 import {IQueryTrades} from '../Account/Trades/QueryTrades';
 import {ITradesHistory} from '../Account/Trades/TradesHistory';
+import {Helper} from '../Common/Helper';
 
 export class Resolver extends AuthChecker {
 
@@ -16,37 +17,71 @@ export class Resolver extends AuthChecker {
         this.Orders = new Orders(opts);
     }
 
-    private joinOrders(trades) {
+    private async fetchOrder(oids: Array<string>, opts?): Promise<any> {
+        opts = opts || {};
+        return this.Orders.query(Object.assign({}, opts, {
+            txid: oids.join(',')
+        }));
+    }
+
+    private async fetchOrders(orderIds: Array<string>, opts: any) {
+
+        let oIds = Helper.chunkArray(orderIds, 20);
+
+        let numberOfChunks = oIds.length;
+
+        return new Promise(async (resolve, reject) => {
+            let n = 0;
+            let result = {};
+
+            while (n < numberOfChunks) {
+                let res;
+
+                try {
+                    res = await this.fetchOrder(oIds[n], opts);
+                } catch (e) {
+                    reject(e);
+                }
+
+                result = extend(result, res);
+                n++;
+            }
+
+            resolve(result);
+        });
+    }
+
+    private joinOrders(trades: any) {
 
         return new Promise((resolve, reject) => {
-            let orderIds: Array<string> = map(trades, (t) => {
+            let orderIds: Array<string> = map(trades, (t: any) => {
                 return t.ordertxid;
             });
+
             //TODO: Handle fetching more then 20 orders
             // for now it fetches only first 20
-            let oIds = orderIds.length > 19 ? orderIds.slice(0, 19) : orderIds;
+            // let oIds = orderIds.length > 19 ? orderIds.slice(0, 19) : orderIds;
 
-            this.Orders.query({
-                txid: oIds.join(',')
-            }).then((orders) => {
+            this.fetchOrders(orderIds, {})
+                .then((orders: any) => {
 
-                let rTrades = {};
-                forEach(trades, (t, tId) => {
+                    let rTrades = {};
+                    forEach(trades, (t, tId) => {
 
-                    t.id = tId;
-                    rTrades[t.id] = t;
+                        t.id = tId;
+                        rTrades[t.id] = t;
 
-                    forEach(orders, (order, oId) => {
-                        if (oId === t.ordertxid) {
-                            order.id = oId;
-                            t.order = order;
-                        }
+                        forEach(orders, (order: any, oId: string) => {
+                            if (oId === t.ordertxid) {
+                                order.id = oId;
+                                t.order = order;
+                            }
+                        });
+
                     });
 
-                });
-
-                resolve(rTrades);
-            }).catch(reject)
+                    resolve(rTrades);
+                }).catch(reject)
         });
     }
 
@@ -54,7 +89,7 @@ export class Resolver extends AuthChecker {
         return new Promise((resolve, reject) => {
             this.Trades
                 .query(opts)
-                .then((res) => {
+                .then((res: any) => {
                     let trades = res.trades;
 
                     this.joinOrders(trades)
@@ -70,7 +105,7 @@ export class Resolver extends AuthChecker {
         return new Promise((resolve, reject) => {
             this.Trades
                 .getHistory(opts)
-                .then((res) => {
+                .then((res: any) => {
                     let trades = res.trades;
 
                     this.joinOrders(trades)
