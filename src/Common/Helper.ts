@@ -35,4 +35,32 @@ export class Helper {
         }
     }
 
+    static parseKrakenErrors(err: Array<string>) {
+
+        if (!Array.isArray(err)) {
+            console.warn('err passed is not instace of Array');
+            return false;
+        }
+
+        let msg = '';
+
+        let errors: Array<string> = err
+            .filter((e) => e.startsWith('E'))
+            .map((e) => e.substr(1));
+
+        let warnings: Array<string> = err
+            .filter((e) => e.startsWith('W'))
+            .map((e) => e.substr(1));
+
+        if (errors.length > 0 ) {
+            msg = msg + '[Errors] ' + err.join('; ') + ';';
+        }
+
+        if (warnings.length > 0 ) {
+            msg = msg + '[Warnings] ' + err.join('; ') + ';';
+        }
+
+        return msg;
+    }
+
 }

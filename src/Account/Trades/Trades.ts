@@ -6,7 +6,12 @@ import {TradeBalance} from './TradeBalance';
 import {TradeVolume} from './TradeVolume';
 import {QueryTrades, IQueryTrades} from './QueryTrades';
 
+interface ITradeOpts {
+    joinOrders: boolean;
+}
+
 export class Trades extends AuthChecker {
+
     protected client: AuthorizedClient;
 
     _TradesHistory: TradesHistory;
@@ -28,10 +33,9 @@ export class Trades extends AuthChecker {
         this._QueryTrades = new QueryTrades({}, this.client);
     }
 
-    query(opts: IQueryTrades) {
-        return this._QueryTrades.get(opts);
+    query(queryOpts: IQueryTrades, opts?: ITradeOpts) {
+        return this._QueryTrades.get(queryOpts);
     }
-
 
     getHistory(opts: ITradesHistory) {
         return this._TradesHistory.get(opts);

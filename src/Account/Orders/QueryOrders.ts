@@ -3,7 +3,7 @@ import {AuthChecker} from '../../Common';
 
 export interface IQueryOrders {
     trades?: boolean; //  whether or not to include trades in output (optional.  default = false)
-    userref: string; // restrict results to given user reference id (optional)
+    userref?: string; // restrict results to given user reference id (optional)
     txid: string; //comma delimited list of transaction ids to query info about (20 maximum)
 }
 

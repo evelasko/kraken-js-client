@@ -1,4 +1,6 @@
-const DEFAULT_RETRY_COUNT = 0;
+import {Helper} from './Helper';
+
+const DEFAULT_RETRY_COUNT = 3;
 const MODULE_NAME = '[Retry:Module]';
 
 export class Retry {
@@ -52,15 +54,24 @@ export class Retry {
         let reqArgs = args;
 
         this.resource(...reqArgs)
-            .then((...args) => { this._resolveFn(...args)})
-            .catch((...args) => {
+            .then((...args) => {
+                this._resolveFn(...args)
+            })
+            .catch((err) => {
                 this._attemptsCount++;
 
+                /**
+                 * Do not retry if its a known kraken error
+                 */
+                if (Array.isArray(err)) {
+                    return this._rejectFn(Helper.parseKrakenErrors(err));
+                }
+
                 if (this._attemptsCount <= this._retryCount) {
-                    console.warn(MODULE_NAME, 'Retrying request: "{}" with args: {}', this.resource.name || '', reqArgs);
+                    console.log(MODULE_NAME, 'Retrying request: "{}" with args: {}', this.resource.name || '', reqArgs);
                     this._request.apply(this, reqArgs)
                 } else {
-                    this._rejectFn(...args);
+                    this._rejectFn(err);
                 }
 
             });

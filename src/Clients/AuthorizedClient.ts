@@ -99,7 +99,7 @@ export class AuthorizedClient {
                     try {
                         body = JSON.parse(response.body);
                     } catch (e) {
-                        throw new Error('Cannot parse data response.');
+                        throw new Error('Cannot parse Kraken data response.');
                     }
 
                     if (body.error && body.error.length > 0) {
