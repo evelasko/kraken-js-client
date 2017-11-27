@@ -87,7 +87,7 @@ export class Resolver extends AuthChecker {
                 .query(opts)
                 .then((res: any) => {
                     let trades = res.trades;
-
+                    console.log(res);
                     this.joinOrders(trades)
                         .then(resolve)
                         .catch(reject);

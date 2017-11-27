@@ -2,7 +2,7 @@ import {AuthChecker} from '../../Common/AuthChecker';
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
 import {AuthorizedClient, IOtp} from '../../Clients/AuthorizedClient';
 
-interface IBalance {
+export interface IBalance {
     eb: string,
     tb: string,
     m: string,
@@ -14,9 +14,9 @@ interface IBalance {
     ml: string
 }
 
-class BalanceInfo {
+export class BalanceInfo {
 
-    _balance: IBalance;
+    protected _balance: IBalance;
 
     constructor(balance: IBalance) {
         this._balance = balance;
@@ -84,7 +84,7 @@ export class TradeBalance {
 
     }
 
-    get(opts: ITradeBalance, raw: boolean): Promise<BalanceInfo> {
+    get(opts: ITradeBalance, raw: boolean): Promise<BalanceInfo | any> {
         return new Promise((resolve, reject) => {
 
             this.client.post(KrakenEndoints.TradeBalance, opts)

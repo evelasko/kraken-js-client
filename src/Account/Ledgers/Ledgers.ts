@@ -1,7 +1,6 @@
 
 import {AuthorizedClient} from '../../Clients/AuthorizedClient';
 import {AuthChecker} from '../../Common/AuthChecker';
-import {QueryLedgers} from './QueryLedgers';
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
 import {forEach} from 'lodash';
 
@@ -24,17 +23,11 @@ export class Ledgers extends AuthChecker {
 
     protected client: AuthorizedClient;
 
-    private QueryLedgers: QueryLedgers;
 
     constructor(opts) {
         super(opts);
 
         this.client = new AuthorizedClient(opts);
-
-        /**
-         * Mount apis
-         */
-        this.QueryLedgers = new QueryLedgers({}, this.client);
     }
 
     get(opts: ILedgersInfo) {

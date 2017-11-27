@@ -2,7 +2,7 @@ import {AuthorizedClient} from '../../Clients/AuthorizedClient';
 import {AuthChecker} from '../../Common/AuthChecker';
 
 import {ITradesHistory, TradesHistory} from './TradesHistory';
-import {ITradeBalance, TradeBalance} from './TradeBalance';
+import {BalanceInfo, ITradeBalance, TradeBalance} from './TradeBalance';
 import {ITradeVolume, TradeVolume} from './TradeVolume';
 import {QueryTrades, IQueryTrades} from './QueryTrades';
 
@@ -37,7 +37,7 @@ export class Trades extends AuthChecker {
         return this._TradesHistory.get(opts);
     }
 
-    getBalance(opts: ITradeBalance, raw) {
+    getBalance(opts: ITradeBalance, raw: boolean): Promise<BalanceInfo | any> {
         return this._TradeBalance.get(opts, raw);
     }
 
