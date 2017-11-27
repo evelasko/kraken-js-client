@@ -1,4 +1,4 @@
-import {forEach} from 'lodash.foreach';
+import {forEach} from 'lodash';
 import {PublicClient} from '../Clients/PublicClient';
 import {KrakenEndoints} from '../Clients/KrakenEndpoints';
 import {TickerInfo} from './TickerInfo';

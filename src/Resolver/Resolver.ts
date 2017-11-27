@@ -17,14 +17,14 @@ export class Resolver extends AuthChecker {
         this.Orders = new Orders(opts);
     }
 
-    private async fetchOrder(oids: Array<string>, opts?): Promise<any> {
+    private fetchOrder(oids: Array<string>, opts?): Promise<any> {
         opts = opts || {};
         return this.Orders.query(Object.assign({}, opts, {
             txid: oids.join(',')
         }));
     }
 
-    private async fetchOrders(orderIds: Array<string>, opts: any) {
+    private fetchOrders(orderIds: Array<string>, opts: any) {
 
         let oIds = Helper.chunkArray(orderIds, 20);
 
@@ -57,10 +57,6 @@ export class Resolver extends AuthChecker {
             let orderIds: Array<string> = map(trades, (t: any) => {
                 return t.ordertxid;
             });
-
-            //TODO: Handle fetching more then 20 orders
-            // for now it fetches only first 20
-            // let oIds = orderIds.length > 19 ? orderIds.slice(0, 19) : orderIds;
 
             this.fetchOrders(orderIds, {})
                 .then((orders: any) => {

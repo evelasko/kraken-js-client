@@ -16,10 +16,10 @@ export class AuthChecker {
             throw Error('Clients with auth require options passed as object');
         }
 
-        this.vaidateAuth(opts)
+        this.validateAuth(opts)
     }
 
-    vaidateAuth(opts) {
+    validateAuth(opts) {
         let key = opts[AuthKeyConfig.apiKey];
         let secret = opts[AuthKeyConfig.apiSecret];
 

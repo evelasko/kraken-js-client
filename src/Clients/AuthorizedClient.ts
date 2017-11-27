@@ -3,10 +3,9 @@ import * as qs from 'querystring';
 
 import {Config} from '../Config';
 import {Retry} from '../Common/Retry';
-import {MessageSignature as MS} from './MessageSignature'
+import {MessageSignature} from './MessageSignature'
 
 const KRAKEN_API_ENDPOINT_URL = Config.KRAKEN_API_ENDPOINT;
-const MessageSignature = new MS();
 
 export class AuthorizedClient {
 
@@ -14,15 +13,22 @@ export class AuthorizedClient {
     private otp: string;
 
     private retryCount: number;
+    private retryDelay: number;
+    protected MessageSignature: MessageSignature;
 
-    constructor({apiKey, apiSecret, otp, retryCount}) {
+    constructor({apiKey, apiSecret, otp}, {retryCount, retryDelay}?) {
         this.apiKey = apiKey;
         this.otp = otp;
 
-        MessageSignature.setSecret(apiSecret);
+        this.MessageSignature = new MessageSignature();
+        this.MessageSignature.setSecret(apiSecret);
 
         if (retryCount) {
             this.retryCount = retryCount;
+        }
+
+        if (retryDelay) {
+            this.retryDelay = retryDelay;
         }
     }
 
@@ -44,6 +50,11 @@ export class AuthorizedClient {
 
     requestRetry(...args) {
         let resource = new Retry(this._request, this);
+
+
+        if (this.retryCount) {
+            resource.setRetryCount(this.retryDelay);
+        }
 
         if (this.retryCount) {
             resource.setRetryCount(this.retryCount);
@@ -69,7 +80,7 @@ export class AuthorizedClient {
 
         let data = Object.assign(message, authData);
 
-        const _messageSignature = MessageSignature.getSignature(path, data, nonce);
+        const _messageSignature = this.MessageSignature.getSignature(path, data, nonce);
         const url = KRAKEN_API_ENDPOINT_URL + path;
 
         const options: any = {

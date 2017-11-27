@@ -1,7 +1,9 @@
+import {Config} from '../Config';
 import {Helper} from './Helper';
 
 const DEFAULT_RETRY_COUNT = 3;
 const MODULE_NAME = '[Retry:Module]';
+
 
 export class Retry {
 
@@ -9,7 +11,8 @@ export class Retry {
     _resolveFn: Function;
     _rejectFn: Function;
 
-    _retryCount: number;
+    _retryCount: number = Config.RETRY_COUNT;
+    _retryDelay: number = Config.DEFAULT_TIMEOUT;
     _attemptsCount: number = 0;
 
     /**
@@ -36,6 +39,12 @@ export class Retry {
     setRetryCount(num) {
         if (typeof num === 'number') {
             this._retryCount = num;
+        }
+    }
+
+    setRetryDelay(num) {
+        if (typeof num === 'number') {
+            this._retryDelay = num;
         }
     }
 
@@ -69,7 +78,12 @@ export class Retry {
 
                 if (this._attemptsCount <= this._retryCount) {
                     console.log(MODULE_NAME, 'Retrying request: "{}" with args: {}', this.resource.name || '', reqArgs);
-                    this._request.apply(this, reqArgs)
+
+                    // Retry delay
+                    setTimeout(this._retryDelay, () =>{
+                        this._request.apply(this, reqArgs)
+                    });
+
                 } else {
                     this._rejectFn(err);
                 }
