@@ -80,9 +80,9 @@ export class Retry {
                     console.log(MODULE_NAME, 'Retrying request: "{}" with args: {}', this.resource.name || '', reqArgs);
 
                     // Retry delay
-                    setTimeout(this._retryDelay, () =>{
+                    setTimeout(() =>{
                         this._request.apply(this, reqArgs)
-                    });
+                    }, this._retryDelay);
 
                 } else {
                     this._rejectFn(err);

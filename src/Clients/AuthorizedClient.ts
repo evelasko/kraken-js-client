@@ -7,6 +7,11 @@ import {MessageSignature} from './MessageSignature'
 
 const KRAKEN_API_ENDPOINT_URL = Config.KRAKEN_API_ENDPOINT;
 
+export interface IClientOpts {
+    retryCount: number;
+    retryDelay: number;
+}
+
 export class AuthorizedClient {
 
     private apiKey: string;
@@ -16,19 +21,20 @@ export class AuthorizedClient {
     private retryDelay: number;
     protected MessageSignature: MessageSignature;
 
-    constructor({apiKey, apiSecret, otp}, {retryCount, retryDelay}?) {
+    constructor({apiKey, apiSecret, otp}, opts?: IClientOpts) {
+        opts = opts || {};
         this.apiKey = apiKey;
         this.otp = otp;
 
         this.MessageSignature = new MessageSignature();
         this.MessageSignature.setSecret(apiSecret);
 
-        if (retryCount) {
-            this.retryCount = retryCount;
+        if (opts.retryCount) {
+            this.retryCount = opts.retryCount;
         }
 
-        if (retryDelay) {
-            this.retryDelay = retryDelay;
+        if (opts.retryDelay) {
+            this.retryDelay = opts.retryDelay;
         }
     }
 
@@ -52,8 +58,8 @@ export class AuthorizedClient {
         let resource = new Retry(this._request, this);
 
 
-        if (this.retryCount) {
-            resource.setRetryCount(this.retryDelay);
+        if (this.retryDelay) {
+            resource.setRetryDelay(this.retryDelay);
         }
 
         if (this.retryCount) {
