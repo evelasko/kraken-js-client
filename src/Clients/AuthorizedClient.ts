@@ -10,7 +10,7 @@ import {Helper} from '../Common/Helper';
 const KRAKEN_API_ENDPOINT_URL = Config.KRAKEN_API_ENDPOINT;
 
 export interface IOtp {
-    otp?: string;
+    otp?: string | number;
 }
 
 export interface IClientOpts {
@@ -25,7 +25,7 @@ export interface IAuthOpts {
 
 export class AuthorizedClient {
 
-    private auth: IAuthOpts;
+    private auth: IAuthOpts | null;
 
     private retryCount: number;
     private retryDelay: number;
@@ -38,7 +38,7 @@ export class AuthorizedClient {
      * @param {IAuthOpts} authOpts
      * @param {IClientOpts} opts
      */
-    constructor(authOpts: IAuthOpts, opts?: IClientOpts) {
+    constructor(authOpts: IAuthOpts | null = null, opts?: IClientOpts) {
         opts = opts || {};
         this.auth = authOpts;
 
@@ -54,8 +54,12 @@ export class AuthorizedClient {
     }
 
     private configureAuth() {
-        this.MessageSignature = new MessageSignature();
-        this.MessageSignature.setSecret(this.auth.apiSecret);
+
+        if (this.auth) {
+            this.MessageSignature = new MessageSignature();
+            this.MessageSignature.setSecret(this.auth.apiSecret);
+        }
+
     }
 
     post(path, data) {
@@ -109,14 +113,19 @@ export class AuthorizedClient {
 
         let data = Object.assign(message, authData);
 
-        const _messageSignature = this.MessageSignature.getSignature(path, data, nonce);
         const url = KRAKEN_API_ENDPOINT_URL + path;
 
         let headers = {
             'User-Agent': 'Kraken Javascript API Client'
         };
 
-        if (Helper.validateAuth(this.auth)) {
+        /**
+         * If auth present do the magic
+         */
+        if (this.auth && Helper.validateAuth(this.auth)) {
+
+            const _messageSignature = this.MessageSignature.getSignature(path, data, nonce);
+
             headers = extend(headers, {
                 'API-Key': this.auth.apiKey,
                 'API-Sign': _messageSignature
