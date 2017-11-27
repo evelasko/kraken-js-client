@@ -77,4 +77,25 @@ export class Helper {
         return result;
     }
 
+    /**
+     * Validate auth object
+     *
+     * @param {{apiKey: string; apiSecret: string}} auth
+     * @returns {boolean}
+     */
+    static validateAuth(auth: {apiKey: string; apiSecret: string}) {
+        let apiKey = auth.apiKey;
+        let apiSecret = auth.apiSecret;
+
+        if (!apiKey || !apiSecret) {
+            return false;
+        }
+
+        if (apiKey.length === 0 || apiSecret.length === 0) {
+            return false;
+        }
+
+        return true;
+    }
+
 }

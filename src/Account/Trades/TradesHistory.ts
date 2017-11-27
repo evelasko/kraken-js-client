@@ -1,8 +1,8 @@
 import {AuthChecker} from '../../Common/AuthChecker';
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
-import {AuthorizedClient} from '../../Clients/AuthorizedClient';
+import {AuthorizedClient, IOtp} from '../../Clients/AuthorizedClient';
 
-export interface ITradesHistory {
+export interface ITradesHistory extends IOtp {
     type?: 'all' | 'any position' | 'closed position' | 'closing position' | 'no position'; // type of trade (optional)
         // all = all types (default)
         // any position = any position (open or closed)

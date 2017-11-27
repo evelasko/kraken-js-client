@@ -5,7 +5,7 @@ const AuthKeyConfig = {
     apiSecret: 'apiSecret'
 };
 
-const OptsFormat = '{apiKey: string, apiSecret: string, otp?: string} // otp is required only if u gave 2FA enabled';
+const OptsFormat = '{apiKey: string, apiSecret: string}';
 
 export class AuthChecker {
 

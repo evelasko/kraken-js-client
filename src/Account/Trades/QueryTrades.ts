@@ -1,8 +1,8 @@
 import {AuthChecker} from '../../Common/AuthChecker';
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
-import {AuthorizedClient} from '../../Clients/AuthorizedClient';
+import {AuthorizedClient, IOtp} from '../../Clients/AuthorizedClient';
 
-export interface IQueryTrades {
+export interface IQueryTrades extends IOtp {
     txid: string;
     trades?: boolean;
 }

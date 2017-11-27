@@ -1,8 +1,13 @@
 import {AuthChecker} from '../../Common/AuthChecker';
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
-import {AuthorizedClient} from '../../Clients/AuthorizedClient';
+import {AuthorizedClient, IOtp} from '../../Clients/AuthorizedClient';
+import {forEach} from 'lodash';
 
 const MODULE_NAME = '[Trades:Volume]';
+
+export interface ITradeVolume extends IOtp {
+    pair: string[] | string;
+}
 
 export class TradeVolume {
 
@@ -20,18 +25,18 @@ export class TradeVolume {
     }
 
     /**
-     * opts.pair = comma delimited list of asset pairs to get fee info on (optional)
+     * opts.pair = Array<string> or comma delimited list of asset pairs to get fee info on (optional)
      * opts.fee-info = whether or not to include fee info in results (optional)
      *
      * @param opts
      * @returns {Promise}
      */
-    get(opts: {pair: any}) {
+    get(opts: ITradeVolume) {
 
         if (opts && opts.pair && Array.isArray(opts.pair)) {
-            let assetPairs: Array<string> = opts.pair;
+            let assetPairs: any = opts.pair;
 
-            assetPairs.forEach((assetPair) => {
+            forEach(assetPairs, (assetPair) => {
                 if (typeof assetPair !== 'string' || !assetPair) {
                     throw new Error(MODULE_NAME + ' Every `assetPair` in array need to be a non-empty string')
                 }

@@ -1,8 +1,8 @@
-import {AuthorizedClient} from '../Clients/AuthorizedClient';
+import {AuthorizedClient, IOtp} from '../Clients/AuthorizedClient';
 import {KrakenEndoints} from '../Clients/KrakenEndpoints';
 import {AuthChecker} from '../Common/AuthChecker';
 
-export interface IOpenPositions {
+export interface IOpenPositions extends IOtp {
     txid: string;
     docalcs?: boolean;
 }

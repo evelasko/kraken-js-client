@@ -1,7 +1,8 @@
 import {AuthorizedClient, KrakenEndoints} from '../../Clients';
 import {AuthChecker} from '../../Common';
+import {IOtp} from '../../Clients/AuthorizedClient';
 
-export interface IQueryOrders {
+export interface IQueryOrders extends IOtp {
     trades?: boolean; //  whether or not to include trades in output (optional.  default = false)
     userref?: string; // restrict results to given user reference id (optional)
     txid: string; //comma delimited list of transaction ids to query info about (20 maximum)

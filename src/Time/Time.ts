@@ -1,5 +1,5 @@
-import  {PublicClient} from './Clients/PublicClient'
-import  {KrakenEndoints} from './Clients/KrakenEndpoints';
+import  {PublicClient} from '../Clients/PublicClient'
+import  {KrakenEndoints} from '../Clients/KrakenEndpoints';
 
 const endpointPath = KrakenEndoints.Time;
 

@@ -1,6 +1,6 @@
 import {AuthChecker} from '../../Common/AuthChecker';
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
-import {AuthorizedClient} from '../../Clients/AuthorizedClient';
+import {AuthorizedClient, IOtp} from '../../Clients/AuthorizedClient';
 
 interface IBalance {
     eb: string,
@@ -64,6 +64,11 @@ class BalanceInfo {
 
 }
 
+export interface ITradeBalance extends IOtp {
+    aclass?: string; //asset class default 'currency'
+    asset?: string; // base asset used to determine balance (default = ZUSD)
+}
+
 export class TradeBalance {
 
     protected client: AuthorizedClient;
@@ -79,7 +84,7 @@ export class TradeBalance {
 
     }
 
-    get(opts, raw) {
+    get(opts: ITradeBalance, raw: boolean): Promise<BalanceInfo> {
         return new Promise((resolve, reject) => {
 
             this.client.post(KrakenEndoints.TradeBalance, opts)

@@ -1,33 +1,46 @@
 import * as request from 'request-promise'
 import * as qs from 'querystring';
+import {extend} from 'lodash';
 
 import {Config} from '../Config';
 import {Retry} from '../Common/Retry';
 import {MessageSignature} from './MessageSignature'
+import {Helper} from '../Common/Helper';
 
 const KRAKEN_API_ENDPOINT_URL = Config.KRAKEN_API_ENDPOINT;
 
+export interface IOtp {
+    otp?: string;
+}
+
 export interface IClientOpts {
-    retryCount: number;
-    retryDelay: number;
+    retryCount?: number;
+    retryDelay?: number;
+}
+
+export interface IAuthOpts {
+    apiKey: string;
+    apiSecret: string;
 }
 
 export class AuthorizedClient {
 
-    private apiKey: string;
-    private otp: string;
+    private auth: IAuthOpts;
 
     private retryCount: number;
     private retryDelay: number;
+
     protected MessageSignature: MessageSignature;
 
-    constructor({apiKey, apiSecret, otp}, opts?: IClientOpts) {
+    /**
+     * AuthOpts are required but u can default to empty strings so client wont send auth headers
+     *
+     * @param {IAuthOpts} authOpts
+     * @param {IClientOpts} opts
+     */
+    constructor(authOpts: IAuthOpts, opts?: IClientOpts) {
         opts = opts || {};
-        this.apiKey = apiKey;
-        this.otp = otp;
-
-        this.MessageSignature = new MessageSignature();
-        this.MessageSignature.setSecret(apiSecret);
+        this.auth = authOpts;
 
         if (opts.retryCount) {
             this.retryCount = opts.retryCount;
@@ -36,6 +49,13 @@ export class AuthorizedClient {
         if (opts.retryDelay) {
             this.retryDelay = opts.retryDelay;
         }
+
+        this.configureAuth();
+    }
+
+    private configureAuth() {
+        this.MessageSignature = new MessageSignature();
+        this.MessageSignature.setSecret(this.auth.apiSecret);
     }
 
     post(path, data) {
@@ -79,9 +99,12 @@ export class AuthorizedClient {
 
         const nonce = this.getNonce();
 
+        /**
+         * OTP will be set during the call in payload which will extend this object
+         * @type {{nonce: number}}
+         */
         let authData = {
-            nonce: nonce,
-            otp: this.otp
+            nonce: nonce
         };
 
         let data = Object.assign(message, authData);
@@ -89,12 +112,19 @@ export class AuthorizedClient {
         const _messageSignature = this.MessageSignature.getSignature(path, data, nonce);
         const url = KRAKEN_API_ENDPOINT_URL + path;
 
-        const options: any = {
-            headers: {
-                'User-Agent': 'Kraken Javascript API Client',
-                'API-Key': this.apiKey,
+        let headers = {
+            'User-Agent': 'Kraken Javascript API Client'
+        };
+
+        if (Helper.validateAuth(this.auth)) {
+            headers = extend(headers, {
+                'API-Key': this.auth.apiKey,
                 'API-Sign': _messageSignature
-            },
+            });
+        }
+
+        const options: any = {
+            headers: headers,
             method: method.toUpperCase(),
             resolveWithFullResponse: true,
             uri: url

@@ -1,6 +1,7 @@
 // Clients
 import {PublicClient} from './Clients/PublicClient'
 import {AuthorizedClient} from './Clients/AuthorizedClient';
+
 // Assets
 import {Assets} from './Assets/Assets';
 import {AssetPairs} from './Assets/AssetPairs';
@@ -9,7 +10,7 @@ import {OrderSides} from './Order/OrderSides';
 import {OrderTypes} from './Order/OrderTypes';
 import {OrderFlags} from './Order/OrderFlags';
 
-import {Time} from './Time';
+import {Time} from './Time/Time';
 import {Ticker} from './Ticker/Ticker';
 import {TickerParts} from './Ticker/TickerParts';
 
