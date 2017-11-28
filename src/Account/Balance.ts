@@ -1,14 +1,10 @@
-import {AuthorizedClient} from '../Clients/AuthorizedClient';
 import {KrakenEndoints} from '../Clients/KrakenEndpoints';
-import {AuthChecker} from '../Common/AuthChecker';
+import {Client} from '../Util/DefaultClient';
 
-export class Balance extends AuthChecker {
+export class Balance extends Client {
 
-    protected client: AuthorizedClient;
-
-    constructor(opts) {
-        super(opts);
-        this.client = new AuthorizedClient(opts);
+    constructor(opts, client?) {
+        super(opts, client);
     }
 
     get() {

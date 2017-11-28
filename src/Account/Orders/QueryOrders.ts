@@ -1,6 +1,6 @@
-import {AuthorizedClient, KrakenEndoints} from '../../Clients';
-import {AuthChecker} from '../../Common';
-import {IOtp} from '../../Clients/AuthorizedClient';
+import {KrakenEndoints} from '../../Clients';
+import {IOtp} from '../../Clients/HttpClient';
+import {Client} from '../../Util/DefaultClient';
 
 export interface IQueryOrders extends IOtp {
     trades?: boolean; //  whether or not to include trades in output (optional.  default = false)
@@ -8,18 +8,10 @@ export interface IQueryOrders extends IOtp {
     txid: string; //comma delimited list of transaction ids to query info about (20 maximum)
 }
 
-export class QueryOrders {
-    client: AuthorizedClient;
+export class QueryOrders extends Client {
 
-    constructor(opts, client) {
-
-        if (client instanceof AuthorizedClient) {
-            this.client = client;
-        } else {
-            new AuthChecker(opts);
-            this.client = new AuthorizedClient(opts);
-        }
-
+    constructor(opts, client?) {
+        super(opts, client);
     }
 
     get(opts: IQueryOrders) {

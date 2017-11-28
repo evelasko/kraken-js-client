@@ -1,25 +1,17 @@
-import {AuthChecker} from '../../Common/AuthChecker';
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
-import {AuthorizedClient, IOtp} from '../../Clients/AuthorizedClient';
+import {IOtp} from '../../Clients/HttpClient';
+import {Client} from '../../Util/DefaultClient';
 
 export interface IQueryTrades extends IOtp {
     txid: string;
     trades?: boolean;
 }
 
-export class QueryTrades {
+export class QueryTrades extends Client {
 
-    protected client: AuthorizedClient;
 
-    constructor(opts, client) {
-
-        if (client instanceof AuthorizedClient) {
-            this.client = client;
-        } else {
-            new AuthChecker(opts);
-            this.client = new AuthorizedClient(opts);
-        }
-
+    constructor(opts, client?) {
+        super(opts, client);
     }
 
     get(opts: IQueryTrades) {

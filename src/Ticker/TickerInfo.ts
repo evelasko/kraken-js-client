@@ -1,6 +1,7 @@
-const get = require('lodash.get');
-const includes = require('lodash.includes');
-const TickerParts = require('./TickerParts');
+import {get, includes} from 'lodash';
+import {TickerParts} from './TickerParts';
+
+const MODULE_NAME = '[Kraken:Ticker:Info]';
 
 export class TickerInfo {
 
@@ -33,12 +34,12 @@ export class TickerInfo {
     getParts(parts) {
         let partsData: Array<any> = [];
         if (!parts || !Array.isArray(parts)) {
-            throw new Error('`parts` argument need to be an non-empty array');
+            throw new Error(MODULE_NAME + '`parts` argument need to be an non-empty array');
         }
 
         parts.forEach(part => {
             if (!includes(TickerParts, part)) {
-                throw new Error('Value `' + part + '` is not supported by TickerInfo');
+                throw new Error(MODULE_NAME + 'Value `' + part + '` is not supported by TickerInfo');
             }
 
             const partValue: any = get(this.rawTickerInfo, part);

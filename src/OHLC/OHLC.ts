@@ -1,13 +1,13 @@
 import {KrakenEndoints} from '../Clients/KrakenEndpoints';
-import {PublicClient} from '../Clients/PublicClient'
+import {Client} from '../Util/DefaultClient';
 
 const endpointPath = KrakenEndoints.OHLC;
 
-export class OHLC {
+export class OHLC extends Client {
 
-    protected client: PublicClient = new PublicClient();
 
-    constructor() {
+    constructor(opts, client?) {
+        super(opts, client);
     }
 
     getAssets(assets, callback) {
@@ -31,19 +31,18 @@ export class OHLC {
             const request = this.client.get(endpointPath, message);
 
             request
-                .then((response) => {
-                    if (response.statusCode !== 200) {
-                        return reject(response)
-                    }
-                    resolve(response.body.result)
-                })
+                .then((body) => {
+                    resolve(body.result)
+                }).catch(reject);
+
         }).then((response) => {
+
             if (typeof callback === 'function') {
                 callback(response)
             }
 
             return response
-        })
+        });
     }
 
     getAllAssets(callback) {

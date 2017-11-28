@@ -1,14 +1,13 @@
-import { PublicClient } from '../Clients/PublicClient';
 import { KrakenEndoints } from '../Clients/KrakenEndpoints';
+import { Client } from '../Util/DefaultClient';
 
 const endpointPath = KrakenEndoints.AssetPairs;
 
-export class AssetPairs {
+export class AssetPairs extends Client {
 
-    protected client: PublicClient;
 
-    constructor() {
-        this.client = new PublicClient()
+    constructor(opts = null, client?) {
+        super(opts, client);
     }
 
     getAssetPairs(assetPairs, callback) {

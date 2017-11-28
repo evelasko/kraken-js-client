@@ -1,18 +1,16 @@
 import {extend, forEach, map} from 'lodash';
 import {Trades} from '../Account/Trades';
-import {AuthChecker} from '../Common/AuthChecker';
 import {Orders} from '../Account/Orders/Orders';
 import {IQueryTrades} from '../Account/Trades/QueryTrades';
 import {ITradesHistory} from '../Account/Trades/TradesHistory';
-import {Helper} from '../Common/Helper';
+import {Util} from '../Util/Util';
 
-export class Resolver extends AuthChecker {
+export class Resolver {
 
     protected Trades: Trades;
     protected Orders: Orders;
 
     constructor(opts) {
-        super(opts);
         this.Trades = new Trades(opts);
         this.Orders = new Orders(opts);
     }
@@ -26,7 +24,7 @@ export class Resolver extends AuthChecker {
 
     private fetchOrders(orderIds: Array<string>, opts: any) {
 
-        let oIds = Helper.chunkArray(orderIds, 20);
+        let oIds = Util.chunkArray(orderIds, 20);
 
         let numberOfChunks = oIds.length;
 
@@ -81,7 +79,7 @@ export class Resolver extends AuthChecker {
         });
     }
 
-    queryTradesJoinOrders(opts: IQueryTrades) {
+    public queryTradesJoinOrders(opts: IQueryTrades) {
         return new Promise((resolve, reject) => {
             this.Trades
                 .query(opts)
@@ -95,7 +93,7 @@ export class Resolver extends AuthChecker {
         });
     }
 
-    tradeHistoryJoinOrders(opts: ITradesHistory) {
+    public tradeHistoryJoinOrders(opts: ITradesHistory) {
         return new Promise((resolve, reject) => {
             this.Trades
                 .getHistory(opts)

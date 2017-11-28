@@ -1,7 +1,7 @@
 
 import {PublicClient} from '../Clients/PublicClient';
 import {KrakenEndoints} from '../Clients/KrakenEndpoints';
-import {Helper} from '../Common/Helper';
+import {Util} from '../Util/Util';
 
 const endpointPath = KrakenEndoints.Assets;
 
@@ -15,7 +15,7 @@ export class Assets {
     getAssets(assets: Array<string>, callback?) {
         let message: any = {};
 
-        Helper.validateAssets(assets);
+        Util.validateAssets(assets);
 
         message.asset = assets.join(',');
 
@@ -42,7 +42,7 @@ export class Assets {
     }
 
     getSingleAsset(asset, callback) {
-        Helper.validateAsset(asset);
+        Util.validateAsset(asset);
         return this.getAssets([asset], callback);
     }
 }

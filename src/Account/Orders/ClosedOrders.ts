@@ -1,5 +1,6 @@
-import {AuthorizedClient, KrakenEndoints, IOtp} from '../../Clients';
-import {AuthChecker} from '../../Common';
+import {IOtp, KrakenEndoints} from '../../Clients';
+import {Client} from '../../Util/DefaultClient';
+import {OrderCloseTimeType} from '../../Common/types';
 
 export interface IClosedOrders extends IOtp {
     trades?: boolean // whether or not to include trades in output (optional.  default = false)
@@ -7,24 +8,21 @@ export interface IClosedOrders extends IOtp {
     start?: number | string; //starting unix timestamp or order tx id of results (optional.  exclusive)
     end?: number | string; //ending unix timestamp or order tx id of results (optional.  inclusive)
     ofs?: number | string; // result offset
-    closetime?: 'open' | 'close' | 'both'; // which time to use (optional) both (default)
+    closetime?: OrderCloseTimeType; // which time to use (optional) both (default)
 }
 
-export class ClosedOrders {
-    client: AuthorizedClient;
+export class ClosedOrders extends Client {
 
-    constructor(opts, client) {
-
-        if (client instanceof AuthorizedClient) {
-            this.client = client;
-        } else {
-            new AuthChecker(opts);
-            this.client = new AuthorizedClient(opts);
-        }
-
+    constructor(opts, client?) {
+        super(opts, client);
     }
 
     get(opts: IClosedOrders) {
-        return this.client.post(KrakenEndoints.ClosedOrders, opts);
+        return new Promise((resolve, reject) => {
+            this.client
+                .post(KrakenEndoints.ClosedOrders, opts)
+                .then(resolve)
+                .catch(reject);
+        });
     }
 }

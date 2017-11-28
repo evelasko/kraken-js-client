@@ -1,6 +1,6 @@
 // Clients
 import {PublicClient} from './Clients/PublicClient'
-import {AuthorizedClient} from './Clients/AuthorizedClient';
+import {HttpClient} from './Clients/HttpClient';
 
 // Assets
 import {Assets} from './Assets/Assets';
@@ -35,7 +35,7 @@ export const Kraken = {
     Resolver,
     Account,
     PublicClient,
-    AuthorizedClient,
+    AuthorizedClient: HttpClient,
     Time,
     Assets,
     AssetPairs,

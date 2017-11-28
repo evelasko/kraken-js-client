@@ -1,8 +1,10 @@
 import {forEach} from 'lodash';
-import {PublicClient} from '../Clients/PublicClient';
 import {KrakenEndoints} from '../Clients/KrakenEndpoints';
 import {TickerInfo} from './TickerInfo';
+import {Client} from '../Util/DefaultClient';
+import {IKrakenResponse} from '../Clients/HttpClient';
 
+const MODULE_NAME = '[Kraken:Ticker]';
 const endpointPath = KrakenEndoints.Ticker;
 
 function createTickerCollection(rawResponse) {
@@ -16,12 +18,11 @@ function createTickerCollection(rawResponse) {
     return collection;
 }
 
-export class Ticker {
+export class Ticker extends Client {
 
-    protected client: PublicClient;
 
-    constructor() {
-        this.client = new PublicClient();
+    constructor(opts, client?) {
+        super(opts, client);
     }
 
     getPairsTickers(assetPairs, callback) {
@@ -29,44 +30,45 @@ export class Ticker {
 
         if (assetPairs !== null) {
             if (!(assetPairs instanceof Array) || assetPairs.length === 0) {
-                throw new Error('Kraken:Assets: `assetPairs` for non-null values need to be an array')
+                throw new Error(MODULE_NAME + 'Kraken:Assets: `assetPairs` for non-null values need to be an array');
             }
 
             assetPairs.forEach((assetPair) => {
                 if (typeof assetPair !== 'string' || !assetPair) {
-                    throw new Error('Kraken:Ticker: every `assetPair` in array need to be a non-empty string')
+                    throw new Error(MODULE_NAME +' every `assetPair` in array need to be a non-empty string');
                 }
             });
 
-            message.pair = assetPairs.join(',')
+            message.pair = assetPairs.join(',');
         }
 
         return new Promise((resolve, reject) => {
             const request = this.client.get(endpointPath, message);
+
             request
-                .then((response) => {
-                    if (response.statusCode !== 200) {
-                        return reject(response)
-                    }
-                    const tickerCollection = createTickerCollection(response.body.result);
-                    resolve(tickerCollection)
-                })
+                .then((body: IKrakenResponse) => {
+                    const tickerCollection = createTickerCollection(body.result);
+                    resolve(tickerCollection);
+                }).catch(reject);
+
         }).then((response) => {
+
             if (typeof callback === 'function') {
-                callback(response)
+                callback(response);
             }
 
-            return response
+            return response;
         })
     }
 
     getSinglePairTicker(assetPair, callback) {
+
         if (typeof assetPair !== 'string' || !assetPair) {
-            throw new Error('Kraken:Ticker: `assetPair` variable need to be a non-empty string')
+            throw new Error(MODULE_NAME +' `assetPair` variable need to be a non-empty string');
         }
 
         return this.getPairsTickers([assetPair], callback)
-            .then(collection => collection[0])
+            .then(collection => collection[0]);
     }
 
 }

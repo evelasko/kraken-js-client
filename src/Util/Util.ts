@@ -1,7 +1,9 @@
 import {map} from 'lodash';
 import {Config} from '../Config';
 
-export class Helper {
+const Conf = Config.config;
+
+export class Util {
 
     static getApiPath(path): string {
 
@@ -9,7 +11,7 @@ export class Helper {
             path = '/' + path;
         }
 
-        return Config.KRAKEN_API_ENDPOINT + path;
+        return Conf.KRAKEN_API_ENDPOINT + path;
     }
 
     static validateAssets(assets) {
@@ -46,8 +48,8 @@ export class Helper {
         let msg = '';
 
         let errors: Array<string> = err
-            .filter((e) => e.startsWith('E'))
-            .map((e) => e.substr(1));
+            .filter((e: string) => e.startsWith('E'))
+            .map((e: string) => e.substr(1));
 
         let warnings: Array<string> = err
             .filter((e) => e.startsWith('W'))

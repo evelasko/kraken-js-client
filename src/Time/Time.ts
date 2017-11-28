@@ -1,13 +1,12 @@
-import  {PublicClient} from '../Clients/PublicClient'
 import  {KrakenEndoints} from '../Clients/KrakenEndpoints';
+import {Client} from '../Util/DefaultClient';
 
 const endpointPath = KrakenEndoints.Time;
 
-export class Time {
-    protected client: PublicClient;
+export class Time extends Client {
 
-    constructor() {
-        this.client = new PublicClient()
+    constructor(opts, client?) {
+        super(opts, client)
     }
 
     getTime(callback?) {

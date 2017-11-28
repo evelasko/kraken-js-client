@@ -1,7 +1,7 @@
-import {AuthChecker} from '../../Common/AuthChecker';
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
-import {AuthorizedClient, IOtp} from '../../Clients/AuthorizedClient';
+import {IOtp} from '../../Clients/HttpClient';
 import {forEach} from 'lodash';
+import {Client} from '../../Util/DefaultClient';
 
 const MODULE_NAME = '[Trades:Volume]';
 
@@ -9,19 +9,11 @@ export interface ITradeVolume extends IOtp {
     pair: string[] | string;
 }
 
-export class TradeVolume {
+export class TradeVolume extends Client {
 
-    client: AuthorizedClient;
 
-    constructor(opts, client) {
-
-        if (client instanceof AuthorizedClient) {
-            this.client = client;
-        } else {
-            new AuthChecker(opts);
-            this.client = new AuthorizedClient(opts);
-        }
-
+    constructor(opts, client?) {
+        super(opts, client);
     }
 
     /**

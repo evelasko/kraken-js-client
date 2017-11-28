@@ -1,9 +1,10 @@
-import {AuthChecker} from '../../Common/AuthChecker';
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
-import {AuthorizedClient, IOtp} from '../../Clients/AuthorizedClient';
+import {IOtp} from '../../Clients/HttpClient';
+import {Client} from '../../Util/DefaultClient';
+import {TradeTypeType} from '../../Common/types';
 
 export interface ITradesHistory extends IOtp {
-    type?: 'all' | 'any position' | 'closed position' | 'closing position' | 'no position'; // type of trade (optional)
+    type?: TradeTypeType; // type of trade (optional)
         // all = all types (default)
         // any position = any position (open or closed)
         // closed position = positions that have been closed
@@ -15,19 +16,11 @@ export interface ITradesHistory extends IOtp {
     ofs?: number | string // result offset
 }
 
-export class TradesHistory {
+export class TradesHistory extends Client {
 
-    protected client: AuthorizedClient;
 
-    constructor(opts, client) {
-
-        if (client instanceof AuthorizedClient) {
-            this.client = client;
-        } else {
-            new AuthChecker(opts);
-            this.client = new AuthorizedClient(opts);
-        }
-
+    constructor(opts, client?) {
+        super(opts, client);
     }
 
     get(opts: ITradesHistory) {

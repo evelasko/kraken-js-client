@@ -1,19 +1,16 @@
-import {AuthorizedClient, IOtp} from '../Clients/AuthorizedClient';
+import {IOtp} from '../Clients/HttpClient';
 import {KrakenEndoints} from '../Clients/KrakenEndpoints';
-import {AuthChecker} from '../Common/AuthChecker';
+import {Client} from '../Util';
 
 export interface IOpenPositions extends IOtp {
     txid: string;
     docalcs?: boolean;
 }
 
-export class OpenPositions extends AuthChecker {
+export class OpenPositions extends Client {
 
-    protected client: AuthorizedClient;
-
-    constructor(opts) {
-        super(opts);
-        this.client = new AuthorizedClient(opts);
+    constructor(opts, client?) {
+        super(opts, client);
     }
 
     get(opts: IOpenPositions) {

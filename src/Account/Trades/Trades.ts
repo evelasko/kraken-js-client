@@ -1,14 +1,11 @@
-import {AuthorizedClient} from '../../Clients/AuthorizedClient';
-import {AuthChecker} from '../../Common/AuthChecker';
 
 import {ITradesHistory, TradesHistory} from './TradesHistory';
 import {BalanceInfo, ITradeBalance, TradeBalance} from './TradeBalance';
 import {ITradeVolume, TradeVolume} from './TradeVolume';
 import {QueryTrades, IQueryTrades} from './QueryTrades';
+import {Client} from '../../Util/DefaultClient';
 
-export class Trades extends AuthChecker {
-
-    protected client: AuthorizedClient;
+export class Trades extends Client {
 
     _TradesHistory: TradesHistory;
     _TradeBalance: TradeBalance;
@@ -17,8 +14,6 @@ export class Trades extends AuthChecker {
 
     constructor(opts) {
         super(opts);
-
-        this.client = new AuthorizedClient(opts);
 
         /**
          * Mount apis

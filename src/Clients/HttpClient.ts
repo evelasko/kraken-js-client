@@ -1,14 +1,19 @@
 import * as request from 'request-promise'
 import * as qs from 'querystring';
-import {extend} from 'lodash';
+import {extend, isEmpty} from 'lodash';
 
 import {Config} from '../Config';
-import {Retry} from '../Common/Retry';
+import {Retry} from '../Util/Retry';
 import {MessageSignature} from './MessageSignature'
-import {Helper} from '../Common/Helper';
+import {Util} from '../Util/Util';
 
-const KRAKEN_API_ENDPOINT_URL = Config.KRAKEN_API_ENDPOINT;
+const Conf = Config.config;
+const KRAKEN_API_ENDPOINT_URL = Conf.KRAKEN_API_ENDPOINT;
 
+export interface IKrakenResponse {
+    result: any;
+    error: string[];
+}
 export interface IOtp {
     otp?: string | number;
 }
@@ -23,7 +28,7 @@ export interface IAuthOpts {
     apiSecret: string;
 }
 
-export class AuthorizedClient {
+export class HttpClient {
 
     private auth: IAuthOpts | null;
 
@@ -53,32 +58,32 @@ export class AuthorizedClient {
         this.configureAuth();
     }
 
-    private configureAuth() {
+    private configureAuth(): void {
 
-        if (this.auth) {
+        if (this.auth && !isEmpty(this.auth)) {
             this.MessageSignature = new MessageSignature();
             this.MessageSignature.setSecret(this.auth.apiSecret);
         }
 
     }
 
-    post(path, data) {
+    post(path, data?): Promise<any> {
         return this.requestRetry('POST', path, data);
     }
 
-    get(path, data) {
+    get(path, data?): Promise<any> {
         return this.requestRetry('GET', path, data);
     }
 
-    put(path, data) {
+    put(path, data?): Promise<any> {
         return this.requestRetry('PUT', path, data);
     }
 
-    delete(path, data) {
+    delete(path, data?): Promise<any> {
         return this.requestRetry('DELETE', path, data);
     }
 
-    requestRetry(...args) {
+    requestRetry(...args): Promise<any> {
         let resource = new Retry(this._request, this);
 
 
@@ -93,7 +98,7 @@ export class AuthorizedClient {
         return resource.request(...args);
     }
 
-    _request(method, path, message) {
+    _request(method, path, message): Promise<any> {
 
         /**
          * Need message to be empty object as default so extending will work
@@ -122,7 +127,7 @@ export class AuthorizedClient {
         /**
          * If auth present do the magic
          */
-        if (this.auth && Helper.validateAuth(this.auth)) {
+        if (this.auth && Util.validateAuth(this.auth)) {
 
             const _messageSignature = this.MessageSignature.getSignature(path, data, nonce);
 
@@ -150,7 +155,7 @@ export class AuthorizedClient {
             request(options)
                 .then((response) => {
 
-                    let body;
+                    let body: IKrakenResponse;
 
                     try {
                         body = JSON.parse(response.body);
@@ -169,7 +174,7 @@ export class AuthorizedClient {
 
     }
 
-    getNonce() {
+    getNonce(): number {
         let time = new Date() as any;
         return time * 1000;
     }

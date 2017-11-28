@@ -1,4 +1,4 @@
-export * from './AuthorizedClient';
+export * from './HttpClient';
 export * from './PublicClient';
 export * from './KrakenEndpoints';
 export * from './KrakenPayload';

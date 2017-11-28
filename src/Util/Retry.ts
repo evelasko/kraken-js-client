@@ -1,5 +1,5 @@
-import {Config} from '../Config';
-import {Helper} from './Helper';
+import {DefaultConfig} from '../Config';
+import {Util} from './Util';
 
 const DEFAULT_RETRY_COUNT = 3;
 const MODULE_NAME = '[Retry:Module]';
@@ -11,8 +11,8 @@ export class Retry {
     _resolveFn: Function;
     _rejectFn: Function;
 
-    _retryCount: number = Config.RETRY_COUNT;
-    _retryDelay: number = Config.DEFAULT_TIMEOUT;
+    _retryCount: number = DefaultConfig.RETRY_COUNT;
+    _retryDelay: number = DefaultConfig.DEFAULT_TIMEOUT;
     _attemptsCount: number = 0;
 
     /**
@@ -73,7 +73,7 @@ export class Retry {
                  * Do not retry if its a known kraken error
                  */
                 if (Array.isArray(err)) {
-                    return this._rejectFn(Helper.parseKrakenErrors(err));
+                    return this._rejectFn(Util.parseKrakenErrors(err));
                 }
 
                 if (this._attemptsCount <= this._retryCount) {

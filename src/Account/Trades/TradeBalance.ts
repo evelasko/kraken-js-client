@@ -1,6 +1,6 @@
-import {AuthChecker} from '../../Common/AuthChecker';
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
-import {AuthorizedClient, IOtp} from '../../Clients/AuthorizedClient';
+import {IOtp} from '../../Clients/HttpClient';
+import {Client} from '../../Util/DefaultClient';
 
 export interface IBalance {
     eb: string,
@@ -16,13 +16,13 @@ export interface IBalance {
 
 export class BalanceInfo {
 
-    protected _balance: IBalance;
+    private _balance: IBalance;
 
     constructor(balance: IBalance) {
         this._balance = balance;
     }
 
-    getRawData() {
+    getRawData(): IBalance {
         return this._balance;
     }
 
@@ -69,19 +69,11 @@ export interface ITradeBalance extends IOtp {
     asset?: string; // base asset used to determine balance (default = ZUSD)
 }
 
-export class TradeBalance {
+export class TradeBalance extends Client {
 
-    protected client: AuthorizedClient;
 
-    constructor(opts, client) {
-
-        if (client instanceof AuthorizedClient) {
-            this.client = client;
-        } else {
-            new AuthChecker(opts);
-            this.client = new AuthorizedClient(opts);
-        }
-
+    constructor(opts, client?) {
+        super(opts, client);
     }
 
     get(opts: ITradeBalance, raw: boolean): Promise<BalanceInfo | any> {
