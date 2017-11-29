@@ -1,27 +1,27 @@
 // Clients
-import {PublicClient} from './Clients/PublicClient'
-import {HttpClient} from './Clients/HttpClient';
+import {PublicClient} from './clients/PublicClient'
+import {HttpClient} from './clients/HttpClient';
 
 // Assets
-import {Assets} from './Assets/Assets';
-import {AssetPairs} from './Assets/AssetPairs';
+import {Assets} from './assets/Assets';
+import {AssetPairs} from './assets/AssetPairs';
 // Orders
-import {OrderSides} from './Order/OrderSides';
-import {OrderTypes} from './Order/OrderTypes';
-import {OrderFlags} from './Order/OrderFlags';
+import {OrderSides} from './order/OrderSides';
+import {OrderTypes} from './order/OrderTypes';
+import {OrderFlags} from './order/OrderFlags';
 
-import {Time} from './Time/Time';
-import {Ticker} from './Ticker/Ticker';
-import {TickerParts} from './Ticker/TickerParts';
+import {Time} from './time/Time';
+import {Ticker} from './ticker/Ticker';
+import {TickerParts} from './ticker/TickerParts';
 
-import {OHLC} from './OHLC/OHLC';
+import {OHLC} from './ohlc/OHLC';
 
-import {Balance} from './Account/Balance';
-import {Trades} from './Account/Trades/Trades';
+import {Balance} from './account/Balance';
+import {Trades} from './account/Trades/Trades';
 
-import {Orders} from './Account/Orders/Orders';
-import {OpenPositions} from './Account/OpenPositions';
-import {Resolver} from './Resolver/Resolver';
+import {Orders} from './account/Orders/Orders';
+import {OpenPositions} from './account/OpenPositions';
+import {Resolver} from './resolver/Resolver';
 
 
 const Account = {
