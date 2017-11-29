@@ -11,7 +11,7 @@ export const DefaultConfig: IConfig = {
     RETRY_COUNT: 3
 };
 
-interface IConfig {
+export interface IConfig {
     KRAKEN_API_ENDPOINT: string;
     API_VERISON: number | string;
     DEFAULT_TIMEOUT: number;

@@ -35,7 +35,7 @@ export const Kraken = {
     Resolver,
     Account,
     PublicClient,
-    AuthorizedClient: HttpClient,
+    HttpClient,
     Time,
     Assets,
     AssetPairs,
