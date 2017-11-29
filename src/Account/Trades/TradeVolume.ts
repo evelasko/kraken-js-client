@@ -1,7 +1,7 @@
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
-import {IOtp} from '../../Clients/HttpClient';
 import {forEach} from 'lodash';
 import {Client} from '../../Util/DefaultClient';
+import {IClientOpts, IOtp} from '../../common/interfaces';
 
 const MODULE_NAME = '[Trades:Volume]';
 
@@ -12,7 +12,7 @@ export interface ITradeVolume extends IOtp {
 export class TradeVolume extends Client {
 
 
-    constructor(opts, client?) {
+    constructor(opts?: IClientOpts, client?) {
         super(opts, client);
     }
 

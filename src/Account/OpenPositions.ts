@@ -1,6 +1,6 @@
-import {IOtp} from '../Clients/HttpClient';
 import {KrakenEndoints} from '../Clients/KrakenEndpoints';
 import {Client} from '../Util';
+import {IClientOpts, IOtp} from '../common/interfaces';
 
 export interface IOpenPositions extends IOtp {
     txid: string;
@@ -9,7 +9,7 @@ export interface IOpenPositions extends IOtp {
 
 export class OpenPositions extends Client {
 
-    constructor(opts, client?) {
+    constructor(opts?: IClientOpts, client?) {
         super(opts, client);
     }
 

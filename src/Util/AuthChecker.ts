@@ -12,8 +12,8 @@ export class AuthChecker {
     constructor(opts) {
 
         if (typeof opts !== 'object') {
-            console.error(MODULE_NAME, 'Clients with auth require options in format:', OptsFormat);
-            throw Error('Clients with auth require options passed as object');
+            console.error(MODULE_NAME, 'Auth options in format:', OptsFormat);
+            throw Error(MODULE_NAME + 'Auth needs to be passed as object in format: ' + OptsFormat);
         }
 
         this.validateAuth(opts)

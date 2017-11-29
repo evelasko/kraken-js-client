@@ -4,13 +4,14 @@ import {Orders} from '../Account/Orders/Orders';
 import {IQueryTrades} from '../Account/Trades/QueryTrades';
 import {ITradesHistory} from '../Account/Trades/TradesHistory';
 import {Util} from '../Util/Util';
+import {IClientOpts} from '../common/interfaces';
 
 export class Resolver {
 
     protected Trades: Trades;
     protected Orders: Orders;
 
-    constructor(opts) {
+    constructor(opts: IClientOpts) {
         this.Trades = new Trades(opts);
         this.Orders = new Orders(opts);
     }

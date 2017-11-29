@@ -1,11 +1,12 @@
 import  {KrakenEndoints} from '../Clients/KrakenEndpoints';
 import {Client} from '../Util/DefaultClient';
+import {IClientOpts} from '../common/interfaces';
 
 const endpointPath = KrakenEndoints.Time;
 
 export class Time extends Client {
 
-    constructor(opts, client?) {
+    constructor(opts?: IClientOpts, client?) {
         super(opts, client)
     }
 

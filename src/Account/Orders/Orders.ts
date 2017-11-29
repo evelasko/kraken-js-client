@@ -4,6 +4,7 @@ import {IQueryOrders, QueryOrders} from './QueryOrders';
 import {Client} from '../../Util/DefaultClient';
 import {CancelOrder, IOrderCancel} from './CancelOrder';
 import {AddOrder, IOrderAdd} from './AddOrder';
+import {HttpClient} from '../../clients/HttpClient';
 
 export class Orders extends Client {
 
@@ -13,8 +14,8 @@ export class Orders extends Client {
     private CancelOrder: CancelOrder;
     private AddOrder: AddOrder;
 
-    constructor(opts) {
-        super(opts);
+    constructor(opts?, client?: HttpClient) {
+        super(opts, client);
 
         /**
          * Mount apis

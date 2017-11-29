@@ -4,7 +4,7 @@ import {extend} from 'lodash';
  * Internal Client Configuration
  */
 
-export const DefaultConfig: IConfig = {
+export const DefaultConfig = {
     KRAKEN_API_ENDPOINT: 'https://api.kraken.com',
     API_VERISON: 0,
     DEFAULT_TIMEOUT: 200, // 0.2s
@@ -12,21 +12,25 @@ export const DefaultConfig: IConfig = {
 };
 
 export interface IConfig {
-    KRAKEN_API_ENDPOINT: string;
-    API_VERISON: number | string;
-    DEFAULT_TIMEOUT: number;
-    RETRY_COUNT: number;
+    KRAKEN_API_ENDPOINT?: string;
+    API_VERISON?: number | string;
+    DEFAULT_TIMEOUT?: number;
+    RETRY_COUNT?: number;
 }
 
+/**
+ * Static Config
+ */
 export class Config {
 
-    static config: IConfig = DefaultConfig;
+    static _config: IConfig = DefaultConfig;
 
-    get config(): IConfig {
-        return Config.config
+    static get config(): IConfig {
+        return Config._config;
     }
 
-    set config(config: IConfig) {
-        Config.config = extend(Config.config, config);
+    static set config(config: IConfig) {
+        Config._config = extend(Config._config, config);
     }
+
 }

@@ -2,7 +2,7 @@ import {forEach} from 'lodash';
 import {KrakenEndoints} from '../Clients/KrakenEndpoints';
 import {TickerInfo} from './TickerInfo';
 import {Client} from '../Util/DefaultClient';
-import {IKrakenResponse} from '../Clients/HttpClient';
+import {IClientOpts, IKrakenResponse} from '../common/interfaces';
 
 const MODULE_NAME = '[Kraken:Ticker]';
 const endpointPath = KrakenEndoints.Ticker;
@@ -21,7 +21,7 @@ function createTickerCollection(rawResponse) {
 export class Ticker extends Client {
 
 
-    constructor(opts, client?) {
+    constructor(opts?: IClientOpts, client?) {
         super(opts, client);
     }
 

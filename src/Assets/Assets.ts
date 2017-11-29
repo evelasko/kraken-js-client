@@ -1,15 +1,14 @@
-
-import {PublicClient} from '../Clients/PublicClient';
 import {KrakenEndoints} from '../Clients/KrakenEndpoints';
 import {Util} from '../Util/Util';
+import {Client} from '../util/DefaultClient';
+import {IClientOpts} from '../common/interfaces';
 
 const endpointPath = KrakenEndoints.Assets;
 
-export class Assets {
-    protected client: PublicClient;
+export class Assets extends Client {
 
-    constructor() {
-        this.client = new PublicClient();
+    constructor(opts?: IClientOpts, client?) {
+        super(opts, client);
     }
 
     getAssets(assets: Array<string>, callback?) {
@@ -22,12 +21,10 @@ export class Assets {
         return new Promise((resolve, reject) => {
             const request = this.client.get(endpointPath, message);
             request
-                .then((response) => {
-                    if (response.statusCode !== 200) {
-                        return reject(response)
-                    }
-                    resolve(response.body.result)
+                .then((body) => {
+                    resolve(body.result)
                 })
+                .catch(reject);
         }).then((response) => {
             if (typeof callback === 'function') {
                 callback(response)
@@ -43,6 +40,7 @@ export class Assets {
 
     getSingleAsset(asset, callback) {
         Util.validateAsset(asset);
+
         return this.getAssets([asset], callback);
     }
 }

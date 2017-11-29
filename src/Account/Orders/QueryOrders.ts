@@ -1,6 +1,6 @@
 import {KrakenEndoints} from '../../Clients';
-import {IOtp} from '../../Clients/HttpClient';
 import {Client} from '../../Util/DefaultClient';
+import {IClientOpts, IOtp} from '../../common/interfaces';
 
 export interface IQueryOrders extends IOtp {
     trades?: boolean; //  whether or not to include trades in output (optional.  default = false)
@@ -10,7 +10,7 @@ export interface IQueryOrders extends IOtp {
 
 export class QueryOrders extends Client {
 
-    constructor(opts, client?) {
+    constructor(opts?: IClientOpts, client?) {
         super(opts, client);
     }
 

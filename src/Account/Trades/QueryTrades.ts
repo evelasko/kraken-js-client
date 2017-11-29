@@ -1,6 +1,7 @@
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
-import {IOtp} from '../../Clients/HttpClient';
+import {HttpClient} from '../../Clients/HttpClient';
 import {Client} from '../../Util/DefaultClient';
+import {IClientOpts, IOtp} from '../../common/interfaces';
 
 export interface IQueryTrades extends IOtp {
     txid: string;
@@ -9,8 +10,7 @@ export interface IQueryTrades extends IOtp {
 
 export class QueryTrades extends Client {
 
-
-    constructor(opts, client?) {
+    constructor(opts?: IClientOpts, client?: HttpClient) {
         super(opts, client);
     }
 

@@ -1,7 +1,7 @@
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
-import {IOtp} from '../../Clients/HttpClient';
 import {Client} from '../../Util/DefaultClient';
 import {TradeTypeType} from '../../Common/types';
+import {IClientOpts, IOtp} from '../../common/interfaces';
 
 export interface ITradesHistory extends IOtp {
     type?: TradeTypeType; // type of trade (optional)
@@ -19,7 +19,7 @@ export interface ITradesHistory extends IOtp {
 export class TradesHistory extends Client {
 
 
-    constructor(opts, client?) {
+    constructor(opts?: IClientOpts, client?) {
         super(opts, client);
     }
 

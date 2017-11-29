@@ -1,6 +1,8 @@
-import {IOtp, KrakenEndoints} from '../../Clients';
+import {KrakenEndoints} from '../../Clients';
 import {Client} from '../../Util/DefaultClient';
 import {OrderCloseTimeType} from '../../Common/types';
+import {HttpClient} from '../../clients/HttpClient';
+import {IClientOpts, IOtp} from '../../common/interfaces';
 
 export interface IClosedOrders extends IOtp {
     trades?: boolean // whether or not to include trades in output (optional.  default = false)
@@ -13,7 +15,7 @@ export interface IClosedOrders extends IOtp {
 
 export class ClosedOrders extends Client {
 
-    constructor(opts, client?) {
+    constructor(opts?: IClientOpts, client?: HttpClient) {
         super(opts, client);
     }
 

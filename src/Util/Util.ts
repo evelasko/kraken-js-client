@@ -1,5 +1,6 @@
 import {map} from 'lodash';
 import {Config} from '../Config';
+import {IAuthOpts} from '../common/interfaces';
 
 const Conf = Config.config;
 
@@ -82,10 +83,11 @@ export class Util {
     /**
      * Validate auth object
      *
-     * @param {{apiKey: string; apiSecret: string}} auth
+     * @param {IAuthOpts} auth
      * @returns {boolean}
      */
-    static validateAuth(auth: {apiKey: string; apiSecret: string}) {
+    static validateAuth(auth: IAuthOpts) {
+
         let apiKey = auth.apiKey;
         let apiSecret = auth.apiSecret;
 

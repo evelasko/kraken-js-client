@@ -1,7 +1,6 @@
 import {DefaultConfig} from '../Config';
 import {Util} from './Util';
 
-const DEFAULT_RETRY_COUNT = 3;
 const MODULE_NAME = '[Retry:Module]';
 
 
@@ -31,8 +30,6 @@ export class Retry {
         } else {
             throw Error('Retry:Params [Retry excepts resource as first param to be a Function(): Promise<any> {}]')
         }
-
-        this._retryCount = DEFAULT_RETRY_COUNT;
 
     }
 

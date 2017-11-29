@@ -4,6 +4,8 @@ import {BalanceInfo, ITradeBalance, TradeBalance} from './TradeBalance';
 import {ITradeVolume, TradeVolume} from './TradeVolume';
 import {QueryTrades, IQueryTrades} from './QueryTrades';
 import {Client} from '../../Util/DefaultClient';
+import {HttpClient} from '../../clients/HttpClient';
+import {IClientOpts} from '../../common/interfaces';
 
 export class Trades extends Client {
 
@@ -12,8 +14,8 @@ export class Trades extends Client {
     _TradeVolume: TradeVolume;
     _QueryTrades: QueryTrades;
 
-    constructor(opts) {
-        super(opts);
+    constructor(opts?: IClientOpts, client?: HttpClient) {
+        super(opts, client);
 
         /**
          * Mount apis

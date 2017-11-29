@@ -6,31 +6,21 @@ import {Config} from '../Config';
 import {Retry} from '../Util/Retry';
 import {MessageSignature} from './MessageSignature'
 import {Util} from '../Util/Util';
+import {AuthChecker} from '../util/AuthChecker';
+import {IAuthOpts, IKrakenResponse} from '../common/interfaces';
 
 const Conf = Config.config;
 const KRAKEN_API_ENDPOINT_URL = Conf.KRAKEN_API_ENDPOINT;
+const MODULE_NAME = '[Kraken:HttpClient]';
 
-export interface IKrakenResponse {
-    result: any;
-    error: string[];
-}
-export interface IOtp {
-    otp?: string | number;
-}
-
-export interface IClientOpts {
+export interface IHttpClientOpts {
     retryCount?: number;
     retryDelay?: number;
 }
 
-export interface IAuthOpts {
-    apiKey: string;
-    apiSecret: string;
-}
-
 export class HttpClient {
 
-    private auth: IAuthOpts | null;
+    private auth: IAuthOpts;
 
     private retryCount: number;
     private retryDelay: number;
@@ -41,11 +31,11 @@ export class HttpClient {
      * AuthOpts are required but u can default to empty strings so client wont send auth headers
      *
      * @param {IAuthOpts} authOpts
-     * @param {IClientOpts} opts
+     * @param {IHttpClientOpts} opts
      */
-    constructor(authOpts: IAuthOpts | null = null, opts?: IClientOpts) {
+    constructor(authOpts?: IAuthOpts, opts?: IHttpClientOpts) {
+        authOpts = authOpts || {};
         opts = opts || {};
-        this.auth = authOpts;
 
         if (opts.retryCount) {
             this.retryCount = opts.retryCount;
@@ -55,16 +45,25 @@ export class HttpClient {
             this.retryDelay = opts.retryDelay;
         }
 
-        this.configureAuth();
+        this.configureAuth(authOpts);
     }
 
-    private configureAuth(): void {
+    private configureAuth(auth: IAuthOpts): void {
 
-        if (this.auth && !isEmpty(this.auth)) {
+        if (auth && !isEmpty(auth)) {
+            new AuthChecker(auth);
+            this.auth = auth;
+
             this.MessageSignature = new MessageSignature();
             this.MessageSignature.setSecret(this.auth.apiSecret);
+        } else {
+            console.debug(MODULE_NAME + ' Auth configuration not passed, proceed.');
         }
 
+    }
+
+    public updateAuth(auth: IAuthOpts) {
+        this.configureAuth(auth);
     }
 
     post(path, data?): Promise<any> {

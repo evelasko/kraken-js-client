@@ -1,12 +1,13 @@
 import {KrakenEndoints} from '../Clients/KrakenEndpoints';
 import {Client} from '../Util/DefaultClient';
+import {IClientOpts} from '../common/interfaces';
 
 const endpointPath = KrakenEndoints.OHLC;
 
 export class OHLC extends Client {
 
 
-    constructor(opts, client?) {
+    constructor(opts?: IClientOpts, client?) {
         super(opts, client);
     }
 

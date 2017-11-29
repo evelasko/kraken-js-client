@@ -22,7 +22,7 @@ My goals:
 Please install this package using `npm`
 kraken-exchange-node-api
 ```bash
-npm install kraken-node-client
+npm install kraken-js-client
 ```
 
 ## Requirements

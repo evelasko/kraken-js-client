@@ -1,9 +1,10 @@
 import {KrakenEndoints} from '../Clients/KrakenEndpoints';
 import {Client} from '../Util/DefaultClient';
+import {IClientOpts} from '../common/interfaces';
 
 export class Balance extends Client {
 
-    constructor(opts, client?) {
+    constructor(opts?: IClientOpts, client?) {
         super(opts, client);
     }
 

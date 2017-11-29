@@ -1,9 +1,10 @@
 import {Client} from '../../Util/DefaultClient';
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
 import {OrderTypeType, OrderFlagsType, OrderType} from '../../Common/types';
+import {IClientOpts, IOtp} from '../../common/interfaces';
 
 
-export interface IOrderAdd {
+export interface IOrderAdd extends IOtp {
     pair: string; // asset pair
     type: OrderType; // type of order (buy/sell)
     ordertype: OrderTypeType;  // order type:
@@ -20,7 +21,7 @@ export interface IOrderAdd {
 
 export class AddOrder extends Client {
 
-    constructor(opts, client?) {
+    constructor(opts: IClientOpts, client?) {
         super(opts, client);
     }
 

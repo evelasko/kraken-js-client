@@ -1,12 +1,13 @@
 import {HttpClient} from '../../Clients/HttpClient';
-import {AuthChecker} from '../../Util/AuthChecker';
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
 import {forEach} from 'lodash';
 import {LedgersType} from '../../Common/types';
+import {Client} from '../../util/DefaultClient';
+import {IClientOpts, IOtp} from '../../common/interfaces';
 
 const MODULE_NAME = '[Kraken:Ledgers]';
 
-export interface ILedgersInfo {
+export interface ILedgersInfo extends IOtp {
     aclass?: string; // asset class (optional): currency (default)
     asset?: Array<string> | string; // comma delimited list of assets to restrict output to (optional.  default = all)
     type?: LedgersType;
@@ -15,18 +16,14 @@ export interface ILedgersInfo {
     ofs: number | string;
 }
 
-export interface IQueryLedgers {
+export interface IQueryLedgers extends IOtp {
     id: string[] | string // comma delimited list of ledger ids to query info about (20 maximum)
 }
 
-export class Ledgers extends AuthChecker {
+export class Ledgers extends Client {
 
-    protected client: HttpClient;
-
-    constructor(opts) {
-        super(opts);
-
-        this.client = new HttpClient(opts);
+    constructor(opts?: IClientOpts, client?: HttpClient) {
+        super(opts, client);
     }
 
     get(opts: ILedgersInfo) {

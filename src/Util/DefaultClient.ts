@@ -11,7 +11,7 @@ export class Client {
         if (client instanceof HttpClient) {
             this.client = client;
         } else {
-            this.client = new HttpClient(opts);
+            this.client = new HttpClient(opts.auth, opts.http);
         }
 
     }

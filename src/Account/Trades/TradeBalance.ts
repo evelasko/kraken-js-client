@@ -1,6 +1,6 @@
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
-import {IOtp} from '../../Clients/HttpClient';
 import {Client} from '../../Util/DefaultClient';
+import {IClientOpts, IOtp} from '../../common/interfaces';
 
 export interface IBalance {
     eb: string,
@@ -72,7 +72,7 @@ export interface ITradeBalance extends IOtp {
 export class TradeBalance extends Client {
 
 
-    constructor(opts, client?) {
+    constructor(opts?: IClientOpts, client?) {
         super(opts, client);
     }
 
