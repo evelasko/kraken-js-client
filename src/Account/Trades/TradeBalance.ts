@@ -1,6 +1,6 @@
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
 import {Client} from '../../Util/DefaultClient';
-import {IClientOpts, IOtp} from '../../common/interfaces';
+import {IClientOpts, IKrakenResponse, IOtp} from '../../common/interfaces';
 
 export interface IBalance {
     eb: string,
@@ -80,8 +80,8 @@ export class TradeBalance extends Client {
         return new Promise((resolve, reject) => {
 
             this.client.post(KrakenEndoints.TradeBalance, opts)
-                .then((d: IBalance) => {
-                    resolve(raw ? d : new BalanceInfo(d));
+                .then((d: IKrakenResponse<IBalance>) => {
+                    resolve(raw ? d : new BalanceInfo(d.result));
                 })
                 .catch(reject);
 

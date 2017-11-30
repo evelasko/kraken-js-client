@@ -1,6 +1,6 @@
-import  {KrakenEndoints} from '../Clients/KrakenEndpoints';
+import {KrakenEndoints} from '../Clients/KrakenEndpoints';
 import {Client} from '../Util/DefaultClient';
-import {IClientOpts} from '../common/interfaces';
+import {IClientOpts, IKrakenResponse} from '../common/interfaces';
 
 const endpointPath = KrakenEndoints.Time;
 
@@ -12,18 +12,15 @@ export class Time extends Client {
 
     getTime(callback?) {
         return new Promise((resolve, reject) => {
-            const request = this.client.get(endpointPath);
+            this.client.get(endpointPath)
+                .then((body: IKrakenResponse<any>) => {
 
-            request
-                .then((response) => {
-
-                if (response.statusCode !== 200) {
-                        return reject(response);
-                    }
-
-                    resolve(response.body.result);
+                    resolve(body.result);
                 })
+                .catch(reject);
+
         }).then((response) => {
+
             if (typeof callback === 'function') {
                 callback(response)
             }

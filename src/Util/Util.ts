@@ -48,13 +48,8 @@ export class Util {
 
         let msg = '';
 
-        let errors: Array<string> = err
-            .filter((e: string) => e.startsWith('E'))
-            .map((e: string) => e.substr(1));
-
-        let warnings: Array<string> = err
-            .filter((e) => e.startsWith('W'))
-            .map((e) => e.substr(1));
+        let errors: Array<string> = Util.extractKrakenErrors(err);
+        let warnings: Array<string> = Util.extractKrakenWarnings(err);
 
         if (errors.length > 0) {
             msg = msg + '[Errors] ' + err.join('; ') + ';';
@@ -65,6 +60,24 @@ export class Util {
         }
 
         return msg;
+    }
+
+    static extractKrakenErrors(err: string[]): string[] {
+
+        let errors: Array<string> = err
+            .filter((e: string) => e.startsWith('E'))
+            .map((e: string) => e.substr(1));
+
+        return errors;
+    }
+
+    static extractKrakenWarnings(err: string[]): string[] {
+
+        let warnings: Array<string> = err
+            .filter((e: string) => e.startsWith('W'))
+            .map((e: string) => e.substr(1));
+
+        return warnings;
     }
 
     static chunkArray(array: Array<any>, chunkSize): Array<Array<any>> {
@@ -88,10 +101,12 @@ export class Util {
      */
     static validateAuth(auth: IAuthOpts) {
 
+        if (typeof auth === 'undefined') { return false; }
+
         let apiKey = auth.apiKey;
         let apiSecret = auth.apiSecret;
 
-        if (!apiKey || !apiSecret) {
+        if (typeof apiKey !== 'string' || typeof apiSecret !== 'string') {
             return false;
         }
 

@@ -46,7 +46,7 @@ export class Ticker extends Client {
             const request = this.client.get(endpointPath, message);
 
             request
-                .then((body: IKrakenResponse) => {
+                .then((body: IKrakenResponse<any>) => {
                     const tickerCollection = createTickerCollection(body.result);
                     resolve(tickerCollection);
                 }).catch(reject);

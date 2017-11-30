@@ -22,11 +22,10 @@ export class Retry {
      * @param resource
      * @param ctx
      */
-    constructor(resource, ctx) {
+    constructor(resource, ctx?) {
 
         if (typeof resource === 'function') {
             this.resource = ctx ? resource.bind(ctx) : resource;
-
         } else {
             throw Error('Retry:Params [Retry excepts resource as first param to be a Function(): Promise<any> {}]')
         }
@@ -74,7 +73,7 @@ export class Retry {
                 }
 
                 if (this._attemptsCount <= this._retryCount) {
-                    console.log(MODULE_NAME, 'Retrying request: "{}" with args: {}', this.resource.name || '', reqArgs);
+                    console.log(MODULE_NAME, `Retrying request: ${this.resource.name || ''} with args: `, reqArgs.toString());
 
                     // Retry delay
                     setTimeout(() =>{

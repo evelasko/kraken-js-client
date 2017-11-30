@@ -4,7 +4,7 @@ import {Orders} from '../Account/Orders/Orders';
 import {IQueryTrades} from '../Account/Trades/QueryTrades';
 import {ITradesHistory} from '../Account/Trades/TradesHistory';
 import {Util} from '../Util/Util';
-import {IClientOpts} from '../common/interfaces';
+import {IClientOpts, IKrakenResponse} from '../common/interfaces';
 
 export class Resolver {
 
@@ -16,7 +16,7 @@ export class Resolver {
         this.Orders = new Orders(opts);
     }
 
-    private fetchOrder(oids: Array<string>, opts?): Promise<any> {
+    private fetchOrder(oids: Array<string>, opts?): Promise<IKrakenResponse<any>> {
         opts = opts || {};
         return this.Orders.query(Object.assign({}, opts, {
             txid: oids.join(',')
@@ -34,15 +34,15 @@ export class Resolver {
             let result = {};
 
             while (n < numberOfChunks) {
-                let res;
+                let res: IKrakenResponse<any>;
 
                 try {
                     res = await this.fetchOrder(oIds[n], opts);
                 } catch (e) {
-                    reject(e);
+                    return reject(e);
                 }
 
-                result = extend(result, res);
+                result = extend(result, res.result);
                 n++;
             }
 
@@ -84,11 +84,10 @@ export class Resolver {
         return new Promise((resolve, reject) => {
             this.Trades
                 .query(opts)
-                .then((trades: any) => {
-                    this.joinOrders(trades)
+                .then((response: IKrakenResponse<any>) => {
+                    this.joinOrders(response.result)
                         .then(resolve)
                         .catch(reject);
-
                 })
                 .catch(reject);
         });
@@ -98,8 +97,8 @@ export class Resolver {
         return new Promise((resolve, reject) => {
             this.Trades
                 .getHistory(opts)
-                .then((res: any) => {
-                    let trades = res.trades;
+                .then((res: IKrakenResponse<any>) => {
+                    let trades = res.result.trades;
 
                     this.joinOrders(trades)
                         .then(resolve)

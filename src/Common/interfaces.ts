@@ -11,8 +11,8 @@ export interface IAuthOpts {
     apiSecret: string;
 }
 
-export interface IKrakenResponse {
-    result: any;
+export interface IKrakenResponse<T> {
+    result: T;
     error: string[];
 }
 

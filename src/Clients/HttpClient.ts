@@ -1,6 +1,6 @@
 import * as request from 'request-promise'
 import * as qs from 'querystring';
-import {extend, isEmpty, cloneDeep} from 'lodash';
+import {extend, cloneDeep} from 'lodash';
 
 import {Config} from '../Config';
 import {Retry} from '../Util/Retry';
@@ -55,14 +55,14 @@ export class HttpClient {
 
     private configureAuth(auth: IAuthOpts): void {
 
-        if (auth && !isEmpty(auth)) {
+        if (Util.validateAuth(auth)) {
             new AuthChecker(auth);
-            this.auth = auth;
 
             this.MessageSignature = new MessageSignature();
+            this.auth = auth;
             this.MessageSignature.setSecret(this.auth.apiSecret);
         } else {
-            console.debug(MODULE_NAME + ' Auth configuration not passed, proceed.');
+            console.log(MODULE_NAME + ' Auth configuration not passed, proceed.');
         }
 
     }
@@ -88,7 +88,7 @@ export class HttpClient {
     }
 
     requestRetry(...args): Promise<any> {
-        let resource = new Retry(this._request, this);
+        let resource = new Retry(this._request.bind(this));
 
 
         if (this.retryDelay) {
@@ -155,11 +155,13 @@ export class HttpClient {
         }
 
         return new Promise((resolve, reject) => {
+            // TODO: Add proper logger with debug mode
+            // console.log('[Kraken:HttpClient] Sending request with opts: ', options);
 
             request(options)
                 .then((response) => {
 
-                    let body: IKrakenResponse;
+                    let body: IKrakenResponse<any>;
 
                     try {
                         body = JSON.parse(response.body);
@@ -167,11 +169,12 @@ export class HttpClient {
                         throw new Error('Cannot parse Kraken data response.');
                     }
 
-                    if (body.error && body.error.length > 0) {
+                    if (body.error && Util.extractKrakenErrors(body.error).length > 0) {
                         return reject(body.error);
                     }
 
-                    return resolve(body.result);
+                    return resolve(body);
+
                 })
                 .catch(e => reject(e))
         });
