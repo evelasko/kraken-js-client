@@ -7,8 +7,8 @@ export interface IClientOpts {
 }
 
 export interface IAuthOpts {
-    apiKey?: string;
-    apiSecret?: string;
+    apiKey: string;
+    apiSecret: string;
 }
 
 export interface IKrakenResponse {

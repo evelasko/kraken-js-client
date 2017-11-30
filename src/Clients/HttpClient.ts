@@ -1,6 +1,6 @@
 import * as request from 'request-promise'
 import * as qs from 'querystring';
-import {extend, isEmpty} from 'lodash';
+import {extend, isEmpty, cloneDeep} from 'lodash';
 
 import {Config} from '../Config';
 import {Retry} from '../Util/Retry';
@@ -18,6 +18,11 @@ export interface IHttpClientOpts {
     retryDelay?: number;
 }
 
+const NoAuthDefault: IAuthOpts = {
+    apiKey: '',
+    apiSecret: ''
+};
+
 export class HttpClient {
 
     private auth: IAuthOpts;
@@ -34,7 +39,7 @@ export class HttpClient {
      * @param {IHttpClientOpts} opts
      */
     constructor(authOpts?: IAuthOpts, opts?: IHttpClientOpts) {
-        authOpts = authOpts || {};
+        authOpts = authOpts ? authOpts : cloneDeep(NoAuthDefault);
         opts = opts || {};
 
         if (opts.retryCount) {
