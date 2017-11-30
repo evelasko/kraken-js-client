@@ -8,10 +8,11 @@ import {MessageSignature} from './MessageSignature'
 import {Util} from '../Util/Util';
 import {AuthChecker} from '../util/AuthChecker';
 import {IAuthOpts, IKrakenResponse} from '../common/interfaces';
+import {Logger} from '../util/logger';
 
 const Conf = Config.config;
 const KRAKEN_API_ENDPOINT_URL = Conf.KRAKEN_API_ENDPOINT;
-const MODULE_NAME = '[Kraken:HttpClient]';
+const MODULE_NAME = 'Kraken:HttpClient';
 
 export interface IHttpClientOpts {
     retryCount?: number;
@@ -26,6 +27,7 @@ const NoAuthDefault: IAuthOpts = {
 export class HttpClient {
 
     private auth: IAuthOpts;
+    private logger: Logger;
 
     private retryCount: number;
     private retryDelay: number;
@@ -50,6 +52,8 @@ export class HttpClient {
             this.retryDelay = opts.retryDelay;
         }
 
+        this.logger = new Logger(MODULE_NAME);
+
         this.configureAuth(authOpts);
     }
 
@@ -62,7 +66,7 @@ export class HttpClient {
             this.auth = auth;
             this.MessageSignature.setSecret(this.auth.apiSecret);
         } else {
-            console.log(MODULE_NAME + ' Auth configuration not passed, proceed.');
+            this.logger.debug('Auth configuration not passed, proceed.');
         }
 
     }
@@ -71,25 +75,24 @@ export class HttpClient {
         this.configureAuth(auth);
     }
 
-    post(path, data?): Promise<any> {
+    post(path: string, data?): Promise<any> {
         return this.requestRetry('POST', path, data);
     }
 
-    get(path, data?): Promise<any> {
+    get(path: string, data?): Promise<any> {
         return this.requestRetry('GET', path, data);
     }
 
-    put(path, data?): Promise<any> {
+    put(path: string, data?): Promise<any> {
         return this.requestRetry('PUT', path, data);
     }
 
-    delete(path, data?): Promise<any> {
+    delete(path: string, data?): Promise<any> {
         return this.requestRetry('DELETE', path, data);
     }
 
     requestRetry(...args): Promise<any> {
         let resource = new Retry(this._request.bind(this));
-
 
         if (this.retryDelay) {
             resource.setRetryDelay(this.retryDelay);
@@ -102,7 +105,7 @@ export class HttpClient {
         return resource.request(...args);
     }
 
-    _request(method, path, message): Promise<any> {
+    _request(method: string, path: string, message: any): Promise<any> {
 
         /**
          * Need message to be empty object as default so extending will work
@@ -130,9 +133,12 @@ export class HttpClient {
 
         /**
          * If auth present do the magic
+         * Only POST requests require auth so filter with that in mind
+         * !== 'get' if they implement put/patch/delete actions
          */
-        if (this.auth && Util.validateAuth(this.auth)) {
+        if (method.toLowerCase() !== 'get' && this.auth && Util.validateAuth(this.auth)) {
 
+            this.logger.debug('Auth present, attaching auth headers for post requests.');
             const _messageSignature = this.MessageSignature.getSignature(path, data, nonce);
 
             headers = extend(headers, {
@@ -155,22 +161,30 @@ export class HttpClient {
         }
 
         return new Promise((resolve, reject) => {
-            // TODO: Add proper logger with debug mode
-            // console.log('[Kraken:HttpClient] Sending request with opts: ', options);
+            this.logger.debug('Sending request to kraken: ', options);
 
             request(options)
                 .then((response) => {
+
+                    this.logger.debug('Server responsed with status: ' + response.statusCode);
 
                     let body: IKrakenResponse<any>;
 
                     try {
                         body = JSON.parse(response.body);
                     } catch (e) {
+                        this.logger.info('Failed to parse kraken response body - Invalid json.');
                         throw new Error('Cannot parse Kraken data response.');
                     }
 
-                    if (body.error && Util.extractKrakenErrors(body.error).length > 0) {
-                        return reject(body.error);
+                    if (body.error ) {
+                        let krakenErrors = Util.extractKrakenErrors(body.error);
+
+                        if (krakenErrors.length > 0) {
+                            this.logger.debug('Kraken errors detected, rejecting: ', krakenErrors);
+                            return reject(body.error);
+                        }
+
                     }
 
                     return resolve(body);

@@ -24,6 +24,7 @@ export interface IKrakenConfiguration {
     retryDelay?: number;
     apiUrl?: string;
     apiVersion?: string;
+    logLevel?: string;
 }
 
 interface IKrakenOpts extends IClientOpts, IKrakenConfiguration {}
@@ -73,6 +74,10 @@ export class Kraken {
 
         if (this.opts.apiVersion) {
             config.API_VERISON = this.opts.apiVersion
+        }
+
+        if (this.opts.logLevel) {
+            config.LOG_LEVEL = this.opts.logLevel
         }
 
         Config.config = config;

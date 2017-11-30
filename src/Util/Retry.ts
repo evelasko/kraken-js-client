@@ -1,18 +1,21 @@
 import {DefaultConfig} from '../Config';
 import {Util} from './Util';
+import {Logger} from './logger/logger';
 
-const MODULE_NAME = '[Retry:Module]';
+const MODULE_NAME = 'RetryModule';
 
 
 export class Retry {
 
-    resource: Function;
-    _resolveFn: Function;
-    _rejectFn: Function;
+    private logger: Logger;
 
-    _retryCount: number = DefaultConfig.RETRY_COUNT;
-    _retryDelay: number = DefaultConfig.DEFAULT_TIMEOUT;
-    _attemptsCount: number = 0;
+    private resource: Function;
+    private _resolveFn: Function;
+    private _rejectFn: Function;
+
+    private _retryCount: number = DefaultConfig.RETRY_COUNT;
+    private _retryDelay: number = DefaultConfig.DEFAULT_TIMEOUT;
+    private _attemptsCount: number = 0;
 
     /**
      * Resource passed must be bound to a ctx of execution or pass in ctx ( class instance ) unfortunately
@@ -24,9 +27,12 @@ export class Retry {
      */
     constructor(resource, ctx?) {
 
+        this.logger = new Logger(MODULE_NAME);
+
         if (typeof resource === 'function') {
             this.resource = ctx ? resource.bind(ctx) : resource;
         } else {
+            this.logger.debug('Invalid params passed, resource not passed to module.');
             throw Error('Retry:Params [Retry excepts resource as first param to be a Function(): Promise<any> {}]')
         }
 
@@ -69,11 +75,12 @@ export class Retry {
                  * Do not retry if its a known kraken error
                  */
                 if (Array.isArray(err)) {
+                    this.logger.debug('Known error received from kraken. Abort retry.');
                     return this._rejectFn(Util.parseKrakenErrors(err));
                 }
 
                 if (this._attemptsCount <= this._retryCount) {
-                    console.log(MODULE_NAME, `Retrying request: ${this.resource.name || ''} with args: `, reqArgs.toString());
+                    this.logger.debug(`Retrying request with args: `, JSON.stringify(reqArgs));
 
                     // Retry delay
                     setTimeout(() =>{
