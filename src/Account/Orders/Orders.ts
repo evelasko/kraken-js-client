@@ -5,6 +5,8 @@ import {Client} from '../../Util/DefaultClient';
 import {CancelOrder, IOrderCancel} from './CancelOrder';
 import {AddOrder, IOrderAdd} from './AddOrder';
 import {HttpClient} from '../../clients/HttpClient';
+import {IClientOpts} from '../../common/interfaces';
+
 
 export class Orders extends Client {
 
@@ -14,7 +16,7 @@ export class Orders extends Client {
     private CancelOrder: CancelOrder;
     private AddOrder: AddOrder;
 
-    constructor(opts?, client?: HttpClient) {
+    constructor(opts?: IClientOpts, client?: HttpClient) {
         super(opts, client);
 
         /**
