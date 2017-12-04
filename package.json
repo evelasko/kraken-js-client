@@ -52,7 +52,7 @@
   "homepage": "https://github.com/flipio/kraken-exchange-api/",
   "license": "MIT",
   "main": "lib/index.js",
-  "types": "dist/bundle.d.ts",
+  "types": "lib/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git://github.com:flipio/kraken-exchange-api.git"
