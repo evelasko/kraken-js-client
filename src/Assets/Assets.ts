@@ -11,7 +11,7 @@ export class Assets extends Client {
         super(opts, client);
     }
 
-    getAssets(assets: Array<string>, callback?): Promise<IKrakenResponse<any>> {
+    getAssets(assets: string[], callback?): Promise<IKrakenResponse<any>> {
         let message: any = {};
 
         Util.validateAssets(assets);
