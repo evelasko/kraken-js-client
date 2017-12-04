@@ -9,9 +9,9 @@ export class Retry {
 
     private logger: Logger;
 
-    private resource: Function;
-    private _resolveFn: Function;
-    private _rejectFn: Function;
+    private resource: (...args) => Promise<any>;
+    private _resolveFn: (...args) => void;
+    private _rejectFn: (...args) => void;
 
     private _retryCount: number = DefaultConfig.RETRY_COUNT;
     private _retryDelay: number = DefaultConfig.DEFAULT_TIMEOUT;
@@ -33,7 +33,7 @@ export class Retry {
             this.resource = ctx ? resource.bind(ctx) : resource;
         } else {
             this.logger.debug('Invalid params passed, resource not passed to module.');
-            throw Error('Retry:Params [Retry excepts resource as first param to be a Function(): Promise<any> {}]')
+            throw Error('Retry:Params [Retry excepts resource as first param to be a Function(): Promise<any> {}]');
         }
 
     }

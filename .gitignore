@@ -48,6 +48,7 @@ fabric.properties
 node_modules
 
 # Generated stuff
+coverage/
 .code
 dist
 lib

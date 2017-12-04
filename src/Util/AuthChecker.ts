@@ -1,4 +1,6 @@
-const MODULE_NAME = '[Params:Auth]';
+import {Logger} from './logger/logger';
+
+const MODULE_NAME = 'Params:Auth';
 
 const AuthKeyConfig = {
     apiKey: 'apiKey',
@@ -9,14 +11,18 @@ const OptsFormat = '{apiKey: string, apiSecret: string}';
 
 export class AuthChecker {
 
+    private log: Logger;
+
     constructor(opts) {
 
+        this.log = new Logger(MODULE_NAME);
+
         if (typeof opts !== 'object') {
-            console.error(MODULE_NAME, 'Auth options in format:', OptsFormat);
-            throw Error(MODULE_NAME + 'Auth needs to be passed as object in format: ' + OptsFormat);
+            this.log.error('Auth options in format: ', OptsFormat);
+            throw Error('[' + MODULE_NAME + ']Auth needs to be passed as object in format: ' + OptsFormat);
         }
 
-        this.validateAuth(opts)
+        this.validateAuth(opts);
     }
 
     validateAuth(opts) {
@@ -24,12 +30,12 @@ export class AuthChecker {
         let secret = opts[AuthKeyConfig.apiSecret];
 
         if (this.checkInvalidKey(key)) {
-            console.error(MODULE_NAME, 'Api Key not provided. Options format: ' + OptsFormat);
+            this.log.error('Api Key not provided. Options format: ' + OptsFormat);
             throw new Error('Invalid auth options. Api Key not provided.');
         }
 
         if (this.checkInvalidKey(secret)) {
-            console.error(MODULE_NAME, 'Api Secret not provided.  Options format: ' + OptsFormat);
+            this.log.error(MODULE_NAME, 'Api Secret not provided.  Options format: ' + OptsFormat);
             throw new Error('Invalid auth options. Api Secret not provided.');
         }
     }

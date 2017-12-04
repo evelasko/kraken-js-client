@@ -14,20 +14,15 @@ My goals:
 - Convert it to typescript for smoother development
 - Make it usable in all nodejs versions and browsers.
 - Implement retry system since kraken is unstabble atm
-- Create typeings for easier use  
-
+- Create typings for easier use  
 
 
 ## Installation
-Please install this package using `npm`
-kraken-exchange-node-api
+Install this package using `npm`
+
 ```bash
 npm install kraken-js-client
 ```
-
-## Requirements
-This library was written in ES2015 code. We highly recommenda any version of Node.js greater than 7.
-
 
 ## API Clients
 API Clients provide simple way to use Kraken API directly without need to use Classes that we provided.
@@ -39,9 +34,82 @@ to get basic information about Market. See [`Public market data section at Krake
 ### Authenticated API Client
 To access Private API from Kraken you need to request ApiKey and ApiSecret from your Account Settings in Kraken Dashboard.
 
-
 ## Built-In Kraken API Support
 Every Class we created provide both `Promise` and `callback` interface.
+
+
+### Kraken
+
+Basic usage:
+
+```javascript
+
+const KrakenClient = require('Kraken').Kraken; // High level class stores all clients
+
+/**
+ * Kraken constructor: 
+ * constructor(opts?: IKrakenConfiguration, auth?: IAuthOpts)
+ * 
+ * KrakenConfiguration: 
+ * 
+ * interface IKrakenConfiguration {
+ *     retryCount?: number;
+ *     retryDelay?: number;
+ *     apiUrl?: string;
+ *     apiVersion?: string;
+ *     logLevel?: string;
+ * }
+ * 
+ * 
+ * AuthOpts: 
+ * 
+ * interface IAuthOpts {
+ *     apiKey: string;
+ *     apiSecret: string;
+ * }
+ *
+ */
+
+const AuthOpts = {
+    apiKey: 'testApiKey',
+    apiSecret: 'testApiSecret'
+};
+
+const Kraken = new KrakenClient({}, AuthOpts);
+
+// Alternate way
+const Kraken = new KrakenClient({
+    retryDelay: 1000
+}); 
+
+/**
+ * Alternate way to add auth credentials if not passed wo constructor
+ */
+Kraken.withAuth(AuthOpts);
+
+Kraken.Balance.get().then(console.log);
+```
+
+### Require individual clients
+
+```javascript
+
+const Time = require('node-js-client').Time;
+
+let time = new Time();
+
+const Balance = require('node-js-client').Balance;
+
+let balance = new Balance({
+    auth: AuthOpts,
+    http: {
+        retryDelay: 1000
+    }
+});
+
+balance.get().then(console.log);
+
+```
 
 ### Kraken.Time
 #### getUnixTime()
@@ -65,8 +133,8 @@ Returns RFC1123 compilant timestamp string.
 
 ##### Example Usage:
 ```javascript
-const Kraken = require('kraken-exchange-node-api')
-const time = new Kraken.Time()
+const Kraken = require('kraken-js-client').Kraken;
+const time = new Kraken().Time;
 
 // Promise Based
 time
@@ -161,13 +229,13 @@ Provides interface to retrieve Ticker information about given Asset Pairs.
 
 ##### Example Usage:
 ```javascript
-const ticker = new Kraken.Ticker()
-const parts = Kraken.TickerParts
+const ticker = new Kraken.Ticker();
+const parts = Kraken.TickerParts;
 
 ticker.getSinglePairTicker('XBTEUR')
    .then((ticker) => {	 
      const [volumeWeightedAveragePriceLast24h, volumeLast24h] = ticker.getParts([parts.VolumeWeightedAveragePriceLast24h, parts.VolumeLast24h])
-     const spread = ticker.getAskPrice() - ticker.getBidPrice()
+     const spread = ticker.getAskPrice() - ticker.getBidPrice();
      console.log(ticker.getPairName(), spread, volumeWeightedAveragePriceLast24h, volumeLast24h)
    })
 ```
