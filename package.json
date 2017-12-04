@@ -58,7 +58,7 @@
     "url": "git://github.com:flipio/kraken-exchange-api.git"
   },
   "scripts": {
-    "build": "npm run build:lib & npm run build:es",
+    "build": "npm run build:lib",
     "build:lib": "tsc --outDir lib --module commonjs",
     "build:es": "tsc --outDir es --module es2015",
     "watch": "tsc --outDir lib --module commonjs -w",
