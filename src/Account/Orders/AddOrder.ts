@@ -1,7 +1,7 @@
 import {Client} from '../../Util/DefaultClient';
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
 import {OrderTypeType, OrderFlagsType, OrderType} from '../../Common/types';
-import {IClientOpts, IOtp} from '../../common/interfaces';
+import {IClientOpts, IKrakenResponse, IOtp} from '../../common/interfaces';
 
 
 export interface IOrderAdd extends IOtp {
@@ -25,7 +25,7 @@ export class AddOrder extends Client {
         super(opts, client);
     }
 
-    add(order: IOrderAdd) {
+    add(order: IOrderAdd): Promise<IKrakenResponse<any>> {
         return new Promise((resolve, reject) => {
             this.client
                 .post(KrakenEndoints.AddOrder, order)

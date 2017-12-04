@@ -1,7 +1,7 @@
 import {KrakenEndoints} from '../../Clients';
 import {Client} from '../../Util/DefaultClient';
 import {HttpClient} from '../../clients/HttpClient';
-import {IClientOpts, IOtp} from '../../common/interfaces';
+import {IClientOpts, IKrakenResponse, IOtp} from '../../common/interfaces';
 
 export interface IOpenOrders extends IOtp {
     trades?: boolean; // whether or not to include trades in output (optional.  default = false)
@@ -14,7 +14,7 @@ export class OpenOrders extends Client {
         super(opts, client);
     }
 
-    get(opts: IOpenOrders) {
+    get(opts: IOpenOrders): Promise<IKrakenResponse<any>> {
         return new Promise((resolve, reject) => {
             this.client
                 .post(KrakenEndoints.OpenOrders, opts)

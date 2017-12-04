@@ -1,6 +1,6 @@
 import {KrakenEndoints} from '../Clients/KrakenEndpoints';
 import {Client} from '../Util/DefaultClient';
-import {IClientOpts} from '../common/interfaces';
+import {IClientOpts, IKrakenResponse} from '../common/interfaces';
 
 export class Balance extends Client {
 
@@ -8,7 +8,7 @@ export class Balance extends Client {
         super(opts, client);
     }
 
-    get() {
+    get(): Promise<IKrakenResponse<any>> {
         return new Promise((resolve, reject) => {
 
             this.client.post(KrakenEndoints.Balance, {})

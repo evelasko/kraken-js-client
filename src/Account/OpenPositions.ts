@@ -1,6 +1,6 @@
 import {KrakenEndoints} from '../Clients/KrakenEndpoints';
 import {Client} from '../Util';
-import {IClientOpts, IOtp} from '../common/interfaces';
+import {IClientOpts, IKrakenResponse, IOtp} from '../common/interfaces';
 
 export interface IOpenPositions extends IOtp {
     txid: string;
@@ -13,7 +13,7 @@ export class OpenPositions extends Client {
         super(opts, client);
     }
 
-    get(opts: IOpenPositions) {
+    get(opts: IOpenPositions): Promise<IKrakenResponse<any>> {
         return new Promise((resolve, reject) => {
 
             this.client.post(KrakenEndoints.OpenPositions, opts)

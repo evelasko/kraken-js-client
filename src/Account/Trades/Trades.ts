@@ -1,11 +1,11 @@
 
 import {ITradesHistory, TradesHistory} from './TradesHistory';
-import {BalanceInfo, ITradeBalance, TradeBalance} from './TradeBalance';
+import {BalanceInfo, IBalance, ITradeBalance, TradeBalance} from './TradeBalance';
 import {ITradeVolume, TradeVolume} from './TradeVolume';
 import {QueryTrades, IQueryTrades} from './QueryTrades';
 import {Client} from '../../Util/DefaultClient';
 import {HttpClient} from '../../clients/HttpClient';
-import {IClientOpts} from '../../common/interfaces';
+import {IClientOpts, IKrakenResponse} from '../../common/interfaces';
 
 export class Trades extends Client {
 
@@ -26,19 +26,19 @@ export class Trades extends Client {
         this._QueryTrades = new QueryTrades({}, this.client);
     }
 
-    query(queryOpts: IQueryTrades) {
+    query(queryOpts: IQueryTrades): Promise<IKrakenResponse<any>> {
         return this._QueryTrades.get(queryOpts);
     }
 
-    getHistory(opts: ITradesHistory) {
+    getHistory(opts: ITradesHistory): Promise<IKrakenResponse<any>> {
         return this._TradesHistory.get(opts);
     }
 
-    getBalance(opts: ITradeBalance, raw: boolean): Promise<BalanceInfo | any> {
+    getBalance(opts: ITradeBalance, raw: boolean): Promise<BalanceInfo | IKrakenResponse<IBalance>> {
         return this._TradeBalance.get(opts, raw);
     }
 
-    getVolume(opts: ITradeVolume) {
+    getVolume(opts: ITradeVolume): Promise<IKrakenResponse<any>> {
         return this._TradeVolume.get(opts);
     }
 

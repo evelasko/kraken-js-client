@@ -1,7 +1,7 @@
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
 import {Client} from '../../Util/DefaultClient';
 import {TradeTypeType} from '../../Common/types';
-import {IClientOpts, IOtp} from '../../common/interfaces';
+import {IClientOpts, IKrakenResponse, IOtp} from '../../common/interfaces';
 
 export interface ITradesHistory extends IOtp {
     type?: TradeTypeType; // type of trade (optional)
@@ -23,7 +23,7 @@ export class TradesHistory extends Client {
         super(opts, client);
     }
 
-    get(opts: ITradesHistory) {
+    get(opts: ITradesHistory): Promise<IKrakenResponse<any>> {
         return new Promise((resolve, reject) => {
 
             this.client.post(KrakenEndoints.TradesHistory, opts)

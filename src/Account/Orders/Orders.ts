@@ -5,7 +5,7 @@ import {Client} from '../../Util/DefaultClient';
 import {CancelOrder, IOrderCancel} from './CancelOrder';
 import {AddOrder, IOrderAdd} from './AddOrder';
 import {HttpClient} from '../../clients/HttpClient';
-import {IClientOpts} from '../../common/interfaces';
+import {IClientOpts, IKrakenResponse} from '../../common/interfaces';
 
 
 export class Orders extends Client {
@@ -29,23 +29,23 @@ export class Orders extends Client {
         this.AddOrder = new AddOrder({}, this.client);
     }
 
-    query(opts: IQueryOrders): Promise<any> {
+    query(opts: IQueryOrders): Promise<IKrakenResponse<any>> {
         return this.QueryOrders.get(opts);
     }
 
-    getClosed(opts: IClosedOrders): Promise<any> {
+    getClosed(opts: IClosedOrders): Promise<IKrakenResponse<any>> {
         return this.ClosedOrders.get(opts);
     }
 
-    getOpen(opts: IOpenOrders): Promise<any> {
+    getOpen(opts: IOpenOrders): Promise<IKrakenResponse<any>> {
         return this.OpenOrders.get(opts);
     }
 
-    add(order: IOrderAdd) {
+    add(order: IOrderAdd): Promise<IKrakenResponse<any>> {
         return this.AddOrder.add(order);
     }
 
-    cancel(opts: IOrderCancel) {
+    cancel(opts: IOrderCancel): Promise<IKrakenResponse<any>> {
         return this.CancelOrder.cancel(opts);
     }
 

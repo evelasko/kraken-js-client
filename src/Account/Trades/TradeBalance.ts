@@ -76,7 +76,7 @@ export class TradeBalance extends Client {
         super(opts, client);
     }
 
-    get(opts: ITradeBalance, raw: boolean): Promise<BalanceInfo | any> {
+    get(opts: ITradeBalance, raw: boolean): Promise<BalanceInfo | IKrakenResponse<IBalance>> {
         return new Promise((resolve, reject) => {
 
             this.client.post(KrakenEndoints.TradeBalance, opts)

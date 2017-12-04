@@ -3,7 +3,7 @@ import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
 import {forEach} from 'lodash';
 import {LedgersType} from '../../Common/types';
 import {Client} from '../../util/DefaultClient';
-import {IClientOpts, IOtp} from '../../common/interfaces';
+import {IClientOpts, IKrakenResponse, IOtp} from '../../common/interfaces';
 
 const MODULE_NAME = '[Kraken:Ledgers]';
 
@@ -26,12 +26,12 @@ export class Ledgers extends Client {
         super(opts, client);
     }
 
-    get(opts: ILedgersInfo) {
+    get(opts: ILedgersInfo): Promise<IKrakenResponse<any>> {
         return this.client
             .post(KrakenEndoints.Ledgers, opts);
     }
 
-    query(opts: IQueryLedgers) {
+    query(opts: IQueryLedgers): Promise<IKrakenResponse<any>> {
         if (opts && opts.id && Array.isArray(opts.id)) {
             let assetPairs: any = opts.id;
 

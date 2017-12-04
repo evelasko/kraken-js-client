@@ -1,6 +1,6 @@
 import {KrakenEndoints} from '../Clients/KrakenEndpoints';
 import {Client} from '../Util/DefaultClient';
-import {IClientOpts} from '../common/interfaces';
+import {IClientOpts, IKrakenResponse} from '../common/interfaces';
 
 const endpointPath = KrakenEndoints.OHLC;
 
@@ -11,7 +11,7 @@ export class OHLC extends Client {
         super(opts, client);
     }
 
-    getAssets(assets, callback) {
+    getAssets(assets, callback): Promise<IKrakenResponse<any>> {
         let message: any = {};
 
         if (assets !== null) {
@@ -32,29 +32,29 @@ export class OHLC extends Client {
             const request = this.client.get(endpointPath, message);
 
             request
-                .then((body) => {
-                    resolve(body.result)
+                .then((body: IKrakenResponse<any>) => {
+                    resolve(body)
                 }).catch(reject);
 
-        }).then((response) => {
+        }).then((response: IKrakenResponse<any>) => {
 
             if (typeof callback === 'function') {
-                callback(response)
+                callback(response);
             }
 
-            return response
+            return response;
         });
     }
 
-    getAllAssets(callback) {
+    getAllAssets(callback): Promise<IKrakenResponse<any>> {
         return this.getAssets(null, callback)
     }
 
-    getSingleAsset(asset, callback) {
+    getSingleAsset(asset, callback): Promise<IKrakenResponse<any>> {
         if (typeof asset !== 'string' || !asset) {
             throw new Error('Kraken:Assets: `asset` variable need to be a non-empty string')
         }
 
-        return this.getAssets([asset], callback)
+        return this.getAssets([asset], callback);
     }
 }

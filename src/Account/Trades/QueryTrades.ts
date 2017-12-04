@@ -1,7 +1,7 @@
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
 import {HttpClient} from '../../Clients/HttpClient';
 import {Client} from '../../Util/DefaultClient';
-import {IClientOpts, IOtp} from '../../common/interfaces';
+import {IClientOpts, IKrakenResponse, IOtp} from '../../common/interfaces';
 
 export interface IQueryTrades extends IOtp {
     txid: string;
@@ -14,7 +14,7 @@ export class QueryTrades extends Client {
         super(opts, client);
     }
 
-    get(opts: IQueryTrades) {
+    get(opts: IQueryTrades): Promise<IKrakenResponse<any>> {
         return new Promise((resolve, reject) => {
 
             this.client

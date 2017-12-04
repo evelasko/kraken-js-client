@@ -1,6 +1,6 @@
 import {KrakenEndoints} from '../../Clients';
 import {Client} from '../../Util/DefaultClient';
-import {IClientOpts, IOtp} from '../../common/interfaces';
+import {IClientOpts, IKrakenResponse, IOtp} from '../../common/interfaces';
 
 export interface IQueryOrders extends IOtp {
     trades?: boolean; //  whether or not to include trades in output (optional.  default = false)
@@ -14,7 +14,7 @@ export class QueryOrders extends Client {
         super(opts, client);
     }
 
-    get(opts: IQueryOrders) {
+    get(opts: IQueryOrders): Promise<IKrakenResponse<any>> {
         return this.client.post(KrakenEndoints.QueryOrders, opts);
     }
 }

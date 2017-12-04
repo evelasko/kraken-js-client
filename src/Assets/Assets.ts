@@ -1,7 +1,7 @@
 import {KrakenEndoints} from '../Clients/KrakenEndpoints';
 import {Util} from '../Util/Util';
 import {Client} from '../util/DefaultClient';
-import {IClientOpts} from '../common/interfaces';
+import {IClientOpts, IKrakenResponse} from '../common/interfaces';
 
 const endpointPath = KrakenEndoints.Assets;
 
@@ -11,7 +11,7 @@ export class Assets extends Client {
         super(opts, client);
     }
 
-    getAssets(assets: Array<string>, callback?) {
+    getAssets(assets: Array<string>, callback?): Promise<IKrakenResponse<any>> {
         let message: any = {};
 
         Util.validateAssets(assets);
@@ -21,11 +21,11 @@ export class Assets extends Client {
         return new Promise((resolve, reject) => {
             const request = this.client.get(endpointPath, message);
             request
-                .then((body) => {
-                    resolve(body.result)
+                .then((body: IKrakenResponse<any>) => {
+                    resolve(body);
                 })
                 .catch(reject);
-        }).then((response) => {
+        }).then((response: IKrakenResponse<any>) => {
             if (typeof callback === 'function') {
                 callback(response)
             }
@@ -34,11 +34,11 @@ export class Assets extends Client {
         })
     }
 
-    getAllAssets(callback) {
+    getAllAssets(callback): Promise<IKrakenResponse<any>> {
         return this.getAssets([], callback);
     }
 
-    getSingleAsset(asset, callback) {
+    getSingleAsset(asset, callback): Promise<IKrakenResponse<any>> {
         Util.validateAsset(asset);
 
         return this.getAssets([asset], callback);

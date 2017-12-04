@@ -1,6 +1,6 @@
 import { KrakenEndoints } from '../Clients/KrakenEndpoints';
 import { Client } from '../Util/DefaultClient';
-import {IClientOpts} from '../common/interfaces';
+import {IClientOpts, IKrakenResponse} from '../common/interfaces';
 
 const endpointPath = KrakenEndoints.AssetPairs;
 
@@ -10,7 +10,7 @@ export class AssetPairs extends Client {
         super(opts, client);
     }
 
-    getAssetPairs(assetPairs, callback) {
+    getAssetPairs(assetPairs, callback): Promise<IKrakenResponse<any>> {
         let message: any = {};
 
         if (assetPairs !== null) {
@@ -30,24 +30,25 @@ export class AssetPairs extends Client {
         return new Promise((resolve, reject) => {
             const request = this.client.get(endpointPath, message);
             request
-                .then((body) => {
-                    resolve(body.result);
+                .then((body: IKrakenResponse<any>) => {
+                    resolve(body);
                 })
                 .catch(reject)
-        }).then((response) => {
+        }).then((response: IKrakenResponse<any>) => {
+
             if (typeof callback === 'function') {
                 callback(response)
             }
 
-            return response
+            return response;
         })
     }
 
-    getAllAssetPairs(callback) {
+    getAllAssetPairs(callback): Promise<IKrakenResponse<any>> {
         return this.getAssetPairs(null, callback);
     }
 
-    getSingleAssetPair(assetPair, callback) {
+    getSingleAssetPair(assetPair, callback): Promise<IKrakenResponse<any>> {
         if (typeof assetPair !== 'string' || !assetPair) {
             throw new Error('Kraken:AssetPairs: `assetPair` variable need to be a non-empty string')
         }

@@ -2,7 +2,7 @@ import {KrakenEndoints} from '../../Clients';
 import {Client} from '../../Util/DefaultClient';
 import {OrderCloseTimeType} from '../../Common/types';
 import {HttpClient} from '../../clients/HttpClient';
-import {IClientOpts, IOtp} from '../../common/interfaces';
+import {IClientOpts, IKrakenResponse, IOtp} from '../../common/interfaces';
 
 export interface IClosedOrders extends IOtp {
     trades?: boolean // whether or not to include trades in output (optional.  default = false)
@@ -19,7 +19,7 @@ export class ClosedOrders extends Client {
         super(opts, client);
     }
 
-    get(opts: IClosedOrders) {
+    get(opts: IClosedOrders): Promise<IKrakenResponse<any>> {
         return new Promise((resolve, reject) => {
             this.client
                 .post(KrakenEndoints.ClosedOrders, opts)

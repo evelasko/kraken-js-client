@@ -1,7 +1,7 @@
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
 import {forEach} from 'lodash';
 import {Client} from '../../Util/DefaultClient';
-import {IClientOpts, IOtp} from '../../common/interfaces';
+import {IClientOpts, IKrakenResponse, IOtp} from '../../common/interfaces';
 
 const MODULE_NAME = '[Trades:Volume]';
 
@@ -23,7 +23,7 @@ export class TradeVolume extends Client {
      * @param opts
      * @returns {Promise}
      */
-    get(opts: ITradeVolume) {
+    get(opts: ITradeVolume): Promise<IKrakenResponse<any>> {
 
         if (opts && opts.pair && Array.isArray(opts.pair)) {
             let assetPairs: any = opts.pair;

@@ -93,7 +93,7 @@ export class Resolver {
         });
     }
 
-    public tradeHistoryJoinOrders(opts: ITradesHistory) {
+    public tradeHistoryJoinOrders(opts: ITradesHistory): Promise<{[key: string]: any}> {
         return new Promise((resolve, reject) => {
             this.Trades
                 .getHistory(opts)
