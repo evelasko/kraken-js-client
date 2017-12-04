@@ -1,4 +1,4 @@
-import {extend, forEach, map} from 'lodash';
+import {forEach, map} from 'lodash';
 import {Trades} from '../Account/Trades';
 import {Orders} from '../Account/Orders/Orders';
 import {IQueryTrades} from '../Account/Trades/QueryTrades';
@@ -42,7 +42,7 @@ export class Resolver {
                     return reject(e);
                 }
 
-                result = extend(result, res.result);
+                result = Object.assign({}, result, res.result);
                 n++;
             }
 

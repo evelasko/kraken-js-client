@@ -1,4 +1,3 @@
-import {extend} from 'lodash';
 
 /**
  * Internal Client Configuration
@@ -32,7 +31,7 @@ export class Config {
     }
 
     static set config(config: IConfig) {
-        Config._config = extend(Config._config, config);
+        Config._config = Object.assign({}, Config._config, config);
     }
 
 }

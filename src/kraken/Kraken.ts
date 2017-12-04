@@ -1,4 +1,3 @@
-import {extend} from 'lodash';
 import {HttpClient} from '../Clients/HttpClient';
 
 import {Assets} from '../assets/Assets';
@@ -86,7 +85,7 @@ export class Kraken {
             this.auth = auth;
         }
 
-        this.clientOpts = extend({}, this.opts, {
+        this.clientOpts = Object.assign({}, this.opts, {
             auth: this.auth,
             http: {
                 retryDelay: Config.config.DEFAULT_TIMEOUT,

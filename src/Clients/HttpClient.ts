@@ -1,10 +1,9 @@
-import * as request from 'request-promise'
+import * as request from 'request-promise';
 import * as qs from 'querystring';
-import {extend, cloneDeep} from 'lodash';
 
 import {Config} from '../Config';
 import {Retry} from '../Util/Retry';
-import {MessageSignature} from './MessageSignature'
+import {MessageSignature} from './MessageSignature';
 import {Util} from '../Util/Util';
 import {AuthChecker} from '../util/AuthChecker';
 import {IAuthOpts, IKrakenResponse} from '../common/interfaces';
@@ -41,7 +40,7 @@ export class HttpClient {
      * @param {IHttpClientOpts} opts
      */
     constructor(authOpts?: IAuthOpts, opts?: IHttpClientOpts) {
-        authOpts = authOpts ? authOpts : cloneDeep(NoAuthDefault);
+        authOpts = authOpts ? authOpts : Object.assign({}, NoAuthDefault);
         opts = opts || {};
 
         if (opts.retryCount) {
@@ -141,10 +140,11 @@ export class HttpClient {
             this.logger.debug('Auth present, attaching auth headers for post requests.');
             const _messageSignature = this.MessageSignature.getSignature(path, data, nonce);
 
-            headers = extend(headers, {
+            headers = Object.assign({}, headers, {
                 'API-Key': this.auth.apiKey,
                 'API-Sign': _messageSignature
             });
+
         }
 
         const options: any = {
