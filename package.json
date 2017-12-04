@@ -64,8 +64,6 @@
   "homepage": "https://github.com/flipio/kraken-exchange-api/",
   "license": "MIT",
   "main": "lib/index.js",
-  "module": "es/index.js",
-  "browser": "dist/bundle.js",
   "types": "dist/bundle.d.ts",
   "repository": {
     "type": "git",

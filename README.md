@@ -12,7 +12,7 @@ Because it was missing hole private section and i found this as the best kraken 
 
 My goals:
 - Convert it to typescript for smoother development
-- Make it usable in all nodejs versions and browsers.
+- Make it usable in all nodejs versions and browsers (not atm).
 - Implement retry system since kraken is unstabble atm
 - Create typings for easier use  
 
