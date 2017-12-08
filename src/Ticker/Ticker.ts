@@ -7,7 +7,7 @@ import {IClientOpts, IKrakenResponse} from '../common/interfaces';
 const MODULE_NAME = '[Kraken:Ticker]';
 const endpointPath = KrakenEndoints.Ticker;
 
-function createTickerCollection(rawResponse) {
+function createTickerCollection(rawResponse): TickerInfo[] {
 
     let collection: Array<TickerInfo> = [];
 
@@ -25,7 +25,7 @@ export class Ticker extends Client {
         super(opts, client);
     }
 
-    getPairsTickers(assetPairs, callback) {
+    getPairsTickers(assetPairs, callback): Promise<TickerInfo[]> {
         let message: any = {};
 
         if (assetPairs !== null) {
@@ -47,21 +47,21 @@ export class Ticker extends Client {
 
             request
                 .then((body: IKrakenResponse<any>) => {
-                    const tickerCollection = createTickerCollection(body.result);
+                    const tickerCollection: TickerInfo[] = createTickerCollection(body.result);
                     resolve(tickerCollection);
                 }).catch(reject);
 
-        }).then((response) => {
+        }).then((response: TickerInfo[]) => {
 
             if (typeof callback === 'function') {
                 callback(response);
             }
 
             return response;
-        })
+        });
     }
 
-    getSinglePairTicker(assetPair, callback) {
+    getSinglePairTicker(assetPair, callback): Promise<TickerInfo> {
 
         if (typeof assetPair !== 'string' || !assetPair) {
             throw new Error(MODULE_NAME +' `assetPair` variable need to be a non-empty string');
