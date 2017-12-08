@@ -13,15 +13,15 @@ export class TickerInfo {
         this.tickerPair = tickerPair;
     }
 
-    getAskPrice() {
+    getAskPrice(): number {
         return parseFloat(this.getPart(TickerParts.AskPrice));
     }
 
-    getBidPrice() {
+    getBidPrice(): number {
         return parseFloat(this.getPart(TickerParts.BidPrice));
     }
 
-    getPairName() {
+    getPairName(): string {
         return this.tickerPair;
     }
 
@@ -31,7 +31,7 @@ export class TickerInfo {
         };
     }
 
-    getParts(parts) {
+    getParts(parts: string[]): any[] {
         let partsData: Array<any> = [];
         if (!parts || !Array.isArray(parts)) {
             throw new Error(MODULE_NAME + '`parts` argument need to be an non-empty array');
@@ -49,7 +49,7 @@ export class TickerInfo {
         return partsData;
     }
 
-    getPart(part) {
+    getPart(part: string) {
         return this.getParts([part])[0];
     }
 
