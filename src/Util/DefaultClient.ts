@@ -6,7 +6,7 @@ export class Client {
 
     constructor(protected opts: any, client?: HttpClient) {
 
-        this.opts = opts;
+        this.opts = opts || {};
 
         if (client instanceof HttpClient) {
             this.client = client;
