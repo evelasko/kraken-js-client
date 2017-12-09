@@ -1,6 +1,6 @@
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
 import {Client} from '../../Util/DefaultClient';
-import {TradeTypeType} from '../../Common/types';
+import {TradeTypeType} from '../../common/types';
 import {IClientOpts, IKrakenResponse, IOtp} from '../../common/interfaces';
 
 export interface ITradesHistory extends IOtp {

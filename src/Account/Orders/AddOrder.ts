@@ -1,6 +1,6 @@
 import {Client} from '../../Util/DefaultClient';
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
-import {OrderTypeType, OrderFlagsType, OrderType} from '../../Common/types';
+import {OrderTypeType, OrderFlagsType, OrderType} from '../../common/types';
 import {IClientOpts, IKrakenResponse, IOtp} from '../../common/interfaces';
 
 

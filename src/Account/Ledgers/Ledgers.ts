@@ -1,7 +1,7 @@
 import {HttpClient} from '../../Clients/HttpClient';
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
 import {forEach} from 'lodash';
-import {LedgersType} from '../../Common/types';
+import {LedgersType} from '../../common/types';
 import {Client} from '../../util/DefaultClient';
 import {IClientOpts, IKrakenResponse, IOtp} from '../../common/interfaces';
 
