@@ -1,4 +1,4 @@
-import {KrakenEndoints} from '../Clients/KrakenEndpoints';
+import {KrakenEndoints} from '../clients/KrakenEndpoints';
 import {Util} from '../util/Util';
 import {Client} from '../util/DefaultClient';
 import {IClientOpts, IKrakenResponse} from '../common/interfaces';

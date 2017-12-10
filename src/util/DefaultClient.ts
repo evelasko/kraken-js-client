@@ -1,4 +1,4 @@
-import {HttpClient} from '../Clients';
+import {HttpClient} from '../clients';
 
 export class Client {
 

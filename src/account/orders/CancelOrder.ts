@@ -1,5 +1,5 @@
 import {Client} from '../../util/DefaultClient';
-import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
+import {KrakenEndoints} from '../../clients/KrakenEndpoints';
 import {IClientOpts, IKrakenResponse, IOtp} from '../../common/interfaces';
 
 export interface IOrderCancel extends IOtp {

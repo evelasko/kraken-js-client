@@ -1,8 +1,8 @@
 import {forEach, map} from 'lodash';
-import {Trades} from '../Account/Trades';
-import {Orders} from '../Account/Orders/Orders';
-import {IQueryTrades} from '../Account/Trades/QueryTrades';
-import {ITradesHistory} from '../Account/Trades/TradesHistory';
+import {Trades} from '../account/trades';
+import {Orders} from '../account/orders/Orders';
+import {IQueryTrades} from '../account/trades/QueryTrades';
+import {ITradesHistory} from '../account/trades/TradesHistory';
 import {Util} from '../util/Util';
 import {IClientOpts, IKrakenResponse} from '../common/interfaces';
 

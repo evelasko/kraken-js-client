@@ -1,5 +1,5 @@
 import {forEach} from 'lodash';
-import {KrakenEndoints} from '../Clients/KrakenEndpoints';
+import {KrakenEndoints} from '../clients';
 import {TickerInfo} from './TickerInfo';
 import {Client} from '../util/DefaultClient';
 import {IClientOpts, IKrakenResponse} from '../common/interfaces';

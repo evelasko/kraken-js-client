@@ -1,4 +1,4 @@
-import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
+import {KrakenEndoints} from '../../clients';
 import {forEach} from 'lodash';
 import {Client} from '../../util/DefaultClient';
 import {IClientOpts, IKrakenResponse, IOtp} from '../../common/interfaces';

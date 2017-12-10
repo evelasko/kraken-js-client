@@ -1,4 +1,4 @@
-import {HttpClient} from '../Clients/HttpClient';
+import {HttpClient} from '../clients/HttpClient';
 
 import {Assets} from '../assets/Assets';
 import {AssetPairs} from '../assets/AssetPairs';
@@ -9,9 +9,9 @@ import {Ticker} from '../ticker/Ticker';
 import {OHLC} from '../ohlc/OHLC';
 
 import {Balance} from '../account/Balance';
-import {Trades} from '../account/Trades/Trades';
+import {Trades} from '../account/trades/Trades';
 
-import {Orders} from '../account/Orders/Orders';
+import {Orders} from '../account/orders/Orders';
 import {OpenPositions} from '../account/OpenPositions';
 import {Resolver} from '../resolver/Resolver';
 import {Ledgers} from '../account/Ledgers/Ledgers';

@@ -1,5 +1,5 @@
-import {HttpClient} from '../../Clients/HttpClient';
-import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
+import {HttpClient} from '../../clients/HttpClient';
+import {KrakenEndoints} from '../../clients/KrakenEndpoints';
 import {forEach} from 'lodash';
 import {LedgersType} from '../../common/types';
 import {Client} from '../../util/DefaultClient';
