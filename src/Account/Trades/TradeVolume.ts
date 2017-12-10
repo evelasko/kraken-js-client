@@ -1,6 +1,6 @@
 import {KrakenEndoints} from '../../Clients/KrakenEndpoints';
 import {forEach} from 'lodash';
-import {Client} from '../../Util/DefaultClient';
+import {Client} from '../../util/DefaultClient';
 import {IClientOpts, IKrakenResponse, IOtp} from '../../common/interfaces';
 
 const MODULE_NAME = '[Trades:Volume]';

@@ -1,5 +1,5 @@
 import {KrakenEndoints} from '../Clients/KrakenEndpoints';
-import {Client} from '../Util/DefaultClient';
+import {Client} from '../util/DefaultClient';
 import {IClientOpts, IKrakenResponse} from '../common/interfaces';
 
 const endpointPath = KrakenEndoints.Time;

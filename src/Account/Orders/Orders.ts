@@ -1,7 +1,7 @@
 import {ClosedOrders, IClosedOrders} from './ClosedOrders';
 import {IOpenOrders, OpenOrders} from './OpenOrders';
 import {IQueryOrders, QueryOrders} from './QueryOrders';
-import {Client} from '../../Util/DefaultClient';
+import {Client} from '../../util/DefaultClient';
 import {CancelOrder, IOrderCancel} from './CancelOrder';
 import {AddOrder, IOrderAdd} from './AddOrder';
 import {HttpClient} from '../../clients/HttpClient';

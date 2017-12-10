@@ -3,7 +3,7 @@ import {Trades} from '../Account/Trades';
 import {Orders} from '../Account/Orders/Orders';
 import {IQueryTrades} from '../Account/Trades/QueryTrades';
 import {ITradesHistory} from '../Account/Trades/TradesHistory';
-import {Util} from '../Util/Util';
+import {Util} from '../util/Util';
 import {IClientOpts, IKrakenResponse} from '../common/interfaces';
 
 export class Resolver {

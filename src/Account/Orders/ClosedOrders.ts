@@ -1,5 +1,5 @@
 import {KrakenEndoints} from '../../Clients';
-import {Client} from '../../Util/DefaultClient';
+import {Client} from '../../util/DefaultClient';
 import {OrderCloseTimeType} from '../../common/types';
 import {HttpClient} from '../../clients/HttpClient';
 import {IClientOpts, IKrakenResponse, IOtp} from '../../common/interfaces';

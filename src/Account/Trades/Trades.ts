@@ -3,7 +3,7 @@ import {ITradesHistory, TradesHistory} from './TradesHistory';
 import {BalanceInfo, IBalance, ITradeBalance, TradeBalance} from './TradeBalance';
 import {ITradeVolume, TradeVolume} from './TradeVolume';
 import {QueryTrades, IQueryTrades} from './QueryTrades';
-import {Client} from '../../Util/DefaultClient';
+import {Client} from '../../util/DefaultClient';
 import {HttpClient} from '../../clients/HttpClient';
 import {IClientOpts, IKrakenResponse} from '../../common/interfaces';
 

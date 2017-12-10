@@ -2,9 +2,9 @@ import * as request from 'request-promise';
 import * as qs from 'querystring';
 
 import {Config} from '../Config';
-import {Retry} from '../Util/Retry';
+import {Retry} from '../util/Retry';
 import {MessageSignature} from './MessageSignature';
-import {Util} from '../Util/Util';
+import {Util} from '../util/Util';
 import {AuthChecker} from '../util/AuthChecker';
 import {IAuthOpts, IKrakenResponse} from '../common/interfaces';
 import {Logger} from '../util/logger';

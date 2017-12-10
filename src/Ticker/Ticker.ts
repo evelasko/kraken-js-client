@@ -1,7 +1,7 @@
 import {forEach} from 'lodash';
 import {KrakenEndoints} from '../Clients/KrakenEndpoints';
 import {TickerInfo} from './TickerInfo';
-import {Client} from '../Util/DefaultClient';
+import {Client} from '../util/DefaultClient';
 import {IClientOpts, IKrakenResponse} from '../common/interfaces';
 
 const MODULE_NAME = '[Kraken:Ticker]';

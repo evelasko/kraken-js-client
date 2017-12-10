@@ -1,5 +1,5 @@
 import {KrakenEndoints} from '../Clients/KrakenEndpoints';
-import {Client} from '../Util';
+import {Client} from '../util';
 import {IClientOpts, IKrakenResponse, IOtp} from '../common/interfaces';
 
 export interface IOpenPositions extends IOtp {
