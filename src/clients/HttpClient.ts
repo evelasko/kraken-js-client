@@ -1,7 +1,7 @@
 import * as request from 'request-promise';
 import * as qs from 'querystring';
 
-import {Config} from '../Config';
+import {Config} from '../config';
 import {Retry} from '../util/Retry';
 import {MessageSignature} from './MessageSignature';
 import {Util} from '../util/Util';

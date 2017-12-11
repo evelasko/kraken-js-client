@@ -14,7 +14,7 @@ import {Trades} from '../account/trades/Trades';
 import {Orders} from '../account/orders/Orders';
 import {OpenPositions} from '../account/OpenPositions';
 import {Resolver} from '../resolver/Resolver';
-import {Ledgers} from '../account/Ledgers/Ledgers';
+import {Ledgers} from '../account/ledgers/Ledgers';
 import {Config, IConfig} from '../config/index';
 import {IAuthOpts, IClientOpts} from '../common/interfaces';
 

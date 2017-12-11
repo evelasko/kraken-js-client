@@ -20,6 +20,8 @@ export {OHLC} from './ohlc/OHLC';
 export {Balance} from './account/Balance';
 export {Trades} from './account/trades/Trades';
 
+export {Ledgers} from './account/ledgers';
+
 export {Orders} from './account/orders/Orders';
 export {OpenPositions} from './account/OpenPositions';
 export {Resolver} from './resolver/Resolver';
