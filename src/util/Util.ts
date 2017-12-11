@@ -1,5 +1,5 @@
 import {map} from 'lodash';
-import {Config} from '../Config';
+import {Config} from '../config';
 import {IAuthOpts} from '../common/interfaces';
 
 const Conf = Config.config;

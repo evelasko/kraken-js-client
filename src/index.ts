@@ -1,10 +1,11 @@
 // Clients
-export {PublicClient} from './clients/PublicClient'
-export {HttpClient} from './clients/HttpClient';
+export {HttpClient, PublicClient} from './clients';
+export {IAuthOpts, IClientOpts} from './common/interfaces';
 
 // Assets
 export {Assets} from './assets/Assets';
 export {AssetPairs} from './assets/AssetPairs';
+
 // Orders
 export {OrderSides} from './order/OrderSides';
 export {OrderTypes} from './order/OrderTypes';

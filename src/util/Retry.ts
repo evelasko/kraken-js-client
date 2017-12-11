@@ -1,4 +1,4 @@
-import {DefaultConfig} from '../Config';
+import {DefaultConfig} from '../config';
 import {Util} from './Util';
 import {Logger} from './logger/logger';
 

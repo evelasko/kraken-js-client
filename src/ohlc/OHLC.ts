@@ -1,8 +1,16 @@
 import {KrakenEndoints} from '../clients';
 import {Client} from '../util/DefaultClient';
 import {IClientOpts, IKrakenResponse} from '../common/interfaces';
+import {isArray, forEach} from 'lodash';
+import {Util} from '../util/Util';
 
 const endpointPath = KrakenEndoints.OHLC;
+
+export interface IOhlc {
+    pair?: string; // optional if assets not passed as first param
+    interval?: number | string; // time frame interval in minutes (optional): 1 (default), 5, 15, 30, 60, 240, 1440
+    since?: string; // return committed OHLC data since given id (optional.  exclusive)
+}
 
 export class OHLC extends Client {
 
@@ -11,50 +19,57 @@ export class OHLC extends Client {
         super(opts, client);
     }
 
-    getAssets(assets, callback): Promise<IKrakenResponse<any>> {
-        let message: any = {};
+    /**
+     * Proxy
+     *
+     * @param {string} pair
+     * @param {IOhlc} data
+     * @returns {Promise<IKrakenResponse<any>>}
+     */
+    getPair(pair: string, data?: IOhlc): Promise<IKrakenResponse<any>> {
+        return this.get(pair, data);
+    }
 
-        if (assets !== null) {
-            if (!(assets instanceof Array) || assets.length === 0) {
-                throw new Error('Kraken:Assets: `assets` for non-null values need to be an array')
-            }
+    /**
+     * Proxy
+     *
+     * @param {string[]} pair
+     * @param {IOhlc} data
+     * @returns {Promise<IKrakenResponse<any>>}
+     */
+    getPairs(pair: string[], data?: IOhlc): Promise<IKrakenResponse<any>> {
+        return this.get(pair, data);
+    }
 
-            assets.forEach((asset) => {
-                if (typeof asset !== 'string' || !asset) {
-                    throw new Error('Kraken:Assets: every `asset` in array need to be a non-empty string')
-                }
+    /**
+     * OHLC.Get
+     *
+     * @param {string | string[]} pair
+     * @param {IOhlc} data
+     * @returns {Promise<IKrakenResponse<any>>}
+     */
+    get(pair: string | string[], data?: IOhlc): Promise<IKrakenResponse<any>> {
+
+        data = data || {};
+
+        if (isArray(pair)) {
+            forEach(pair, (a) => {
+                Util.validateAsset(pair);
             });
 
-            message.asset = assets.join(',')
+            data.pair = pair.join(',');
+        }
+
+        if (typeof pair === 'string') {
+            Util.validateAsset(pair);
+            data.pair = pair;
         }
 
         return new Promise((resolve, reject) => {
-            const request = this.client.get(endpointPath, message);
-
-            request
-                .then((body: IKrakenResponse<any>) => {
-                    resolve(body)
-                }).catch(reject);
-
-        }).then((response: IKrakenResponse<any>) => {
-
-            if (typeof callback === 'function') {
-                callback(response);
-            }
-
-            return response;
+            this.client
+                .get(endpointPath, data)
+                .then(resolve)
+                .catch(reject);
         });
-    }
-
-    getAllAssets(callback): Promise<IKrakenResponse<any>> {
-        return this.getAssets(null, callback)
-    }
-
-    getSingleAsset(asset, callback): Promise<IKrakenResponse<any>> {
-        if (typeof asset !== 'string' || !asset) {
-            throw new Error('Kraken:Assets: `asset` variable need to be a non-empty string')
-        }
-
-        return this.getAssets([asset], callback);
     }
 }
