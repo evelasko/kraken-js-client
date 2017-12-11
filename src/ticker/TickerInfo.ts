@@ -27,12 +27,12 @@ export class TickerInfo {
 
     getRawData() {
         return {
-            [this.tickerPair]: this.rawTickerInfo
+            [this.tickerPair]: this.rawTickerInfo,
         };
     }
 
     getParts(parts: string[]): any[] {
-        let partsData: Array<any> = [];
+        const partsData: string[] = [];
         if (!parts || !Array.isArray(parts)) {
             throw new Error(MODULE_NAME + '`parts` argument need to be an non-empty array');
         }
@@ -42,7 +42,7 @@ export class TickerInfo {
                 throw new Error(MODULE_NAME + 'Value `' + part + '` is not supported by TickerInfo');
             }
 
-            const partValue: any = get(this.rawTickerInfo, part);
+            const partValue: string = get(this.rawTickerInfo, part);
             partsData.push(partValue);
         });
 

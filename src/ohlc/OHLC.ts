@@ -3,6 +3,7 @@ import {Client} from '../util/DefaultClient';
 import {IClientOpts, IKrakenResponse} from '../common/interfaces';
 import {isArray, forEach} from 'lodash';
 import {Util} from '../util/Util';
+import {IOHLCTick, OHLCInfo} from './OHLCInfo';
 
 const endpointPath = KrakenEndoints.OHLC;
 
@@ -12,8 +13,11 @@ export interface IOhlc {
     since?: string; // return committed OHLC data since given id (optional.  exclusive)
 }
 
-export class OHLC extends Client {
+export interface IOHLCResponse {
+    [key: string]: string[][];
+}
 
+export class OHLC extends Client {
 
     constructor(opts?: IClientOpts, client?) {
         super(opts, client);
@@ -26,7 +30,7 @@ export class OHLC extends Client {
      * @param {IOhlc} data
      * @returns {Promise<IKrakenResponse<any>>}
      */
-    getPair(pair: string, data?: IOhlc): Promise<IKrakenResponse<any>> {
+    getPair(pair: string, data?: IOhlc): Promise<IOHLCTick[]> {
         return this.get(pair, data);
     }
 
@@ -37,7 +41,7 @@ export class OHLC extends Client {
      * @param {IOhlc} data
      * @returns {Promise<IKrakenResponse<any>>}
      */
-    getPairs(pair: string[], data?: IOhlc): Promise<IKrakenResponse<any>> {
+    getPairs(pair: string[], data?: IOhlc): Promise<IOHLCTick[]> {
         return this.get(pair, data);
     }
 
@@ -48,7 +52,7 @@ export class OHLC extends Client {
      * @param {IOhlc} data
      * @returns {Promise<IKrakenResponse<any>>}
      */
-    get(pair: string | string[], data?: IOhlc): Promise<IKrakenResponse<any>> {
+    get(pair: string | string[], data?: IOhlc): Promise<IOHLCTick[]> {
 
         data = data || {};
 
@@ -68,7 +72,10 @@ export class OHLC extends Client {
         return new Promise((resolve, reject) => {
             this.client
                 .get(endpointPath, data)
-                .then(resolve)
+                .then((d: IKrakenResponse<IOHLCResponse>) => {
+                    const ohlc: OHLCInfo = new OHLCInfo(d.result);
+                    resolve(ohlc.parse());
+                })
                 .catch(reject);
         });
     }

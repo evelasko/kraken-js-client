@@ -8,5 +8,5 @@ export const OHLCParts = {
     Close,
     VolumeWeightedAveragePrice,
     Volume,
-    Count
+    Count,
 };
