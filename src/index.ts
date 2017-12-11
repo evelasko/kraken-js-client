@@ -17,9 +17,9 @@ export {TickerParts} from './ticker/TickerParts';
 export {OHLC} from './ohlc/OHLC';
 
 export {Balance} from './account/Balance';
-export {Trades} from './account/Trades/Trades';
+export {Trades} from './account/trades/Trades';
 
-export {Orders} from './account/Orders/Orders';
+export {Orders} from './account/orders/Orders';
 export {OpenPositions} from './account/OpenPositions';
 export {Resolver} from './resolver/Resolver';
 

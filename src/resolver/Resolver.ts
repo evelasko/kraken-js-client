@@ -1,5 +1,5 @@
 import {forEach, map} from 'lodash';
-import {Trades} from '../account/trades';
+import {Trades} from '../account/trades/Trades';
 import {Orders} from '../account/orders/Orders';
 import {IQueryTrades} from '../account/trades/QueryTrades';
 import {ITradesHistory} from '../account/trades/TradesHistory';
