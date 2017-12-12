@@ -1,8 +1,8 @@
-const should = require('chai').should
-const assert = require('chai').assert
-const Kraken = require('../lib/index')
-const TickerInfo = require('../lib/Ticker/TickerInfo')
-const TickerParts = Kraken.TickerParts
+const should = require('chai').should;
+const assert = require('chai').assert;
+const Kraken = require('../lib/index');
+const TickerInfo = require('../lib/Ticker/TickerInfo');
+const TickerParts = Kraken.TickerParts;
 
 should()
 

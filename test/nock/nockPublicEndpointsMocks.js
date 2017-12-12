@@ -1,12 +1,12 @@
-const fs = require('fs')
+const fs = require('fs');
 const nock = require('nock');
-const krakenEndpoints = require('../../lib/Clients/KrakenEndpoints')
-const KRAKEN_API_ENDPOINT_URL = 'https://api.kraken.com'
+const krakenEndpoints = require('../../lib/Clients/KrakenEndpoints');
+const KRAKEN_API_ENDPOINT_URL = 'https://api.kraken.com';
 
 
 function readJsonResponse (responseFileName) {
-  const path = __dirname + '/responses/' + responseFileName
-  return JSON.parse(fs.readFileSync(path))
+  const path = __dirname + '/responses/' + responseFileName;
+  return JSON.parse(fs.readFileSync(path));
 }
 
 /**
@@ -19,11 +19,11 @@ const timeResponseBody = {
     unixtime: Math.floor(new Date() / 1000),
     rfc1123: "Sat, 10 Jun 17 19:43:58 +0000"
   }
-}
+};
 
 const nockTime = nock(KRAKEN_API_ENDPOINT_URL)
-  .get(krakenEndpoints.Time)
-  .reply(200, timeResponseBody)
+  .get(krakenEndpoints.Time);
+  .reply(200, timeResponseBody);
 
 
 /**
