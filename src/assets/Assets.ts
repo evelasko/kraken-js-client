@@ -11,12 +11,13 @@ export class Assets extends Client {
         super(opts, client);
     }
 
-    getAssets(assets: string[], callback?): Promise<IKrakenResponse<any>> {
-        let message: any = {};
+    getAssets(assets: string[] | null, callback?): Promise<IKrakenResponse<any>> {
+        const message: any = {};
 
-        Util.validateAssets(assets);
-
-        message.asset = assets.join(',');
+        if (assets !== null) {
+            Util.validateAssets(assets);
+            message.asset = assets.join(',');
+        }
 
         return new Promise((resolve, reject) => {
             const request = this.client.get(endpointPath, message);
@@ -27,15 +28,15 @@ export class Assets extends Client {
                 .catch(reject);
         }).then((response: IKrakenResponse<any>) => {
             if (typeof callback === 'function') {
-                callback(response)
+                callback(response);
             }
 
-            return response
-        })
+            return response;
+        });
     }
 
     getAllAssets(callback): Promise<IKrakenResponse<any>> {
-        return this.getAssets([], callback);
+        return this.getAssets(null, callback);
     }
 
     getSingleAsset(asset, callback): Promise<IKrakenResponse<any>> {

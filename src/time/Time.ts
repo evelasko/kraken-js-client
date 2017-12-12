@@ -7,7 +7,7 @@ const endpointPath = KrakenEndoints.Time;
 export class Time extends Client {
 
     constructor(opts?: IClientOpts, client?) {
-        super(opts, client)
+        super(opts, client);
     }
 
     getTime(callback?) {
@@ -22,22 +22,24 @@ export class Time extends Client {
         }).then((response) => {
 
             if (typeof callback === 'function') {
-                callback(response)
+                callback(response);
             }
 
-            return response
-        })
+            return response;
+        });
     }
 
     getUnixTime(callback?) {
         return this.getTime()
             .then((response) => {
                 const unixTime = response['unixtime'];
+
                 if (typeof callback === 'function') {
                     callback(unixTime);
                 }
-                return unixTime
-            })
+
+                return unixTime;
+            });
     }
 
     getTimeInRfc1123(callback?) {
@@ -50,6 +52,6 @@ export class Time extends Client {
                 }
 
                 return unixTime;
-            })
+            });
     }
 }

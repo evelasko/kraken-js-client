@@ -9,10 +9,10 @@ const endpointPath = KrakenEndoints.Ticker;
 
 function createTickerCollection(rawResponse): TickerInfo[] {
 
-    let collection: Array<TickerInfo> = [];
+    const collection: TickerInfo[] = [];
 
     forEach(rawResponse, (rawTickerData, tickerPair) => {
-        collection.push(new TickerInfo(rawTickerData, tickerPair))
+        collection.push(new TickerInfo(rawTickerData, tickerPair));
     });
 
     return collection;
@@ -20,13 +20,12 @@ function createTickerCollection(rawResponse): TickerInfo[] {
 
 export class Ticker extends Client {
 
-
     constructor(opts?: IClientOpts, client?) {
         super(opts, client);
     }
 
     getPairsTickers(assetPairs, callback): Promise<TickerInfo[]> {
-        let message: any = {};
+        const message: any = {};
 
         if (assetPairs !== null) {
             if (!(assetPairs instanceof Array) || assetPairs.length === 0) {
@@ -35,7 +34,7 @@ export class Ticker extends Client {
 
             assetPairs.forEach((assetPair) => {
                 if (typeof assetPair !== 'string' || !assetPair) {
-                    throw new Error(MODULE_NAME +' every `assetPair` in array need to be a non-empty string');
+                    throw new Error(MODULE_NAME + ' every `assetPair` in array need to be a non-empty string');
                 }
             });
 
@@ -64,7 +63,7 @@ export class Ticker extends Client {
     getSinglePairTicker(assetPair, callback): Promise<TickerInfo> {
 
         if (typeof assetPair !== 'string' || !assetPair) {
-            throw new Error(MODULE_NAME +' `assetPair` variable need to be a non-empty string');
+            throw new Error(MODULE_NAME + ' `assetPair` variable need to be a non-empty string');
         }
 
         return this.getPairsTickers([assetPair], callback)
@@ -72,4 +71,3 @@ export class Ticker extends Client {
     }
 
 }
-

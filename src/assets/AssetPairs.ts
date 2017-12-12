@@ -10,8 +10,8 @@ export class AssetPairs extends Client {
         super(opts, client);
     }
 
-    getAssetPairs(assetPairs, callback): Promise<IKrakenResponse<any>> {
-        let message: any = {};
+    getAssetPairs(assetPairs: string[] | null, callback): Promise<IKrakenResponse<any>> {
+        const message: any = {};
 
         if (assetPairs !== null) {
             if (!(assetPairs instanceof Array) || assetPairs.length === 0) {
@@ -33,22 +33,22 @@ export class AssetPairs extends Client {
                 .then((body: IKrakenResponse<any>) => {
                     resolve(body);
                 })
-                .catch(reject)
+                .catch(reject);
         }).then((response: IKrakenResponse<any>) => {
 
             if (typeof callback === 'function') {
-                callback(response)
+                callback(response);
             }
 
             return response;
-        })
+        });
     }
 
-    getAllAssetPairs(callback): Promise<IKrakenResponse<any>> {
+    getAllAssetPairs(callback?): Promise<IKrakenResponse<any>> {
         return this.getAssetPairs(null, callback);
     }
 
-    getSingleAssetPair(assetPair, callback): Promise<IKrakenResponse<any>> {
+    getSingleAssetPair(assetPair: string, callback?): Promise<IKrakenResponse<any>> {
         if (typeof assetPair !== 'string' || !assetPair) {
             throw new Error('Kraken:AssetPairs: `assetPair` variable need to be a non-empty string')
         }

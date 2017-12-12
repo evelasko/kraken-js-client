@@ -18,18 +18,18 @@ export class MessageSignature {
 
     getSignature(path, request, nonce) {
 
-        if (!this.secret) {
-            throw new Error('MessageSignature secret need to be provided for message to be signed')
+        if (!this.secret || this.secret.length === 0) {
+            throw new Error('MessageSignature secret need to be provided and not to be empty for message to be signed');
         }
 
         const message = queryString.stringify(request);
-        let hash = crypto.createHash('sha256');
+        const hash = crypto.createHash('sha256');
 
         /**
          * Had to do this "hack" since ts lint was going crazy
          * @type {any}
          */
-        let hmac = crypto.createHmac('sha512', this.secret) as any;
+        const hmac = crypto.createHmac('sha512', this.secret) as any;
         const hashDigest = hash.update(nonce + message) as any;
         const nHashDigest = hashDigest.digest('binary');
         const hmacDigest = hmac.update(path + nHashDigest, 'binary').digest('base64');

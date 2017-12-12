@@ -1,39 +1,42 @@
-const should = require('chai').should
-const AssetPairs = require('../lib/index').AssetPairs
+const n = require('./nock/nockPublicEndpointsMocks');
+const AssetPairs = require('../lib/index').AssetPairs;
 
-should()
+describe('AssetPairs', function () {
 
-describe('AssetPairs', function() {
+    const assetsPairs = new AssetPairs();
 
-  const assetsPairs = new AssetPairs()
+    it('should return multiple assets pairs', function () {
+        return assetsPairs.getAllAssetPairs()
+            .then((response) => {
+                const rawAssetPairs = response.result;
+                const assetPairs = Object.keys(rawAssetPairs);
 
-  it('should return multiple assets pairs', function() {
-      return assetsPairs.getAllAssetPairs()
-        .then((rawAssetPairs) => {
-          const assetPairs = Object.keys(rawAssetPairs)
-          assetPairs.should.to.be.an('array').that.is.not.empty;
-          assetPairs.length.should.be.greaterThan(1)
-        })
-  })
+                expect(assetPairs).toBeInstanceOf(Array);
+                expect(assetPairs.length).toBeGreaterThan(1);
+            });
+    });
 
-  it('should return selected assets pairs', function() {
-    const selectedAssetPairs = ['XBTEUR', 'XBTUSD', 'ETHEUR']
-    return assetsPairs.getAssetPairs(selectedAssetPairs)
-      .then((rawAssetPairs) => {
-        const assetPairs = Object.keys(rawAssetPairs)
-        assetPairs.should.to.be.an('array').that.is.not.empty
-        assetPairs.length.should.be.equal(selectedAssetPairs.length)
-      })
-  })
+    it('should return selected assets pairs', function () {
+        const selectedAssetPairs = ['XBTEUR', 'XBTUSD', 'ETHEUR'];
+        return assetsPairs.getAssetPairs(selectedAssetPairs)
+            .then((response) => {
+                const rawAssetPairs = response.result;
+                const assetPairs = Object.keys(rawAssetPairs);
+                expect(assetPairs).toBeInstanceOf(Array);
+                expect(assetPairs.length).toEqual(selectedAssetPairs.length);
+            });
+    });
 
-  it('should return single selected asset pair', function() {
-    const selectedAssetPair = 'XBTEUR'
-    return assetsPairs.getSingleAssetPair(selectedAssetPair)
-      .then((rawAssetPairs) => {
-        const assetPairs = Object.keys(rawAssetPairs)
-        assetPairs.should.to.be.an('array').that.is.not.empty
-        assetPairs.length.should.be.equal(1)
-      })
-  })
+    it('should return single selected asset pair', function () {
+        const selectedAssetPair = 'XBTEUR';
+        return assetsPairs.getSingleAssetPair(selectedAssetPair)
+            .then((response) => {
+                const rawAssetPairs = response.result;
+                const assetPairs = Object.keys(rawAssetPairs);
 
-})
+                expect(assetPairs).toBeInstanceOf(Array);
+                expect(assetPairs.length).toEqual(1);
+            });
+    });
+
+});

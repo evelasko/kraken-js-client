@@ -19,7 +19,7 @@ export class Util {
 
         if (assets !== null) {
 
-            if (!(assets instanceof Array) || assets.length === 0) {
+            if (!(assets instanceof Array)) {
                 throw new Error('Kraken:Assets: `assets` for non-null values need to be an array');
             }
 

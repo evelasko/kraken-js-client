@@ -56,6 +56,9 @@ export class HttpClient {
         this.configureAuth(authOpts);
     }
 
+    public updateAuth(auth: IAuthOpts) {
+        this.configureAuth(auth);
+    }
     private configureAuth(auth: IAuthOpts): void {
 
         if (Util.validateAuth(auth)) {
@@ -70,28 +73,24 @@ export class HttpClient {
 
     }
 
-    public updateAuth(auth: IAuthOpts) {
-        this.configureAuth(auth);
-    }
-
-    post(path: string, data?): Promise<any> {
+    public post(path: string, data?): Promise<any> {
         return this.requestRetry('POST', path, data);
     }
 
-    get(path: string, data?): Promise<any> {
+    public get(path: string, data?): Promise<any> {
         return this.requestRetry('GET', path, data);
     }
 
-    put(path: string, data?): Promise<any> {
+    public put(path: string, data?): Promise<any> {
         return this.requestRetry('PUT', path, data);
     }
 
-    delete(path: string, data?): Promise<any> {
+    public delete(path: string, data?): Promise<any> {
         return this.requestRetry('DELETE', path, data);
     }
 
-    requestRetry(...args): Promise<any> {
-        let resource = new Retry(this._request.bind(this));
+    private requestRetry(...args): Promise<any> {
+        const resource = new Retry(this._request.bind(this));
 
         if (this.retryDelay) {
             resource.setRetryDelay(this.retryDelay);
@@ -104,7 +103,7 @@ export class HttpClient {
         return resource.request(...args);
     }
 
-    _request(method: string, path: string, message: any): Promise<any> {
+    private _request(method: string, path: string, message: any): Promise<any> {
 
         /**
          * Need message to be empty object as default so extending will work
@@ -114,21 +113,17 @@ export class HttpClient {
 
         const nonce = this.getNonce();
 
+        const url = KRAKEN_API_ENDPOINT_URL + path;
+
+        let headers = {
+            'User-Agent': 'Kraken Javascript API Client',
+        };
+
         /**
          * OTP will be set during the call in payload which will extend this object
          * @type {{nonce: number}}
          */
-        let authData = {
-            nonce: nonce
-        };
-
-        let data = Object.assign(message, authData);
-
-        const url = KRAKEN_API_ENDPOINT_URL + path;
-
-        let headers = {
-            'User-Agent': 'Kraken Javascript API Client'
-        };
+        let data = Object.assign({}, message);
 
         /**
          * If auth present do the magic
@@ -137,21 +132,26 @@ export class HttpClient {
          */
         if (method.toLowerCase() !== 'get' && this.auth && Util.validateAuth(this.auth)) {
 
+            const authData = {
+                nonce,
+            };
+
             this.logger.debug('Auth present, attaching auth headers for post requests.');
             const _messageSignature = this.MessageSignature.getSignature(path, data, nonce);
 
             headers = Object.assign({}, headers, {
                 'API-Key': this.auth.apiKey,
-                'API-Sign': _messageSignature
+                'API-Sign': _messageSignature,
             });
 
+            data = Object.assign(data, authData);
         }
 
         const options: any = {
-            headers: headers,
+            headers,
             method: method.toUpperCase(),
             resolveWithFullResponse: true,
-            uri: url
+            uri: url,
         };
 
         if (method.toLowerCase() === 'get') {
@@ -178,7 +178,7 @@ export class HttpClient {
                     }
 
                     if (body.error ) {
-                        let krakenErrors = Util.extractKrakenErrors(body.error);
+                        const krakenErrors = Util.extractKrakenErrors(body.error);
 
                         if (krakenErrors.length > 0) {
                             this.logger.debug('Kraken errors detected, rejecting: ', krakenErrors);
@@ -195,8 +195,8 @@ export class HttpClient {
 
     }
 
-    getNonce(): number {
-        let time = new Date() as any;
+    public getNonce(): number {
+        const time = new Date() as any;
         return time * 1000;
     }
 

@@ -36,7 +36,12 @@
     "semver": "^5.4.0",
     "ts-jest": "^20.0.0",
     "tslint": "^5.6.0",
-    "typescript": "^2.4.0"
+    "typescript": "^2.4.0",
+    "chai": "^4.0.1",
+    "debug": "^2.6.8",
+    "docco": "0.7.0",
+    "mocha": "2.1.0",
+    "nock": "0.59.1"
   },
   "directories": {
     "lib": "./lib",

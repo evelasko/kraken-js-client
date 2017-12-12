@@ -21,15 +21,19 @@ module.exports = {
         '.(tsx?)': '<rootDir>/node_modules/ts-jest/preprocessor.js'
     },
     testMatch: [
-        '**/__tests__/**/*.{t,j}s?(x)',
+        '**/test/**/*.{t,j}s?(x)',
         '**/?(*.)(spec|test).{t,j}s?(x)'
     ],
     testPathIgnorePatterns: [
-        '<rootDir>/(node_modules|lib|es|dist)'
+        '<rootDir>/(node_modules|lib|es|dist)',
+        'test/nock'
     ],
     collectCoverageFrom: [
         'src/**/*.{t,j}s?(x)',
         '!src/**/*.d.ts',
+    ],
+    'unmockedModulePathPatterns': [
+        '<rootDir>/node_modules/nock'
     ],
     moduleFileExtensions: ['js', 'jsx', 'json', 'ts', 'tsx'],
     mapCoverage: true,
