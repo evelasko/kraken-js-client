@@ -1,5 +1,5 @@
 // Clients
-export {HttpClient, PublicClient} from './clients';
+export {HttpClient} from './clients';
 export {IAuthOpts, IClientOpts} from './common/interfaces';
 
 // Assets

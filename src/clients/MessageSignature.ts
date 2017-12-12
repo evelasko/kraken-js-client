@@ -1,5 +1,5 @@
 import * as crypto from 'crypto';
-import * as queryString from'querystring';
+import * as queryString from 'querystring';
 
 export class MessageSignature {
 
