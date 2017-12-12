@@ -15,7 +15,10 @@ My goals:
 - Make it usable in all nodejs versions and browsers (not atm).
 - Implement retry system since kraken is unstabble atm
 - Create typings for easier use  
+- Implement missing private section
+- Add helpers for working with KrakenAPI
 
+*I created new npm package since it differed from fork too much.
 
 ## Installation
 Install this package using `npm`
