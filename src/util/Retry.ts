@@ -4,7 +4,6 @@ import {Logger} from './logger/logger';
 
 const MODULE_NAME = 'RetryModule';
 
-
 export class Retry {
 
     private logger: Logger;
@@ -85,7 +84,7 @@ export class Retry {
                     this.logger.debug(`Retrying request with args: `, JSON.stringify(reqArgs));
 
                     // Retry delay
-                    setTimeout(() =>{
+                    setTimeout(() => {
 
                         this._request.apply(this, reqArgs);
                     }, this._retryDelay);
@@ -98,4 +97,3 @@ export class Retry {
     }
 
 }
-
