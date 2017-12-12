@@ -13,44 +13,56 @@ export interface IOHLCTick {
     count: string;
 }
 
+export interface IOHLCData {
+    [key: string]: IOHLCTick[];
+}
+
 export class OHLCInfo {
 
-    private _data: string[][];
-    private pair: string;
+    private _data: IOHLCResponse;
+    private pairs: string[];
 
     constructor(data: IOHLCResponse) {
-        const pair: string = Object.keys(data)[0];
-        this.pair = pair;
-        this._data = data[this.pair];
+        const pairs: string[] = Object.keys(data);
+        this.pairs = pairs;
+        this._data = data;
     }
 
-    parse(): IOHLCTick[] {
-        const data: IOHLCTick[] = [];
+    parse(): IOHLCData {
+        const data: IOHLCData = {};
 
-        forEach(this._data, (d) => {
+        forEach(this.pairs, (pair) => {
 
-            const p: IOHLCTick = {
-                time: d[OHLCParts.Time],
-                open: d[OHLCParts.Open],
-                close: d[OHLCParts.Close],
-                high: d[OHLCParts.High],
-                low: d[OHLCParts.Low],
-                volumeWeightedAveragePrice: d[OHLCParts.VolumeWeightedAveragePrice],
-                volume: d[OHLCParts.Volume],
-                count: d[OHLCParts.Count],
-            };
+            data[pair] = [];
 
-            data.push(p);
+            const pairObj = data[pair];
+
+            forEach(this._data[pair], (d) => {
+
+                const p: IOHLCTick = {
+                    time: d[OHLCParts.Time],
+                    open: d[OHLCParts.Open],
+                    close: d[OHLCParts.Close],
+                    high: d[OHLCParts.High],
+                    low: d[OHLCParts.Low],
+                    volumeWeightedAveragePrice: d[OHLCParts.VolumeWeightedAveragePrice],
+                    volume: d[OHLCParts.Volume],
+                    count: d[OHLCParts.Count],
+                };
+
+                pairObj.push(p);
+            });
+
         });
 
         return data;
     }
 
-    getPair(): string {
-        return this.pair;
+    getPairs(): string[] {
+        return this.pairs;
     }
 
-    getRaw(): string[][] {
+    getRaw(): IOHLCResponse {
         return this._data;
     }
 

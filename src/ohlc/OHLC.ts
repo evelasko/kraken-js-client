@@ -3,7 +3,7 @@ import {Client} from '../util/DefaultClient';
 import {IClientOpts, IKrakenResponse} from '../common/interfaces';
 import {isArray, forEach} from 'lodash';
 import {Util} from '../util/Util';
-import {IOHLCTick, OHLCInfo} from './OHLCInfo';
+import {IOHLCData, OHLCInfo} from './OHLCInfo';
 
 const endpointPath = KrakenEndoints.OHLC;
 
@@ -30,7 +30,7 @@ export class OHLC extends Client {
      * @param {IOhlc} data
      * @returns {Promise<IKrakenResponse<any>>}
      */
-    getPair(pair: string, data?: IOhlc): Promise<IOHLCTick[]> {
+    getPair(pair: string, data?: IOhlc): Promise<IOHLCData> {
         return this.get(pair, data);
     }
 
@@ -41,7 +41,7 @@ export class OHLC extends Client {
      * @param {IOhlc} data
      * @returns {Promise<IKrakenResponse<any>>}
      */
-    getPairs(pair: string[], data?: IOhlc): Promise<IOHLCTick[]> {
+    getPairs(pair: string[], data?: IOhlc): Promise<IOHLCData> {
         return this.get(pair, data);
     }
 
@@ -52,7 +52,7 @@ export class OHLC extends Client {
      * @param {IOhlc} data
      * @returns {Promise<IKrakenResponse<any>>}
      */
-    get(pair: string | string[], data?: IOhlc): Promise<IOHLCTick[]> {
+    get(pair: string | string[], data?: IOhlc): Promise<IOHLCData> {
 
         data = data || {};
 

@@ -30,34 +30,28 @@ interface IKrakenOpts extends IClientOpts, IKrakenConfiguration {}
 
 export class Kraken {
 
-    private auth: IAuthOpts;
-    private opts: IKrakenOpts;
-    private clientOpts: IClientOpts;
-
-    private client: HttpClient;
-
     public Assets: Assets;
     public AssetPairs: AssetPairs;
-
     public Time: Time;
     public Ticker: Ticker;
-
     public OHLC: OHLC;
-
     public Balance: Balance;
     public Trades: Trades;
-
     public Orders: Orders;
     public OpenPositions: OpenPositions;
     public Resolver: Resolver;
-
     public Ledgers: Ledgers;
+
+    private auth: IAuthOpts;
+    private opts: IKrakenOpts;
+    private clientOpts: IClientOpts;
+    private client: HttpClient;
 
     constructor(opts?: IKrakenConfiguration, auth?: IAuthOpts) {
         // store original opts passed
         this.opts = opts || {};
 
-        let config: IConfig = {};
+        const config: IConfig = {};
 
         if (this.opts.retryCount) {
             config.RETRY_COUNT = this.opts.retryCount
@@ -89,8 +83,8 @@ export class Kraken {
             auth: this.auth,
             http: {
                 retryDelay: Config.config.DEFAULT_TIMEOUT,
-                retryCount: Config.config.RETRY_COUNT
-            }
+                retryCount: Config.config.RETRY_COUNT,
+            },
         });
 
         this.client = new HttpClient(this.auth, this.clientOpts.http);
