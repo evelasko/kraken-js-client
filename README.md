@@ -1,5 +1,5 @@
-# kraken-exchange-api
-[![Build Status](https://travis-ci.org/flipio/kraken-exchange-api.svg?branch=master)](https://travis-ci.org/flipioo/kraken-exchange-api)
+# kraken-js-client
+[![Build Status](https://travis-ci.org/flipio/kraken-exchange-api.svg?branch=master)](https://travis-ci.org/flipioo/kraken-je-client)
 
 # Quick Start
 
@@ -97,11 +97,11 @@ Kraken.Balance.get().then(console.log);
 
 ```javascript
 
-const Time = require('node-js-client').Time;
+const Time = require('kraken-js-client').Time;
 
 let time = new Time();
 
-const Balance = require('node-js-client').Balance;
+const Balance = require('kraken-js-client').Balance;
 
 let balance = new Balance({
     auth: AuthOpts,
