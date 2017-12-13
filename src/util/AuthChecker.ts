@@ -11,6 +11,8 @@ const OptsFormat = '{apiKey: string, apiSecret: string}';
 
 export class AuthChecker {
 
+    protected opts: any = {};
+
     private log: Logger;
 
     constructor(opts) {
@@ -22,10 +24,11 @@ export class AuthChecker {
             throw Error('[' + MODULE_NAME + ']Auth needs to be passed as object in format: ' + OptsFormat);
         }
 
-        this.validateAuth(opts);
+        this.opts = opts;
     }
 
-    validateAuth(opts) {
+    validateAuth() {
+        const opts = this.opts;
         const key = opts[AuthKeyConfig.apiKey];
         const secret = opts[AuthKeyConfig.apiSecret];
 

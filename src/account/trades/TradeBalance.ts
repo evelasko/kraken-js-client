@@ -3,15 +3,15 @@ import {Client} from '../../util/DefaultClient';
 import {IClientOpts, IKrakenResponse, IOtp} from '../../common/interfaces';
 
 export interface IBalance {
-    eb: string,
-    tb: string,
-    m: string,
-    n: string,
-    c: string,
-    v: string,
-    e: string,
-    mf: string,
-    ml: string
+    eb: string;
+    tb: string;
+    m: string;
+    n: string;
+    c: string;
+    v: string;
+    e: string;
+    mf: string;
+    ml: string;
 }
 
 export class BalanceInfo {

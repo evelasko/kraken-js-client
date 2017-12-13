@@ -15,12 +15,12 @@ export class AssetPairs extends Client {
 
         if (assetPairs !== null) {
             if (!(assetPairs instanceof Array) || assetPairs.length === 0) {
-                throw new Error('Kraken:AssetPairs: `assetPairs` for non-null values need to be an array')
+                throw new Error('Kraken:AssetPairs: `assetPairs` for non-null values need to be an array');
             }
 
             assetPairs.forEach((assetPair) => {
                 if (typeof assetPair !== 'string' || !assetPair) {
-                    throw new Error('Kraken:AssetPairs: every `assetPair` in array need to be a non-empty string')
+                    throw new Error('Kraken:AssetPairs: every `assetPair` in array need to be a non-empty string');
                 }
             });
 
@@ -50,9 +50,10 @@ export class AssetPairs extends Client {
 
     getSingleAssetPair(assetPair: string, callback?): Promise<IKrakenResponse<any>> {
         if (typeof assetPair !== 'string' || !assetPair) {
-            throw new Error('Kraken:AssetPairs: `assetPair` variable need to be a non-empty string')
+            throw new Error('Kraken:AssetPairs: `assetPair` variable need to be a non-empty string');
         }
 
         return this.getAssetPairs([assetPair], callback);
     }
+
 }

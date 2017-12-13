@@ -20,18 +20,18 @@ export interface IHttpClientOpts {
 
 const NoAuthDefault: IAuthOpts = {
     apiKey: '',
-    apiSecret: ''
+    apiSecret: '',
 };
 
 export class HttpClient {
+
+    protected MessageSignature: MessageSignature;
 
     private auth: IAuthOpts;
     private logger: Logger;
 
     private retryCount: number;
     private retryDelay: number;
-
-    protected MessageSignature: MessageSignature;
 
     /**
      * AuthOpts are required but u can default to empty strings so client wont send auth headers
@@ -79,7 +79,9 @@ export class HttpClient {
     private configureAuth(auth: IAuthOpts): void {
 
         if (Util.validateAuth(auth)) {
-            new AuthChecker(auth);
+
+            const AuthCheck = new AuthChecker(auth);
+            AuthCheck.validateAuth();
 
             this.MessageSignature = new MessageSignature();
             this.auth = auth;
@@ -191,7 +193,7 @@ export class HttpClient {
                     return resolve(body);
 
                 })
-                .catch(e => reject(e))
+                .catch(e => reject(e));
         });
 
     }

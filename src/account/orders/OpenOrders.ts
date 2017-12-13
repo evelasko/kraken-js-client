@@ -5,7 +5,7 @@ import {IClientOpts, IKrakenResponse, IOtp} from '../../common/interfaces';
 
 export interface IOpenOrders extends IOtp {
     trades?: boolean; // whether or not to include trades in output (optional.  default = false)
-    userref?: string // restrict results to given user reference id (optional)
+    userref?: string; // restrict results to given user reference id (optional)
 }
 
 export class OpenOrders extends Client {

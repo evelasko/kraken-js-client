@@ -11,7 +11,6 @@ export interface ITradeVolume extends IOtp {
 
 export class TradeVolume extends Client {
 
-
     constructor(opts?: IClientOpts, client?) {
         super(opts, client);
     }
@@ -30,7 +29,7 @@ export class TradeVolume extends Client {
 
             forEach(assetPairs, (assetPair) => {
                 if (typeof assetPair !== 'string' || !assetPair) {
-                    throw new Error(MODULE_NAME + ' Every `assetPair` in array need to be a non-empty string')
+                    throw new Error(MODULE_NAME + ' Every `assetPair` in array need to be a non-empty string');
                 }
             });
 
@@ -45,5 +44,5 @@ export class TradeVolume extends Client {
 
         });
     }
-}
 
+}

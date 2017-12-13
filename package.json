@@ -69,7 +69,7 @@
     "watch": "tsc --outDir lib --module commonjs -w",
     "clean": "rimraf dist es lib coverage",
     "typecheck": "tsc --noEmit",
-    "lint": "tslint --project tsconfig.json --type-check --format stylish",
+    "lint": "tslint --project tsconfig.json --format stylish",
     "test": "jest --env=jsdom --coverage",
     "test:watch": "jest --env=jsdom --watch --updateSnapshot",
     "prepublishOnly": "npm run build",
