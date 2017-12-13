@@ -14,5 +14,5 @@ const Sell = 'sell';
 
 export const OrderSides = {
     Buy,
-    Sell
+    Sell,
 };

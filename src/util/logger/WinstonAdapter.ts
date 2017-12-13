@@ -12,10 +12,10 @@ export class WinstonAdapter implements LoggerAdapter {
                 new winston.transports.Console({
                     level: Config.config.LOG_LEVEL,
                     timestamp: true,
-                    colorize: true
-                })
+                    colorize: true,
+                }),
             ],
-            exitOnError: false
+            exitOnError: false,
         });
     }
 

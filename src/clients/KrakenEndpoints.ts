@@ -49,5 +49,5 @@ export const KrakenEndoints = {
     QueryLedgers,
     TradeVolume,
     AddOrder,
-    CancelOrder
+    CancelOrder,
 };

@@ -16,18 +16,47 @@ export class Resolver {
         this.Orders = new Orders(opts);
     }
 
-    private fetchOrder(oids: Array<string>, opts?): Promise<IKrakenResponse<any>> {
+    public queryTradesJoinOrders(opts: IQueryTrades) {
+        return new Promise((resolve, reject) => {
+            this.Trades
+                .query(opts)
+                .then((response: IKrakenResponse<any>) => {
+                    this.joinOrders(response.result)
+                        .then(resolve)
+                        .catch(reject);
+                })
+                .catch(reject);
+        });
+    }
+
+    public tradeHistoryJoinOrders(opts: ITradesHistory): Promise<{[key: string]: any}> {
+        return new Promise((resolve, reject) => {
+            this.Trades
+                .getHistory(opts)
+                .then((res: IKrakenResponse<any>) => {
+                    const trades = res.result.trades;
+
+                    this.joinOrders(trades)
+                        .then(resolve)
+                        .catch(reject);
+
+                })
+                .catch(reject);
+        });
+    }
+
+    private fetchOrder(oids: string[], opts?): Promise<IKrakenResponse<any>> {
         opts = opts || {};
         return this.Orders.query(Object.assign({}, opts, {
-            txid: oids.join(',')
+            txid: oids.join(','),
         }));
     }
 
-    private fetchOrders(orderIds: Array<string>, opts: any) {
+    private fetchOrders(orderIds: string[], opts: any) {
 
-        let oIds = Util.chunkArray(orderIds, 20);
+        const oIds = Util.chunkArray(orderIds, 20);
 
-        let numberOfChunks = oIds.length;
+        const numberOfChunks = oIds.length;
 
         return new Promise(async (resolve, reject) => {
             let n = 0;
@@ -53,14 +82,14 @@ export class Resolver {
     private joinOrders(trades: any) {
 
         return new Promise((resolve, reject) => {
-            let orderIds: Array<string> = map(trades, (t: any) => {
+            const orderIds: string[] = map(trades, (t: any) => {
                 return t.ordertxid;
             });
 
             this.fetchOrders(orderIds, {})
                 .then((orders: any) => {
 
-                    let rTrades = {};
+                    const rTrades = {};
                     forEach(trades, (t, tId) => {
 
                         t.id = tId;
@@ -76,38 +105,8 @@ export class Resolver {
                     });
 
                     resolve(rTrades);
-                }).catch(reject)
+                }).catch(reject);
         });
     }
-
-    public queryTradesJoinOrders(opts: IQueryTrades) {
-        return new Promise((resolve, reject) => {
-            this.Trades
-                .query(opts)
-                .then((response: IKrakenResponse<any>) => {
-                    this.joinOrders(response.result)
-                        .then(resolve)
-                        .catch(reject);
-                })
-                .catch(reject);
-        });
-    }
-
-    public tradeHistoryJoinOrders(opts: ITradesHistory): Promise<{[key: string]: any}> {
-        return new Promise((resolve, reject) => {
-            this.Trades
-                .getHistory(opts)
-                .then((res: IKrakenResponse<any>) => {
-                    let trades = res.result.trades;
-
-                    this.joinOrders(trades)
-                        .then(resolve)
-                        .catch(reject);
-
-                })
-                .catch(reject);
-        });
-    }
-
 
 }

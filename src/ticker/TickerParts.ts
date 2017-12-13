@@ -54,5 +54,5 @@ export const TickerParts = {
     LowPriceLast24h,
     HighPriceToday,
     HighPriceLast24h,
-    OpenPrice
+    OpenPrice,
 };

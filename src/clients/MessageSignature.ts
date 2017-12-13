@@ -5,8 +5,6 @@ export class MessageSignature {
 
     private secret: Buffer;
 
-    constructor() {}
-
     setSecret(secret) {
 
         if (!secret || typeof secret !== 'string') {

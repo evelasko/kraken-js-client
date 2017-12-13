@@ -1,10 +1,13 @@
 import {map} from 'lodash';
 import {Config} from '../config';
 import {IAuthOpts} from '../common/interfaces';
+import {Logger} from './logger/logger';
 
 const Conf = Config.config;
 
 export class Util {
+
+    static logger: Logger = new Logger('Kraken:Util');
 
     static getApiPath(path): string {
 
@@ -25,7 +28,7 @@ export class Util {
 
             assets.forEach((asset) => {
                 if (typeof asset !== 'string' || !asset) {
-                    throw new Error('Kraken:Assets: every `asset` in array need to be a non-empty string')
+                    throw new Error('Kraken:Assets: every `asset` in array need to be a non-empty string');
                 }
             });
 
@@ -35,21 +38,21 @@ export class Util {
 
     static validateAsset(asset): void {
         if (typeof asset !== 'string' || !asset) {
-            throw new Error('Kraken:Assets: `asset` variable need to be a non-empty string')
+            throw new Error('Kraken:Assets: `asset` variable need to be a non-empty string');
         }
     }
 
-    static parseKrakenErrors(err: Array<string>): string | boolean {
+    static parseKrakenErrors(err: string[]): string | boolean {
 
         if (!Array.isArray(err)) {
-            console.warn('err passed is not instance of Array');
+            Util.logger.warn('[Kraken:error:parser] Err passed is not instance of Array');
             return false;
         }
 
         let msg = '';
 
-        let errors: Array<string> = Util.extractKrakenErrors(err);
-        let warnings: Array<string> = Util.extractKrakenWarnings(err);
+        const errors: string[] = Util.extractKrakenErrors(err);
+        const warnings: string[] = Util.extractKrakenWarnings(err);
 
         if (errors.length > 0) {
             msg = msg + '[Errors] ' + err.join('; ') + ';';
@@ -64,7 +67,7 @@ export class Util {
 
     static extractKrakenErrors(err: string[]): string[] {
 
-        let errors: Array<string> = err
+        const errors: string[] = err
             .filter((e: string) => e.startsWith('E'))
             .map((e: string) => e.substr(1));
 
@@ -73,20 +76,20 @@ export class Util {
 
     static extractKrakenWarnings(err: string[]): string[] {
 
-        let warnings: Array<string> = err
+        const warnings: string[] = err
             .filter((e: string) => e.startsWith('W'))
             .map((e: string) => e.substr(1));
 
         return warnings;
     }
 
-    static chunkArray(array: Array<any>, chunkSize): Array<Array<any>> {
+    static chunkArray(array: any[], chunkSize): any[][] {
 
         chunkSize = chunkSize || 20;
 
-        let result: Array<any> = map(array, function (item, index) {
+        const result: any[] = map(array, (item, index) => {
             return index % chunkSize === 0 ? array.slice(index, index + chunkSize) : null;
-        }).filter(function (item) {
+        }).filter((item) => {
             return item;
         });
 
@@ -103,8 +106,8 @@ export class Util {
 
         if (typeof auth === 'undefined') { return false; }
 
-        let apiKey = auth.apiKey;
-        let apiSecret = auth.apiSecret;
+        const apiKey = auth.apiKey;
+        const apiSecret = auth.apiSecret;
 
         if (typeof apiKey !== 'string' || typeof apiSecret !== 'string') {
             return false;

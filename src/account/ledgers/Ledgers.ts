@@ -9,7 +9,7 @@ const MODULE_NAME = '[Kraken:Ledgers]';
 
 export interface ILedgersInfo extends IOtp {
     aclass?: string; // asset class (optional): currency (default)
-    asset?: Array<string> | string; // comma delimited list of assets to restrict output to (optional.  default = all)
+    asset?: string[] | string; // comma delimited list of assets to restrict output to (optional.  default = all)
     type?: LedgersType;
     start?: number | string; // unix timestamp
     end?: number | string; // unix timestamp
@@ -17,7 +17,7 @@ export interface ILedgersInfo extends IOtp {
 }
 
 export interface IQueryLedgers extends IOtp {
-    id: string[] | string // comma delimited list of ledger ids to query info about (20 maximum)
+    id: string[] | string; // comma delimited list of ledger ids to query info about (20 maximum)
 }
 
 export class Ledgers extends Client {
@@ -33,7 +33,7 @@ export class Ledgers extends Client {
 
     query(opts: IQueryLedgers): Promise<IKrakenResponse<any>> {
         if (opts && opts.id && Array.isArray(opts.id)) {
-            let assetPairs: any = opts.id;
+            const assetPairs: any = opts.id;
 
             forEach(assetPairs, (assetPair) => {
                 if (typeof assetPair !== 'string' || !assetPair) {
@@ -41,7 +41,7 @@ export class Ledgers extends Client {
                 }
             });
 
-            opts.id = assetPairs.join(',')
+            opts.id = assetPairs.join(',');
         }
 
         return this.client

@@ -25,4 +25,3 @@ export class QueryTrades extends Client {
     }
 
 }
-

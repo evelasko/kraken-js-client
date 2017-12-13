@@ -59,19 +59,6 @@ export class HttpClient {
     public updateAuth(auth: IAuthOpts) {
         this.configureAuth(auth);
     }
-    private configureAuth(auth: IAuthOpts): void {
-
-        if (Util.validateAuth(auth)) {
-            new AuthChecker(auth);
-
-            this.MessageSignature = new MessageSignature();
-            this.auth = auth;
-            this.MessageSignature.setSecret(this.auth.apiSecret);
-        } else {
-            this.logger.debug('Auth configuration not passed, proceed.');
-        }
-
-    }
 
     public post(path: string, data?): Promise<any> {
         return this.requestRetry('POST', path, data);
@@ -87,6 +74,20 @@ export class HttpClient {
 
     public delete(path: string, data?): Promise<any> {
         return this.requestRetry('DELETE', path, data);
+    }
+
+    private configureAuth(auth: IAuthOpts): void {
+
+        if (Util.validateAuth(auth)) {
+            new AuthChecker(auth);
+
+            this.MessageSignature = new MessageSignature();
+            this.auth = auth;
+            this.MessageSignature.setSecret(this.auth.apiSecret);
+        } else {
+            this.logger.debug('Auth configuration not passed, proceed.');
+        }
+
     }
 
     private requestRetry(...args): Promise<any> {
@@ -195,7 +196,7 @@ export class HttpClient {
 
     }
 
-    public getNonce(): number {
+    private getNonce(): number {
         const time = new Date() as any;
         return time * 1000;
     }

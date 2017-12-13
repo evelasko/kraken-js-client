@@ -64,11 +64,9 @@ export class Retry {
         const reqArgs = args;
 
         this.resource(...reqArgs)
-            .then((...args) => {
-                this._resolveFn(...args);
-            })
+            .then(this._resolveFn)
             .catch((err) => {
-                this.logger.debug(`Kraken ruquest failed: `, JSON.stringify(reqArgs));
+                this.logger.debug('Kraken ruquest failed: ', JSON.stringify(reqArgs));
 
                 this._attemptsCount++;
 
@@ -85,7 +83,6 @@ export class Retry {
 
                     // Retry delay
                     setTimeout(() => {
-
                         this._request.apply(this, reqArgs);
                     }, this._retryDelay);
 

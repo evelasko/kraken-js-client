@@ -11,13 +11,12 @@ export interface ITradesHistory extends IOtp {
         // closing position = any trade closing all or part of a position
         // no position = non-positional trades
     trades?: boolean; // whether or not to include trades related to position in output (optional.  default = false)
-    start?: number | string // starting unix timestamp or trade tx id of results (optional.  exclusive)
-    end?: number | string // ending unix timestamp or trade tx id of results (optional.  inclusive)
-    ofs?: number | string // result offset
+    start?: number | string; // starting unix timestamp or trade tx id of results (optional.  exclusive)
+    end?: number | string; // ending unix timestamp or trade tx id of results (optional.  inclusive)
+    ofs?: number | string; // result offset
 }
 
 export class TradesHistory extends Client {
-
 
     constructor(opts?: IClientOpts, client?) {
         super(opts, client);
@@ -34,4 +33,3 @@ export class TradesHistory extends Client {
     }
 
 }
-

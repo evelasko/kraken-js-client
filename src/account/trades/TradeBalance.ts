@@ -65,12 +65,11 @@ export class BalanceInfo {
 }
 
 export interface ITradeBalance extends IOtp {
-    aclass?: string; //asset class default 'currency'
+    aclass?: string; // asset class default 'currency'
     asset?: string; // base asset used to determine balance (default = ZUSD)
 }
 
 export class TradeBalance extends Client {
-
 
     constructor(opts?: IClientOpts, client?) {
         super(opts, client);

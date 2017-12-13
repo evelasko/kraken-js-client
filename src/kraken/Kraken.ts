@@ -54,23 +54,23 @@ export class Kraken {
         const config: IConfig = {};
 
         if (this.opts.retryCount) {
-            config.RETRY_COUNT = this.opts.retryCount
+            config.RETRY_COUNT = this.opts.retryCount;
         }
 
         if (this.opts.retryDelay) {
-            config.DEFAULT_TIMEOUT = this.opts.retryDelay
+            config.DEFAULT_TIMEOUT = this.opts.retryDelay;
         }
 
         if (this.opts.apiUrl) {
-            config.KRAKEN_API_ENDPOINT = this.opts.apiUrl
+            config.KRAKEN_API_ENDPOINT = this.opts.apiUrl;
         }
 
         if (this.opts.apiVersion) {
-            config.API_VERISON = this.opts.apiVersion
+            config.API_VERISON = this.opts.apiVersion;
         }
 
         if (this.opts.logLevel) {
-            config.LOG_LEVEL = this.opts.logLevel
+            config.LOG_LEVEL = this.opts.logLevel;
         }
 
         Config.config = config;

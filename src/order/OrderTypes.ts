@@ -100,5 +100,5 @@ export const OrderTypes = {
     TrailingStop,
     TrailingStopLimit,
     StopLossAndLimit,
-    SettlePosition
-}
+    SettlePosition,
+};

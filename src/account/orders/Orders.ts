@@ -7,7 +7,6 @@ import {AddOrder, IOrderAdd} from './AddOrder';
 import {HttpClient} from '../../clients/HttpClient';
 import {IClientOpts, IKrakenResponse} from '../../common/interfaces';
 
-
 export class Orders extends Client {
 
     private ClosedOrders: ClosedOrders;

@@ -1,18 +1,12 @@
 
-export class KrakenPayload {
+export interface KrakenPayload {
 
-    constructor(payload) {
+    extract(): void;
 
-    }
+    parseError(): void;
 
-    extract() {}
+    getError(): void;
 
-    parseError() {}
-
-    getError() {}
-
-    hasError() {
-
-    }
+    hasError(): void;
 
 }

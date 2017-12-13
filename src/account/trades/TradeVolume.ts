@@ -26,7 +26,7 @@ export class TradeVolume extends Client {
     get(opts: ITradeVolume): Promise<IKrakenResponse<any>> {
 
         if (opts && opts.pair && Array.isArray(opts.pair)) {
-            let assetPairs: any = opts.pair;
+            const assetPairs: any = opts.pair;
 
             forEach(assetPairs, (assetPair) => {
                 if (typeof assetPair !== 'string' || !assetPair) {
@@ -34,13 +34,13 @@ export class TradeVolume extends Client {
                 }
             });
 
-            opts.pair = assetPairs.join(',')
+            opts.pair = assetPairs.join(',');
         }
 
         return new Promise((resolve, reject) => {
 
             this.client.post(KrakenEndoints.TradeVolume, opts)
-                .then(resolve) //TODO: parse results first
+                .then(resolve) // TODO: parse results first
                 .catch(reject);
 
         });

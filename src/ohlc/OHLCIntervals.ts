@@ -19,5 +19,5 @@ export const OHLCIntervals = {
     FourHours,
     Day,
     Week,
-    TwoWeeks
+    TwoWeeks,
 };

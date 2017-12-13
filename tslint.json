@@ -27,6 +27,8 @@
       "check-format",
       "allow-pascal-case",
       "allow-leading-underscore"
-    ]
+    ],
+    "no-console": false,
+    "jsdoc-format": false
   }
 }

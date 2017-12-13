@@ -18,7 +18,8 @@ export class CancelOrder extends Client {
                 .post(KrakenEndoints.CancelOrder, opts)
                 .then(resolve)
                 .catch(reject);
-        })
+        });
+
     }
 
 }

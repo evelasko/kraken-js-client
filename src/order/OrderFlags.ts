@@ -38,5 +38,5 @@ export const OrderFlags = {
     PreferFeeInBaseCurrency,
     PreferFeeInQuoteCurrency,
     NoMarketPriceProtection,
-    PostOnlyOrder
+    PostOnlyOrder,
 };

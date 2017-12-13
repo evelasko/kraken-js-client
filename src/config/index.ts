@@ -2,13 +2,12 @@
 /**
  * Internal Client Configuration
  */
-
 export const DefaultConfig = {
     KRAKEN_API_ENDPOINT: 'https://api.kraken.com',
     API_VERISON: 0,
     DEFAULT_TIMEOUT: 200, // 0.2s
     RETRY_COUNT: 3,
-    LOG_LEVEL: 'info'
+    LOG_LEVEL: 'info',
 };
 
 export interface IConfig {
@@ -16,7 +15,7 @@ export interface IConfig {
     API_VERISON?: number | string;
     DEFAULT_TIMEOUT?: number;
     RETRY_COUNT?: number;
-    LOG_LEVEL?: string
+    LOG_LEVEL?: string;
 }
 
 /**

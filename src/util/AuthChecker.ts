@@ -4,7 +4,7 @@ const MODULE_NAME = 'Params:Auth';
 
 const AuthKeyConfig = {
     apiKey: 'apiKey',
-    apiSecret: 'apiSecret'
+    apiSecret: 'apiSecret',
 };
 
 const OptsFormat = '{apiKey: string, apiSecret: string}';
@@ -26,8 +26,8 @@ export class AuthChecker {
     }
 
     validateAuth(opts) {
-        let key = opts[AuthKeyConfig.apiKey];
-        let secret = opts[AuthKeyConfig.apiSecret];
+        const key = opts[AuthKeyConfig.apiKey];
+        const secret = opts[AuthKeyConfig.apiSecret];
 
         if (this.checkInvalidKey(key)) {
             this.log.error('Api Key not provided. Options format: ' + OptsFormat);
@@ -45,4 +45,3 @@ export class AuthChecker {
     }
 
 }
-
