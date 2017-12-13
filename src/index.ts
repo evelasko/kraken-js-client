@@ -26,4 +26,4 @@ export {Orders} from './account/orders/Orders';
 export {OpenPositions} from './account/OpenPositions';
 export {Resolver} from './resolver/Resolver';
 
-export {Kraken, IKrakenConfiguration} from './kraken/kraken';
+export {Kraken, IKrakenConfiguration} from './kraken';
