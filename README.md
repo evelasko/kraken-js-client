@@ -1,5 +1,5 @@
 # kraken-js-client
-[![Build Status](https://travis-ci.org/flipio/kraken-exchange-api.svg?branch=master)](https://travis-ci.org/flipioo/kraken-je-client)
+[![Build Status](https://travis-ci.org/flipio/kraken-js-client.svg?branch=master)](https://travis-ci.org/flipioo/kraken-je-client)
 
 # Quick Start
 
