@@ -1,8 +1,7 @@
 const fs = require('fs');
 const nock = require('nock');
-const krakenEndpoints = require('../../lib/Clients/KrakenEndpoints').KrakenEndoints;
+const krakenEndpoints = require('../../lib/clients/KrakenEndpoints').KrakenEndoints;
 const KRAKEN_API_ENDPOINT_URL = 'https://api.kraken.com';
-
 
 function readJsonResponse (responseFileName) {
   const path = __dirname + '/responses/' + responseFileName;
